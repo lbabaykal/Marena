@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', config('app.name') . 'Админ панель')
 @section('content')
     <div class="dashboard">
         <div class="section section_red">

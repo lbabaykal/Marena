@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', config('app.name'))
 @section('content')
     <div class="group_custom_articles">
         <div class="content_group_heading color-chapter-green">

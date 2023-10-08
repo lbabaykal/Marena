@@ -1,4 +1,5 @@
 @extends('layouts.main')
+@section('title', config('app.name') . $article->title_rus . '🔥︎')
 @section('content')
     <section class="content_article">
         <div class="article_full">

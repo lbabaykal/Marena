@@ -66,30 +66,24 @@ Route::namespace('App\Http\Controllers\Admin')
         ->group(function () {
     //========ADMIN_PANEL========
     Route::get('/', 'IndexController')->name('index');
-    //========ARTICLES========
     Route::pattern('article', '[0-9]+');
-    Route::resource('articles', ArticleController::class);
-    //========CATEGORIES========
     Route::pattern('category', '[0-9]+');
-    Route::resource('categories', CategoryController::class);
-    //========COUNTRIES========
     Route::pattern('country', '[0-9]+');
-    Route::resource('countries', CountryController::class);
-    //========GENRES========
     Route::pattern('genre', '[0-9]+');
-    Route::resource('genres', GenreController::class);
-    //========STUDIOS========
     Route::pattern('studio', '[0-9]+');
-    Route::resource('studios', StudioController::class);
-    //========TYPES========
     Route::pattern('type', '[0-9]+');
-    Route::resource('types', TypeController::class);
-    //========USERS========
     Route::pattern('user', '[0-9]+');
-    Route::resource('users', UserController::class);
-    //========ROLES========
     Route::pattern('role', '[0-9]+');
-    Route::resource('roles', RoleController::class);
+    Route::resources([
+        'articles' => ArticleController::class,
+        'categories' => CategoryController::class,
+        'countries' => CountryController::class,
+        'genres' => GenreController::class,
+        'studios' => StudioController::class,
+        'types' => TypeController::class,
+        'users' => UserController::class,
+        'roles' => RoleController::class,
+    ]);
 });
 
 

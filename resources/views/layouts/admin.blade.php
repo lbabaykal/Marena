@@ -1,7 +1,7 @@
 <!DOCTYPE html >
 <html lang="ru-Ru">
 <head>
-    <title>{TITLE}</title>
+    <title>@yield('title')</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="icon" type="image/png" sizes="256x256" href="{{asset('images/favicon.png')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/admin.css')}}">

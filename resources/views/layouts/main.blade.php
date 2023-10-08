@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru-Ru">
 <head>
-    <title>{TITLE}</title>
+    <title>@yield('title')</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="{DESCRIPTION}" />
     <meta name="keywords" content="{KEYWORDS}" />

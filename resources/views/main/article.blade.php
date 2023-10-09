@@ -43,6 +43,8 @@
                 <div class="info_value">{{$article->year}}</div>
                 <div class="info_key">Страна:</div>
                 <div class="info_value">{{$article->country->title}}</div>
+                <div class="info_key">Студия:</div>
+                <div class="info_value">{{$article->studio->title}}</div>
                 @isset($article->age_limit)
                     <div class="info_key">Возрастной рейтинг:</div>
                     <div class="info_value">{{$article->age_limit}}</div>

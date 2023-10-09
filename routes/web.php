@@ -39,17 +39,20 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
-Route::get('/articles/{article}', \App\Http\Controllers\ArticleController::class)->name('article.show');
 Route::get('/categories/{category}', \App\Http\Controllers\CategoryController::class)->name('category.show');
-
 //ERROR
 Route::get('/genres/{genre}', \App\Http\Controllers\CategoryController::class)->name('genre.show');
 
 
 
+
 //========FULL_ARTICLE========
+Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('article.show');
 Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
 Route::post('/favorites', \App\Http\Controllers\FavoriteController::class);
+//========FILTER_ARTICLE========
+Route::get('/filter_article', [\App\Http\Controllers\ArticleController::class, 'filter_article'])
+    ->name('article.filter_article');
 //========FULL_ARTICLE========COMMENTS========
 Route::pattern('comment', '[0-9]+');
 Route::namespace('App\Http\Controllers\Comments')->prefix('comments')->name('comments.')->group(function () {
@@ -58,12 +61,13 @@ Route::namespace('App\Http\Controllers\Comments')->prefix('comments')->name('com
     Route::patch('/{comment}', \App\Http\Controllers\Comments\UpdateController::class);
 });
 
+
 //==========ADMIN_PANEL==========
 Route::namespace('App\Http\Controllers\Admin')
-        ->prefix('admin_panel')
-        ->name('admin.')
-        ->middleware(['auth', 'isAdmin'])
-        ->group(function () {
+    ->prefix('admin_panel')
+    ->name('admin.')
+    ->middleware(['auth', 'isAdmin'])
+    ->group(function () {
     //========ADMIN_PANEL========
     Route::get('/', 'IndexController')->name('index');
     Route::pattern('article', '[0-9]+');

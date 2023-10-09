@@ -6,7 +6,7 @@
     <meta name="description" content="{DESCRIPTION}" />
     <meta name="keywords" content="{KEYWORDS}" />
     <link rel="icon" type="image/png" sizes="256x256" href="{{asset('images_icon/favicon.png')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}/">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css')}}">
     <script src="{{asset('js/jquery-3.7.1.min.js')}}"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -31,8 +31,8 @@
     <img id="search-change" class="header-search" src="{{asset('images_icon/loupe.svg')}}" alt="Search" onclick="">
     @include('layouts.login')
     <div id="search-active" class="search" style="display: none;">
-        <form action="/search" method="GET">
-            <input type="text" name="search" />
+        <form action="{{route('article.filter_article')}}" method="GET">
+            <input type="text" name="title" />
             <button type="submit">Поиск</button>
         </form>
     </div>

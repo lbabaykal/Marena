@@ -22,10 +22,10 @@
 
     <div class="header-nav">
         <a href="/"><div class="header-nav-items">Главная</div></a>
-        <a href="{{route('category.show', 1)}}"><div class="header-nav-items">Аниме</div></a>
-        <a href="{{route('category.show', 2)}}"><div class="header-nav-items">Дорамы</div></a>
-        <a href="{{route('category.show', 3)}}"><div class="header-nav-items">Манга</div></a>
-        <a href="{{route('category.show', 4)}}"><div class="header-nav-items">AMV</div></a>
+        <a href="{{route('article.filter_article', ['category[]' => 1])}}"><div class="header-nav-items">Аниме</div></a>
+        <a href="{{route('article.filter_article', ['category[]' => 2])}}"><div class="header-nav-items">Дорамы</div></a>
+        <a href="{{route('article.filter_article', ['category[]' => 3])}}"><div class="header-nav-items">Манга</div></a>
+        <a href="{{route('article.filter_article', ['category[]' => 4])}}"><div class="header-nav-items">AMV</div></a>
     </div>
 
     <img id="search-change" class="header-search" src="{{asset('images_icon/loupe.svg')}}" alt="Search" onclick="">

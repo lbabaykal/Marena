@@ -2,30 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FavoritesRequest;
+use App\Http\Requests\Favorite\DestroyRequest;
+use App\Http\Requests\Favorite\UpdateRequest;
 use App\Models\Favorites;
-use Illuminate\Http\Request;
+use App\Models\Folder;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
-    public function __invoke(FavoritesRequest $request)
+    public function store(UpdateRequest $request)
     {
-        if (Auth::check())
-        {
+        if (Auth::check()) {
             $data = $request->validated();
-            $user = Auth::user();
-            if (Favorites::where('user_id', Auth::id())->where('article_id', $data['article_id'])->exists())
-            {
-                $user->favorites()->toggle($data);
-                return ['success' => 'Yess'];
-            } else {
-                $user->favorites()->toggle($data);
-                return ['success' => 'Yes'];
-            }
+            $folder = Folder::find($data['folder_id']);
 
+            if ($folder->user_id === Auth::id() || $folder->user_id === 0)
+                Favorites::updateOrCreate(
+                    [
+                        'user_id' => Auth::id(),
+                        'article_id' => $data['article_id']
+                    ],
+                    [
+                        'folder_id' => $data['folder_id']
+                    ]
+                );
+            return ['success' => 'Yes'];
         } else  {
             return ['success' => 'No'];
         }
     }
+
+    public function destroy(DestroyRequest $request)
+    {
+        if (Auth::check()) {
+            $data = $request->validated();
+
+            Favorites::where('user_id', Auth::id())
+                ->where($data)
+                ->delete();
+
+            return ['success' => 'Yes'];
+        } else  {
+            return ['success' => 'No'];
+        }
+    }
+
 }

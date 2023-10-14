@@ -6,12 +6,20 @@
             <div class="article_image">
                 <img src="{{asset('images_articles/' . $article->image)}}" alt="">
                 <div class="my_list_cont">
-                    <div class="my_list">
-                        <button class="my_list_button">Добавить в список <sup style="font-size: 12px">test</sup></button>
-                    </div>
-                    <div class="favourite">
-                        <button onclick="favorite({{$article->id}})" id="favourite" class="favourite_button @if($article->favorite) favourite_active @endif "></button>
-                    </div>
+                    <select class="my_list @if($favorite->isNotEmpty()) favourite_active @endif" id="folder">
+                        @if($favorite->isEmpty())
+                            <option value="">Добавить в список</option>
+                        @endif
+                        @foreach($folders as $folder)
+                            <option data-folder="{{$folder->id}}" data-article="{{$article->id}}"
+                                {{$folder->id === $favorite->value('folder_id') ? ' selected': ''}}>{{$folder->title}}</option>
+                        @endforeach
+                    </select>
+                    @if($favorite->isNotEmpty())
+                        <div class="favourite">
+                            <button onclick="favorite_del({{$article->id}})" id="favourite" class="favourite_button"></button>
+                        </div>
+                    @endif
                 </div>
                 @if($article->is_rating == 1)
                     @include('layouts.rating')

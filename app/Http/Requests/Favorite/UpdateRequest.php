@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Favorite;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FavoritesRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,6 +22,7 @@ class FavoritesRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'folder_id' => 'required|integer|exists:folders,id',
             'article_id' => 'required|integer|exists:articles,id',
         ];
     }

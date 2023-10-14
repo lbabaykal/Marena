@@ -47,7 +47,8 @@ Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
 //========FULL_ARTICLE========
 Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])->name('article.show');
 Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
-Route::post('/favorites', \App\Http\Controllers\FavoriteController::class);
+Route::post('/favorites', [\App\Http\Controllers\FavoriteController::class, 'store']);
+Route::delete('/favorites', [\App\Http\Controllers\FavoriteController::class, 'destroy']);
 //========FILTER_ARTICLE========
 Route::get('/filter_article', [\App\Http\Controllers\ArticleController::class, 'filter_article'])
     ->name('article.filter_article');

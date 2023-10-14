@@ -11,14 +11,14 @@ return new class extends Migration
     {
         Schema::create('favorites', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Folder::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->foreignIdFor(\App\Models\User::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->constrained();
             $table->foreignIdFor(\App\Models\Article::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->constrained();
         });
     }
 

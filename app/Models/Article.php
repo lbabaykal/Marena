@@ -56,4 +56,9 @@ class Article extends Model
     {
         return $this->belongsToMany(User::class, 'rating_assessments', 'article_id', 'user_id');
     }
+
+    public function folders()
+    {
+        return $this->belongsToMany(User::class, 'folders', 'article_id', 'user_id');
+    }
 }

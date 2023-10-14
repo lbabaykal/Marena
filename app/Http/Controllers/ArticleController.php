@@ -12,6 +12,7 @@ use App\Http\Filters\Article\YearTo;
 use App\Marena;
 use App\Models\Article;
 use App\Models\Favorites;
+use App\Models\Folder;
 use App\Models\RatingAssessment;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
@@ -22,16 +23,19 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $article->genre_id = $article->genres;
-        $article->favorite = Favorites::where('user_id', Auth::id())
-                                        ->where('article_id', $article->id)
-                                        ->exists();
         $article->user_assessment = RatingAssessment::where('user_id', Auth::id())
                                                     ->where('article_id', $article->id)
                                                     ->value('assessment');
         $articleComments = $article->comments;
+
+        $favorite = Favorites::where('article_id', $article->id)
+                                ->where('user_id', Auth::id())
+                                ->get();
+        $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
+
         return ($article->is_show === 0)
             ? redirect(route('main.show'))
-            : view('main.article', compact('article', 'articleComments'));
+            : view('main.article', compact('article', 'articleComments', 'folders', 'favorite'));
     }
 
     public function filter_article() {
@@ -53,6 +57,7 @@ class ArticleController extends Controller
         $types = \App\Models\Type::all();
         $genres = \App\Models\Genre::all();
         $countries = \App\Models\Country::all();
+
         return view('layouts.filter_article', compact('articles', 'categories', 'types', 'genres', 'countries'));
     }
 }

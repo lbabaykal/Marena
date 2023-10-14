@@ -63,4 +63,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Article::class, 'rating_assessments', 'user_id', 'article_id');
     }
 
+    public function folders()
+    {
+        return $this->hasMany(Folder::class);
+    }
+
 }

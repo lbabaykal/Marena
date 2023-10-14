@@ -40,29 +40,52 @@ function rating(article_id, assessment) {
     });
 }
 
-function favorite(article_id) {
-    const Favourite = document.querySelector('#favourite');
+let Favorite = document.getElementById("folder");
+Favorite.addEventListener("change", function() {
+    let data = Favorite.options[Favorite.selectedIndex];
 
     $.ajax({
         url: '/favorites',
         method: 'POST',
         dataType: 'json',
+        data: { folder_id: data.getAttribute("data-folder"),
+                article_id: data.getAttribute("data-article") },
+        success (data) {
+            if (data.success === "Yes") {
+                Favorite.classList.add('favourite_active');
+                Notification.classList.add('notification');
+                Notification.innerText = 'Добавлено в список!';
+                setTimeout(() => {
+                    Notification.classList.remove('notification');
+                }, 2000);
+            }
+            if (data.success === "No") {
+                Notification.classList.add('notification');
+                Notification.innerText = 'Необходимо авторизоваться!';
+                setTimeout(() => {
+                    Notification.classList.remove('notification');
+                }, 2000);
+            }
+        }
+    });
+});
+
+function favorite_del(article_id) {
+    const Favorite = document.querySelector('#folder');
+
+    $.ajax({
+        url: '/favorites',
+        method: 'DELETE',
+        dataType: 'json',
         data: { article_id: article_id },
         success (data) {
-            if (data.success === "Yess") {
-                Favourite.classList.remove('favourite_active');
-                Notification.classList.add('notification');
-                Notification.innerText = 'Убрано из избранного!';
-                setTimeout(() => {
-                    Notification.classList.remove('notification');
-                }, 4000);
-            }
             if (data.success === "Yes") {
-                Favourite.classList.add('favourite_active');
+                Favorite.classList.add('favourite_active');
                 Notification.classList.add('notification');
-                Notification.innerText = 'Добавлено в избранное!';
+                Notification.innerText = 'Удалено из списка!';
                 setTimeout(() => {
                     Notification.classList.remove('notification');
+                    location.reload();
                 }, 2000);
             }
             if (data.success === "No") {

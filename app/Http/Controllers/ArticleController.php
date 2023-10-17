@@ -22,25 +22,30 @@ class ArticleController extends Controller
 {
     public function show(Article $article)
     {
-        $article->genre_id = $article->genres;
-        $article->user_assessment = RatingAssessment::where('user_id', Auth::id())
-                                                    ->where('article_id', $article->id)
-                                                    ->value('assessment');
-        $articleComments = $article->comments;
+        if ($article->is_show === 0) {
+            return redirect(route('main.show'));
+        } else {
+                        $article->genre_id = $article->genres;
+            $article->user_assessment = RatingAssessment::query()
+                ->where('user_id', Auth::id())
+                ->where('article_id', $article->id)
+                ->value('assessment');
+            $articleComments = $article->comments;
 
-        $favorite = Favorites::where('article_id', $article->id)
-                                ->where('user_id', Auth::id())
-                                ->get();
-        $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
+            $favorite = Favorites::query()
+                ->where('article_id', $article->id)
+                ->where('user_id', Auth::id())
+                ->get();
+            $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
 
-        return ($article->is_show === 0)
-            ? redirect(route('main.show'))
-            : view('main.article', compact('article', 'articleComments', 'folders', 'favorite'));
+            return view('main.article', compact('article', 'articleComments', 'folders', 'favorite'));
+        }
     }
 
-    public function filter_article() {
+    public function filter_article()
+    {
         $articles = app()->make(Pipeline::class)
-            ->send(Article::query())
+            ->send(Article::query()->where('is_show', 1))
             ->through([
                 Title::class,
                 Category::class,

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', config('app.name') . 'Поиск...')
+@section('title', $title . 'Поиск...')
 @section('content')
     <div class="filter">
         <form action="{{route('article.filter_article')}}" method="GET" enctype="multipart/form-data">
@@ -14,9 +14,9 @@
                     <label><input type="checkbox" name="type[]" value="{{$type->id}}"
                         @if(request()->exists('type'))
                             @foreach(request('type') as $typeValue)
-                                {{$type->id === (int) $typeValue ? ' checked': ''}}
-                                @endforeach
-                            @endif
+                                @checked($type->id === (int) $typeValue)
+                            @endforeach
+                        @endif
                         >{{$type->title}}</label>
                 @endforeach
             </div>
@@ -27,15 +27,15 @@
                     <label><input type="checkbox" name="category[]" value="{{$category->id}}"
                         @if(request()->exists('category'))
                             @foreach(request('category') as $categoryValue)
-                                {{$category->id === (int) $categoryValue ? ' checked': ''}}
-                                @endforeach
+                                @checked($category->id === (int) $categoryValue)
+                            @endforeach
                         @endif
                         >{{$category->title}}</label>
                 @endforeach
             </div>
 
             <label for="genre_and_or">Строгий поиск по жанру?
-                <input type="checkbox" id="genre_and_or" name="genre_and_or" {{request('genre_and_or') !== null ? 'checked' : ''}} />
+                <input type="checkbox" id="genre_and_or" name="genre_and_or" @checked(request('genre_and_or') !== null) />
             </label>
 
             Жанр:
@@ -44,9 +44,9 @@
                     <label><input type="checkbox" name="genre[]" value="{{$genre->id}}"
                         @if(request()->exists('genre'))
                             @foreach(request('genre') as $genreValue)
-                                {{$genre->id === (int) $genreValue ? ' checked': ''}}
-                                @endforeach
-                            @endif
+                                @checked($genre->id === (int) $genreValue)
+                            @endforeach
+                        @endif
                         >{{$genre->title}}</label>
                 @endforeach
             </div>
@@ -57,7 +57,7 @@
                     @foreach($countries as $country)
                         <option value="{{$country->id}}"
                         @if(request()->exists('country'))
-                            {{$country->id === (int) request('country') ? ' selected': ''}}
+                            @selected($country->id === (int) request('country'))
                         @endif
                         >{{$country->title}}</option>
                     @endforeach

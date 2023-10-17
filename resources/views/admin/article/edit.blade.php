@@ -24,7 +24,7 @@
             <label>Категория: @error('category_id') {{$message}} @enderror
                 <select name="category_id">
                     @foreach($categories as $category)
-                        <option value="{{$category->id}}" {{$category->id === $article->category_id ? ' selected': ''}} >{{$category->title}}</option>
+                        <option value="{{$category->id}}" @selected($category->id === $article->category_id) >{{$category->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -32,7 +32,7 @@
             <label>Тип: @error('type_id') {{$message}} @enderror
                 <select name="type_id">
                     @foreach($types as $type)
-                        <option value="{{$type->id}}" {{$type->id === $article->type_id ? ' selected': ''}} >{{$type->title}}</option>
+                        <option value="{{$type->id}}" @selected($type->id === $article->type_id) >{{$type->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -40,7 +40,7 @@
             <label>Студия: @error('studio_id') {{$message}} @enderror
                 <select name="studio_id">
                     @foreach($studios as $studio)
-                        <option value="{{$studio->id}}" {{$studio->id === $article->studio_id ? ' selected': ''}} >{{$studio->title}}</option>
+                        <option value="{{$studio->id}}" @selected($studio->id === $article->studio_id) >{{$studio->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -56,7 +56,7 @@
             <label>Страна: @error('country_id') {{$message}} @enderror
                 <select name="country_id">
                     @foreach($countries as $county)
-                        <option value="{{$county->id}}"  {{$county->id === $article->country_id ? ' selected': ''}} >{{$county->title}}</option>
+                        <option value="{{$county->id}}"  @selected($county->id === $article->country_id)>{{$county->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -66,15 +66,15 @@
             </label>
 
             <label for="is_show">Разрешить показ? @error('is_show') {{$message}} @enderror
-                <input type="checkbox" id="is_show" name="is_show" {{$article->is_show === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="is_show" name="is_show" @checked($article->is_show === 1) />
             </label>
 
             <label for="is_comment">Разрешить комментарии? @error('is_comment') {{$message}} @enderror
-                <input type="checkbox" id="is_comment" name="is_comment" {{$article->is_comment === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="is_comment" name="is_comment" @checked($article->is_comment === 1) />
             </label>
 
             <label for="is_rating">Разрешить рейтинг? @error('is_rating') {{$message}} @enderror
-                <input type="checkbox" id="is_rating" name="is_rating" {{$article->is_rating === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="is_rating" name="is_rating" @checked($article->is_rating === 1) />
             </label>
 
             <label>Жанр: @error('genre_id') {{$message}} @enderror
@@ -82,7 +82,7 @@
                     @foreach($genres as $genre)
                         <option value="{{$genre->id}}"
                                 @foreach($article->genre_id as $articleGenre)
-                                    {{$genre->id === $articleGenre->id ? ' selected': ''}}
+                                    @selected($genre->id === $articleGenre->id)
                                 @endforeach
                         >{{$genre->title}}</option>
                     @endforeach

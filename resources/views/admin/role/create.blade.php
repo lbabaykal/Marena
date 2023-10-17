@@ -13,23 +13,23 @@
             </label>
 
             <label for="isAdmin">isAdmin? @error('isAdmin') {{$message}} @enderror
-                <input type="checkbox" id="isAdmin" name="isAdmin" {{old('isAdmin') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="isAdmin" name="isAdmin" @checked(old('isAdmin')) />
             </label>
 
             <label for="allowView">allowView? @error('allowView') {{$message}} @enderror
-                <input type="checkbox" id="allowView" name="allowView" {{old('allowView') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="allowView" name="allowView" @checked(old('allowView')) />
             </label>
 
             <label for="allowCreate">allowCreate? @error('allowCreate') {{$message}} @enderror
-                <input type="checkbox" id="allowCreate" name="allowCreate" {{old('allowCreate') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="allowCreate" name="allowCreate" @checked(old('allowCreate')) />
             </label>
 
             <label for="allowUpdate">allowUpdate? @error('allowUpdate') {{$message}} @enderror
-                <input type="checkbox" id="allowUpdate" name="allowUpdate" {{old('allowUpdate') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="allowUpdate" name="allowUpdate" @checked(old('allowUpdate')) />
             </label>
 
             <label for="allowDelete">allowDelete? @error('allowDelete') {{$message}} @enderror
-                <input type="checkbox" id="allowDelete" name="allowDelete" {{old('allowDelete') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="allowDelete" name="allowDelete" @checked(old('allowDelete')) />
             </label>
 
             <div class="window_buttons">

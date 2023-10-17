@@ -24,7 +24,7 @@
                 <select name="category_id">
                     <option value="">Нету</option>
                     @foreach($categories as $category)
-                        <option value="{{$category->id}}" {{$category->id == old('category_id') ? ' selected': ''}} >{{$category->title}}</option>
+                        <option value="{{$category->id}}" @selected($category->id == old('category_id')) >{{$category->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -33,7 +33,7 @@
                 <select name="type_id">
                     <option value="">Нету</option>
                     @foreach($types as $type)
-                        <option value="{{$type->id}}" {{$type->id == old('type_id') ? ' selected': ''}} >{{$type->title}}</option>
+                        <option value="{{$type->id}}" @selected($type->id == old('type_id')) >{{$type->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -42,7 +42,7 @@
                 <select name="studio_id">
                     <option value="">Нету</option>
                     @foreach($studios as $studio)
-                        <option value="{{$studio->id}}" {{$studio->id == old('studio_id') ? ' selected': ''}} >{{$studio->title}}</option>
+                        <option value="{{$studio->id}}" @selected($studio->id == old('studio_id')) >{{$studio->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -59,7 +59,7 @@
                 <select name="country_id">
                     <option value="">Нету</option>
                     @foreach($countries as $county)
-                        <option value="{{$county->id}}" {{$county->id == old('country_id') ? ' selected': ''}} >{{$county->title}}</option>
+                        <option value="{{$county->id}}" @selected($county->id === old('country_id'))>{{$county->title}}</option>
                     @endforeach
                 </select>
             </label>
@@ -69,15 +69,16 @@
             </label>
 
             <label for="is_show">Разрешить показ? @error('is_show') {{$message}} @enderror
-                <input type="checkbox" id="is_show" name="is_show" {{old('is_show') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="is_show" name="is_show" @checked(old('is_show'))
+                />
             </label>
 
             <label for="is_comment">Разрешить комментарии? @error('is_comment') {{$message}} @enderror
-                <input type="checkbox" id="is_comment" name="is_comment" {{old('is_comment') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="is_comment" name="is_comment" @checked(old('is_comment')) />
             </label>
 
             <label for="is_rating">Разрешить рейтинг? @error('is_rating') {{$message}} @enderror
-                <input type="checkbox" id="is_rating" name="is_rating" {{old('is_rating') == 'on' ? 'checked' : ''}} />
+                <input type="checkbox" id="is_rating" name="is_rating" @checked(old('is_rating')) />
             </label>
 
             <label>Жанр: @error('genre_id') {{$message}} @enderror

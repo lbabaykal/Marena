@@ -19,23 +19,23 @@
             </label>
 
             <label for="isAdmin">isAdmin? @error('isAdmin') {{$message}} @enderror
-                <input type="checkbox" id="isAdmin" name="isAdmin" {{$role->isAdmin === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="isAdmin" name="isAdmin" @checked($role->isAdmin === 1) />
             </label>
 
             <label for="allowView">allowView? @error('allowView') {{$message}} @enderror
-                <input type="checkbox" id="allowView" name="allowView" {{$role->allowView === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="allowView" name="allowView" @checked($role->allowView === 1) />
             </label>
 
             <label for="allowCreate">allowCreate? @error('allowCreate') {{$message}} @enderror
-                <input type="checkbox" id="allowCreate" name="allowCreate" {{$role->allowCreate === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="allowCreate" name="allowCreate" @checked($role->allowCreate === 1) />
             </label>
 
             <label for="allowUpdate">allowUpdate? @error('allowUpdate') {{$message}} @enderror
-                <input type="checkbox" id="allowUpdate" name="allowUpdate" {{$role->allowUpdate === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="allowUpdate" name="allowUpdate" @checked($role->allowUpdate === 1) />
             </label>
 
             <label for="allowDelete">allowDelete? @error('allowDelete') {{$message}} @enderror
-                <input type="checkbox" id="allowDelete" name="allowDelete" {{$role->allowDelete === 1 ? 'checked' : ''}} />
+                <input type="checkbox" id="allowDelete" name="allowDelete" @checked($role->allowDelete === 1) />
             </label>
 
             <div class="window_buttons">

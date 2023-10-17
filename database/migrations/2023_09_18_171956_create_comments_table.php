@@ -12,9 +12,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->constrained();
             $table->text('comment');
             $table->date('date');
             $table->morphs('commentable');

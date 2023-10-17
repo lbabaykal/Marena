@@ -11,7 +11,11 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id')->index()->constrained('articles');
+            $table->foreignId(\App\Models\Article::class)
+                ->index()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->unsignedFloat('rating');
             $table->unsignedInteger('count_assessments');
             $table->softDeletes();

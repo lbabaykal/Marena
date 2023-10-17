@@ -15,21 +15,43 @@ return new class extends Migration
             $table->string('title_orig');
             $table->string('title_rus');
             $table->string('title_eng');
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('type_id');
-            $table->unsignedBigInteger('studio_id');
-            $table->unsignedBigInteger('country_id');
+//            $table->unsignedBigInteger('category_id');
+//            $table->unsignedBigInteger('type_id');
+//            $table->unsignedBigInteger('studio_id');
+//            $table->unsignedBigInteger('country_id');
 //            $table->unsignedBigInteger('genre_id')->nullable();
 //            $table->index('genre_id', 'article_genre_idx');
 //            $table->foreign('genre_id', 'article_genre_fk')
 //                            ->on('genres')
 //                            ->references('id');
-            $table->foreignIdFor(\App\Models\Genre::class)->nullable()->constrained();
+            $table->foreignIdFor(\App\Models\Category::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Type::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Studio::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Country::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Genre::class)
+                ->nullable()
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->string('episodes')->nullable();
             $table->string('year')->nullable();
             $table->string('age_limit')->nullable();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('author_id');
+//            $table->unsignedBigInteger('author_id');
+            $table->foreignIdFor(\App\Models\User::class)
+                ->constrained();
             $table->boolean('is_show')->default(false);
             $table->boolean('is_comment')->default(false);
             $table->boolean('is_rating')->default(false);

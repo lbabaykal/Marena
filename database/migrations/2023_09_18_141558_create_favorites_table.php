@@ -18,7 +18,9 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class)
                 ->constrained();
             $table->foreignIdFor(\App\Models\Article::class)
-                ->constrained();
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
     }
 

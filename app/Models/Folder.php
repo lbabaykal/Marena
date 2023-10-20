@@ -12,13 +12,9 @@ class Folder extends Model
     protected $guarded = false;
     public $timestamps = false;
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class, 'folders', 'id', 'user_id');
-    }
-
     public static function findUserFolders(int $id)
     {
         return Folder::where('user_id', $id)->orWhere('user_id', 0)->get();
     }
+
 }

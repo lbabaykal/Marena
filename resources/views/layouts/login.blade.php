@@ -19,22 +19,25 @@
                     <span>Admin_Panel</span>
                 </a>
             @endif
-            <a class="profile-menu-button" href="/my_profile/">
+            <a class="profile-menu-button" href="{{route('account.index')}}">
                 <img src="{{asset('images_icon/profile.png')}}" alt="">
-                <span>Мой профиль</span>
+                <span>Мой Аккаунт</span>
             </a>
-            <a class="profile-menu-button" href="/my_profile/my_favorites">
+            <a class="profile-menu-button" href="{{route('account.favorites.index')}}">
                 <img src="{{asset('images_icon/favorite.png')}}" alt="">
                 <span>Избранное</span>
             </a>
-            <a class="profile-menu-button" href="/my_profile/settings">
+            <a class="profile-menu-button" href="{{route('profile.edit')}}">
                 <img src="{{asset('images_icon/settings.png')}}" alt="">
                 <span>Настройки</span>
             </a>
-            <a class="profile-menu-button" href="#">
+
+            <form class="profile-menu-button" action="{{route('logout')}}" method="POST">
+                @csrf
                 <img src="{{asset('images_icon/exit.png')}}" alt="">
-                <span>Выход</span>
-            </a>
+                <button type="submit">Выход</button>
+            </form>
+
         </div>
     </div>
 @endauth

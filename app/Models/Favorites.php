@@ -12,4 +12,8 @@ class Favorites extends Model
     protected $guarded = false;
     public $timestamps = false;
 
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class, 'favorites', 'id', 'article_id');
+    }
 }

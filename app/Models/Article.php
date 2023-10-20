@@ -47,18 +47,9 @@ class Article extends Model
         return $this->morphMany(Comments::class, 'commentable');
     }
 
-    public function favorites()
-    {
-        return $this->belongsToMany(User::class, 'favorites', 'article_id', 'user_id');
-    }
-
     public function rating_assessments()
     {
         return $this->belongsToMany(User::class, 'rating_assessments', 'article_id', 'user_id');
     }
 
-    public function folders()
-    {
-        return $this->belongsToMany(User::class, 'folders', 'article_id', 'user_id');
-    }
 }

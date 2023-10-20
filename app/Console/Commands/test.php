@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\Folder;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class test extends Command
@@ -32,9 +31,8 @@ class test extends Command
 //            'user_id' => 1
 //        ])->delete();
 
-        $lol = Folder::findUserFolders(1)->toArray();
+        $lol = User::query()->find(1)->folders();
         dd($lol);
-//        dd($lol);
         return 0;
     }
 }

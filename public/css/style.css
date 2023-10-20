@@ -246,6 +246,17 @@ body {
     width: 200px;
 }
 
+.profile-menu-button button {
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 14px;
+    line-height: 48px;
+    width: 200px;
+    text-align: left;
+    background: none;
+    color: #fff;
+}
+
 .profile-menu-button:hover {
     background-color: #fff;
     color: #000;

@@ -52,7 +52,7 @@ Route::prefix('account')
         );
     }
 );
-
+//ДОБАВЬ МИДЛВАРЕ ДЛЯ ПРОВЕРКИ РАЗРЕШЕНИЯ ДЛЯ ПРОСМОТРА ПУБЛИЧНОЙ ПАПКИ ДРУГОГО ЧЕЛОВЕКА
 
 //MAIN_PAGE
 Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');

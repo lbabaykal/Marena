@@ -1,13 +1,13 @@
-<div class="articles_cont">
+<div class="article_short">
     <a href="{{route('article.show', $article->id)}}">
         <div class="article">
-            <img class="image_article" src="{{asset('images_articles/' . $article->image)}}" alt="">
-            <div class="count_series">
+            <div class="article_image" style="background-image: url('{{asset('images_articles/' . $article->image)}}')"></div>
+            <div class="article_count_series">
                 @isset($article->episodes) EPS: {{$article->episodes}} @endisset
             </div>
-            <div class="article_type">{{$article->type->title}}</div>
-            <div class="article_rating">☆ {{$article->rating->rating}}</div>
+            <div class="article_title">{{$article->title_rus}}</div>
         </div>
-        <div class="title_article">{{$article->title_rus}}</div>
+        <div class="article_type">{{$article->type->title}}</div>
+        <div class="article_rating">☆ {{$article->rating->rating}}</div>
     </a>
 </div>

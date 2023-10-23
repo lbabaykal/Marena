@@ -32,23 +32,24 @@ function ShowRecovery_Password() {
 	Modal_Recovery_Password.classList.toggle("show-modal");
 }
 
+$('#menu-button').on("click", function() {
+    document.querySelector('#profile-menu').classList.toggle('show');
+});
+$('#search-button').on("click", function() {
+    document.querySelector('#search').classList.toggle('show');
+});
+
+//Delete
 let header = $('.header'),
-	scrollPrev = 0;
+    scrollPrev = 0;
 
 $(window).scroll(function() {
-	let scrolled = $(window).scrollTop();
+    let scrolled = $(window).scrollTop();
 
-	if ( scrolled > 50 && scrolled > scrollPrev ) {
-		header.addClass('out');
-	} else {
-		header.removeClass('out');
-	}
-	scrollPrev = scrolled;
-});
-
-$('#menu-change').on("click", function(){
-	$('#menu-active').toggle();
-});
-$('#search-change').on("click", function(){
-	$('#search-active').toggle();
+    if ( scrolled > 50 && scrolled > scrollPrev ) {
+        header.addClass('out');
+    } else {
+        header.removeClass('out');
+    }
+    scrollPrev = scrolled;
 });

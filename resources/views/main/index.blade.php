@@ -1,36 +1,25 @@
 @extends('layouts.main')
 @section('title', $title)
 @section('content')
-    <div class="group_custom_articles">
-        <div class="content_group_heading color-chapter-green">
-            <div class="group_heading_text"><a href="{{route('article.filter_article', ['category[]' => 1])}}">| Аниме |</a></div>
+    <section class="articles_main_short">
+        <div class="articles_main_short_title article_title_scarlet">
+            <a href="{{route('article.filter_article', ['category[]' => 1])}}">АНИМЕ</a>
         </div>
-        <div class="group_short_article">
+        <div class="articles_group_short">
             @foreach($articles_anime as $article)
                 @include('layouts.short_article')
             @endforeach
         </div>
-    </div>
+    </section>
 
-    <div class="group_custom_articles">
-        <div class="content_group_heading color-chapter-orange">
-            <div class="group_heading_text"><a href="{{route('article.filter_article', ['category[]' => 2])}}">| Дорамы |</a></div>
+    <section class="articles_main_short">
+        <div class="articles_main_short_title article_title_orange">
+            <a href="{{route('article.filter_article', ['category[]' => 2])}}">ДОРАМЫ</a>
         </div>
-        <div class="group_short_article">
+        <div class="articles_group_short">
             @foreach($articles_dorams as $article)
                 @include('layouts.short_article')
             @endforeach
         </div>
-    </div>
-
-    <div class="group_custom_articles">
-        <div class="content_group_heading color-chapter-red">
-            <div class="group_heading_text"><a href="{{route('article.filter_article', ['category[]' => 3])}}">| Манга |</a></div>
-        </div>
-        <div class="group_short_article">
-            @foreach($articles_manga as $article)
-                @include('layouts.short_article')
-            @endforeach
-        </div>
-    </div>
+    </section>
 @endsection

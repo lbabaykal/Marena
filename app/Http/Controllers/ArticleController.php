@@ -45,7 +45,10 @@ class ArticleController extends Controller
     public function filter_article()
     {
         $articles = app()->make(Pipeline::class)
-            ->send(Article::query()->where('is_show', 1))
+            ->send(Article::query()
+                ->where('is_show', 1)
+                ->orderByDesc('articles.id')
+            )
             ->through([
                 Title::class,
                 Category::class,

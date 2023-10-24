@@ -76,12 +76,11 @@
         </form>
     </div>
 
-    <div class="content_group">
-        <div class="group_articles">
+    <div class="articles_main_short">
+        <div class="articles_group_short">
             @foreach($articles as $article)
                 @include('layouts.short_article')
             @endforeach
-
         </div>
     </div>
     {{$articles->withQueryString()->links()}}

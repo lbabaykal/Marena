@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId(\App\Models\Article::class)
+            $table->foreignIdFor(\App\Models\Article::class)
                 ->index()
                 ->constrained()
                 ->cascadeOnUpdate()

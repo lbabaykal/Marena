@@ -59,7 +59,7 @@
                 <select name="country_id">
                     <option value="">Нету</option>
                     @foreach($countries as $county)
-                        <option value="{{$county->id}}" @selected($county->id === old('country_id'))>{{$county->title}}</option>
+                        <option value="{{$county->id}}" @selected($county->id == old('country_id'))>{{$county->title}}</option>
                     @endforeach
                 </select>
             </label>

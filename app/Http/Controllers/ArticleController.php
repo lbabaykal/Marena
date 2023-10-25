@@ -38,7 +38,7 @@ class ArticleController extends Controller
                 ->get();
             $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
 
-            return view('main.article', compact('article', 'articleComments', 'folders', 'favorite'));
+            return view('layouts.main.article', compact('article', 'articleComments', 'folders', 'favorite'));
         }
     }
 

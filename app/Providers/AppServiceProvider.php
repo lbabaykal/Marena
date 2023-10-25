@@ -22,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::share('title', '🌸MOON HARMONY🌸');
-        Paginator::defaultView('pagination');
+        Paginator::defaultView('layouts.pagination');
     }
 }

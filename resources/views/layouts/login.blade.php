@@ -61,11 +61,11 @@
 @endauth
 
 @guest
-    <div onclick="ShowAuthorization()">
+    <a href="{{route('login')}}">
         <div id="menu-change" class="header-profile">
             <div class="header-profile-up-text">Авторизация</div>
             <div class="header-profile-down-text">Регистрация</div>
             <div class="header-profile-avatar" style="background-image: url('{{asset('avatars/no_avatar.png')}}')"></div>
         </div>
-    </div>
+    </a>
 @endguest

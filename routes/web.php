@@ -54,7 +54,7 @@ Route::prefix('account')
 );
 //ДОБАВЬ МИДЛВАРЕ ДЛЯ ПРОВЕРКИ РАЗРЕШЕНИЯ ДЛЯ ПРОСМОТРА ПУБЛИЧНОЙ ПАПКИ ДРУГОГО ЧЕЛОВЕКА
 
-//MAIN_PAGE
+//========MAIN_PAGE========
 Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
 //========FULL_ARTICLE========
 Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])
@@ -85,14 +85,14 @@ Route::namespace('App\Http\Controllers\Admin')
     ->group(function () {
         //========ADMIN_PANEL========
         Route::get('/', 'IndexController')->name('index');
-        Route::pattern('article', '[0-9]+');
-        Route::pattern('category', '[0-9]+');
-        Route::pattern('country', '[0-9]+');
-        Route::pattern('genre', '[0-9]+');
-        Route::pattern('studio', '[0-9]+');
-        Route::pattern('type', '[0-9]+');
-        Route::pattern('user', '[0-9]+');
-        Route::pattern('role', '[0-9]+');
+        Route::pattern('article', '\d+');
+        Route::pattern('category', '\d+');
+        Route::pattern('country', '\d+');
+        Route::pattern('genre', '\d+');
+        Route::pattern('studio', '\d+');
+        Route::pattern('type', '\d+');
+        Route::pattern('user', '\d+');
+        Route::pattern('role', '\d+');
         Route::resources([
             'articles' => ArticleController::class,
             'categories' => CategoryController::class,

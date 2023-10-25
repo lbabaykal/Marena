@@ -1,25 +1,32 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>@yield('title', $title . ' Восстановление пароля')</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="{DESCRIPTION}" />
+    <link rel="icon" type="image/png" sizes="256x256" href="{{ asset('images_icon/favicon.png') }}">
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+</head>
+<body>
+    <div class="modal_window_content">
+        <div class="authorization_left">
+            <div class="authorization_container">
+                <span>Восстановление пароля</span>
+                <div id="warning_rp">&nbsp;</div>
+                <form action="{{ route('password.email') }}" method="POST" autocomplete="off">
+                    @csrf
+                    @error('email') <div class="warning">{{ $message }}</div> @enderror
+                    <input id="email" type="email" name="email" placeholder="example@gmail.com" value="{{ old('email') }}" autofocus >
+                    <button type="submit" class="button button_auth">Восстановить пароль</button>
+                </form>
+            </div>
+        </div>
+        <div class="authorization_right">
+            <a href="/">
+                <img src="{{ asset('images_icon/cancel.png') }}" class="window_close" alt="Закрыть">
+            </a>
+            <div class="image" style="background-image: url('{{ asset('images_icon/moonlight.png') }}');"></div>
+        </div>
     </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</body>
+</html>

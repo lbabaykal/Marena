@@ -29,6 +29,6 @@ class MainController extends Controller
             ->limit(Marena::COUNT_ARTICLES_MAIN)
             ->get();
 
-        return view('main.index', compact('articles_anime', 'articles_dorams', 'articles_manga'));
+        return view('layouts.main.index', compact('articles_anime', 'articles_dorams', 'articles_manga'));
     }
 }

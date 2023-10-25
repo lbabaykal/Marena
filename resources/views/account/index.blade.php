@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('title', $title . 'Аккаунт ' . Auth::user()->username)
-@section('content')
+@section('main')
+<main class="main">
     <section class="content_My_Profile">
         <div class="My_Profile_User">
             <div class="user_left">
@@ -39,6 +40,6 @@
                 </table>
             </div>
         </div>
-
     </section>
+</main>
 @endsection

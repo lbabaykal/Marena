@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('title', $title . 'Поиск...')
-@section('content')
+@section('main')
+<main class="main">
     <div class="filter">
         <form action="{{route('article.filter_article')}}" method="GET" enctype="multipart/form-data">
 
@@ -83,6 +84,7 @@
             @endforeach
         </div>
     </div>
+</main>
     {{$articles->withQueryString()->links()}}
 
 

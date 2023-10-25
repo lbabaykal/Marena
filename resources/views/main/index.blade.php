@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('title', $title)
-@section('content')
+@section('main')
+<main class="main">
     <section class="articles_main_short">
         <div class="articles_main_short_title article_title_scarlet">
             <a href="{{route('article.filter_article', ['category[]' => 1])}}">АНИМЕ</a>
@@ -22,4 +23,5 @@
             @endforeach
         </div>
     </section>
+</main>
 @endsection

@@ -37,9 +37,7 @@
     </div>
 </header>
 
-<main class="main">
-    @yield('content')
-</main>
+@yield('main')
 
 <footer class="footer">
     <div class="footer_copyright">

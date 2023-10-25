@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('title', $title . $article->title_rus . '🔥︎')
-@section('content')
+@section('main')
+<main class="main">
     <section class="content_article">
         <div class="article_full">
             <div class="article_image">
@@ -73,5 +74,6 @@
             <div class="modal_comment"></div>
         @endif
     </section>
+</main>
     <script src="{{asset('js/Full_Article.js')}}"></script>
 @endsection

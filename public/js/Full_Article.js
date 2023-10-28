@@ -1,6 +1,4 @@
 const Notification = document.querySelector('#notification');
-const Warning = document.querySelector('#warning_rating');
-const WarningText = document.querySelector('#warning_rating span');
 
 $.ajaxSetup({
     headers: {
@@ -16,26 +14,24 @@ function rating(article_id, assessment) {
         data: { article_id: article_id,
                 assessment: assessment },
         success (data) {
-            if (data.success === "Yes") {
-                Warning.classList.remove('warning__RED');
-                Warning.classList.add('warning__GREEN');
-                WarningText.innerText = 'Оценка добавлена.';
-                setTimeout(() => {
-                    Warning.classList.remove('warning__GREEN'); }, 2000);
-            }
-            if (data.success === "Yess") {
-                Warning.classList.remove('warning__RED');
-                Warning.classList.add('warning__GREEN');
-                WarningText.innerText = 'Оценка изменена на ' + assessment;
-                setTimeout(() => {
-                    Warning.classList.remove('warning__GREEN'); }, 2000);
-            }
-            if (data.success === "No") {
-                Warning.classList.add('warning__RED');
-                WarningText.innerText = 'Необходимо авторизоваться!';
-                setTimeout(() => {
-                    Warning.classList.remove('warning__RED'); }, 2000);
-            }
+            new Notify ({
+                status: data.status,
+                title: 'Рейтинг',
+                text: data.text,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2500,
+                gap: 15,
+                distance: 15,
+                type: 2,
+                position: 'right bottom',
+                customWrapper: '',
+            })
         }
     });
 }
@@ -51,21 +47,27 @@ Favorite.addEventListener("change", function() {
         data: { folder_id: data.getAttribute("data-folder"),
                 article_id: data.getAttribute("data-article") },
         success (data) {
-            if (data.success === "Yes") {
-                Favorite.classList.add('favourite_active');
-                Notification.classList.add('notification');
-                Notification.innerText = 'Добавлено в список!';
-                setTimeout(() => {
-                    Notification.classList.remove('notification');
-                }, 2000);
-            }
-            if (data.success === "No") {
-                Notification.classList.add('notification');
-                Notification.innerText = 'Необходимо авторизоваться!';
-                setTimeout(() => {
-                    Notification.classList.remove('notification');
-                }, 2000);
-            }
+            new Notify ({
+                status: data.status,
+                title: 'Избранное',
+                text: data.text,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2500,
+                gap: 15,
+                distance: 15,
+                type: 2,
+                position: 'right bottom',
+                customWrapper: '',
+            })
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
         }
     });
 });
@@ -79,22 +81,27 @@ function favorite_del(article_id) {
         dataType: 'json',
         data: { article_id: article_id },
         success (data) {
-            if (data.success === "Yes") {
-                Favorite.classList.add('favourite_active');
-                Notification.classList.add('notification');
-                Notification.innerText = 'Удалено из списка!';
-                setTimeout(() => {
-                    Notification.classList.remove('notification');
-                    location.reload();
-                }, 2000);
-            }
-            if (data.success === "No") {
-                Notification.classList.add('notification');
-                Notification.innerText = 'Необходимо авторизоваться!';
-                setTimeout(() => {
-                    Notification.classList.remove('notification');
-                }, 2000);
-            }
+            new Notify ({
+                status: data.status,
+                title: 'Избранное',
+                text: data.text,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2500,
+                gap: 15,
+                distance: 15,
+                type: 2,
+                position: 'right bottom',
+                customWrapper: '',
+            })
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
         }
     });
 }

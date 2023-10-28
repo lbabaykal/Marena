@@ -79,7 +79,7 @@ Route::namespace('App\Http\Controllers\Comments')
 
 //==========ADMIN_PANEL==========
 Route::namespace('App\Http\Controllers\Admin')
-    ->prefix('admin_panel')
+    ->prefix('admin')
     ->name('admin.')
     ->middleware(['auth', 'isAdmin'])
     ->group(function () {

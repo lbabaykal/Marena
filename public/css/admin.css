@@ -410,6 +410,10 @@ button.profile-menu-button {
     margin-left: 20px;
 }
 
+.list_item_active {
+    background-color: var(--green-color) !important;
+}
+
 #notification {
     position: fixed;
     padding: 15px;

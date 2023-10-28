@@ -1,17 +1,19 @@
 @charset "utf-8";
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap&text={}:/0123456789"');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 :root {
     --white-color: #FFFFFF;
+    --gray-color: #7C7C7C;
     --black-color: #000000;
-    --bg-color: #24282f;
-    --bg-color-2: #35385b;
+    --bg-color: #24282F;
+    --bg-color-2: #35385B;
     --green-color: #AEED7F;
     --red-color: #E9563E;
     --orange-color: #FFA500;
     --violet-color: #9E1DF5;
     --scarlet-color: #F53347;
-    --blue-color: #1BC0C0;
+    --blue-color: #00A7D3;
+    /*--blue-color: #1BC0C0;*/
 }
 
 *,
@@ -74,7 +76,8 @@ body {
     /*min-height: 100%;*/
     line-height: 1.5;
     /*line-height: 1;*/
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', 'Raleway', sans-serif;
+    /*font-family: 'Raleway', sans-serif;*/
     background-color: var(--black-color);
 }
 
@@ -103,7 +106,8 @@ body {
 .menu {
     display: flex;
     justify-content: space-between;
-    margin-inline: auto;
+    align-items: center;
+    margin-inline: 15px;
     max-width: 1860px;
 }
 
@@ -199,6 +203,7 @@ body {
     width: 30px;
     margin-block: 13px;
 }
+
 /*--------------PROFILE MENU---------------*/
 .header-profile-menu {
     background-color: var(--bg-color);
@@ -302,23 +307,19 @@ button.profile-menu-button {
 }
 /*--------------SEARCH---------------*/
 .search {
-    position: absolute;
-    top: 80px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    z-index: 90;
-    width: 800px;
-    height: 80px;
+    position: fixed;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-inline: auto;
+    display: block;
+    z-index: 9999;
     background-color: var(--bg-color);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6),
-    0 3px 15px rgba(255, 0, 0, 0.8);
-    visibility: hidden;
 }
 
 .search form  {
-    width: 100%;
-    height: 100%;
+    width: 500px;
+    height: 40px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -326,33 +327,33 @@ button.profile-menu-button {
 }
 
 .search > form > input {
-    width: 75%;
-    font-size: 18px;
-    border: 1px solid var(--black-color);
-    margin-right: 20px;
-    padding: 5px 10px;
+    width: 100%;
+    height: 100%;
+    font-size: 16px;
+    padding: 10px;
+    background-color: var(--bg-color-2);
+    color: var(--white-color);
+    border-radius: 5px 0 0 5px;
 }
 
-.search > form > input:focus {
-    box-shadow: 0 1px 10px rgba(231, 0, 255, 0.6),
-    0 1px 15px rgba(140, 0, 255, 0.8);
+.search:focus-within {
+    box-shadow: 0 6px 3px -3px rgba(255, 0, 140, 0.8);
 }
 
 .search form button {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--white-color);
-    text-transform: uppercase;
-    border-radius: 3px;
-    padding: 8px 30px;
-    background: var(--violet-color);
-    transition: background-color 0.4s, color 0.4s;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--bg-color-2);
+    border-radius: 0 5px 5px 0;
+    padding: 10px 30px;
+    transition: background-color 0.4s;
 }
 
 .search form button:hover {
     cursor: pointer;
     background-color: var(--red-color);
-    color: var(--white-color);
 }
 
 .show {
@@ -361,8 +362,7 @@ button.profile-menu-button {
 
 /*--------------PAGINATION---------------*/
 .pagination {
-    padding-top: 15px;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     text-align: center;
     user-select: none;
 }
@@ -381,12 +381,16 @@ button.profile-menu-button {
     background-color: var(--bg-color);
 }
 
-.pagination a:hover {
+.pagination .pagination-previous:hover,
+.pagination .pagination-next:hover,
+.pagination .pagination-button:hover
+{
     background-color: var(--green-color);
     color: var(--black-color);
 }
 
-.pagination-previous, .pagination-next  {
+.pagination-previous,
+.pagination-next  {
     background-color: var(--bg-color);
     color: var(--white-color);
 }
@@ -437,6 +441,12 @@ button.profile-menu-button {
     color: var(--white-color);
 }
 
+.pagination-previous-none,
+.pagination-next-none {
+    background-color: var(--bg-color);
+    color: #7c7c7c !important;
+}
+
 /*--------------FOOTER---------------*/
 .footer {
     display: flex;
@@ -476,14 +486,17 @@ button.profile-menu-button {
 .footer_links a:hover {
     text-decoration: underline;
 }
+
 /*--------------MAIN---------------*/
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 70px 10px 10px 10px;
-    min-height: calc(100vh - 201px);
+    /*min-height: calc(100vh - 201px);*/
+    min-height: calc(100vh - 256px);
 }
+
 /*--------------MAIN_ARTICLES_SHORT---------------*/
 .articles_main_short {
     display: flex;
@@ -582,6 +595,7 @@ button.profile-menu-button {
     flex-wrap: wrap;
     flex-direction: row;
 }
+
 /*--------------ARTICLES_SHORT---------------*/
 .article_short {
     position: relative;
@@ -694,6 +708,7 @@ button.profile-menu-button {
     text-align: center;
     padding-inline: 5px;
 }
+
 /*--------------Articles_Full---------------*/
 .content_article {
     display: flex;
@@ -779,33 +794,6 @@ button.profile-menu-button {
     font-size: 30px;
     font-weight: 700;
     color: var(--red-color);
-}
-
-#warning_rating {
-    position: absolute;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 10px;
-    z-index: 10;
-}
-
-#warning_rating span {
-    font-weight: 700;
-    font-size: 20px;
-}
-
-.warning__RED {
-    color: var(--scarlet-color);
-    display: flex !important;
-}
-
-.warning__GREEN {
-    color: #00ffff;
-    display: flex !important;
 }
 
 .rating_stars {
@@ -1055,6 +1043,7 @@ button.profile-menu-button {
     background-color: var(--green-color);
     color: var(--black-color);
 }
+
 /*--------------My_Profile---------------*/
 .content_My_Profile {
     display: flex;
@@ -1200,9 +1189,9 @@ button.profile-menu-button {
     border: none;
     border-bottom: 2px solid var(--violet-color);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.10),
-    0 10px 20px rgba(0, 0, 0, 0.05),
-    0 20px 20px rgba(0, 0, 0, 0.05),
-    0 30px 20px rgba(0, 0, 0, 0.05);
+                0 10px 20px rgba(0, 0, 0, 0.05),
+                0 20px 20px rgba(0, 0, 0, 0.05),
+                0 30px 20px rgba(0, 0, 0, 0.05);
 }
 
 .My_Profile_User_table th, .My_Profile_User_table td {
@@ -1233,23 +1222,7 @@ button.profile-menu-button {
 .filter {
 
 }
-/*--------------Notification---------------*/
-#notification {
-    position: fixed;
-    padding: 15px;
-    background-color: var(--white-color);
-    display: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgb(255, 0, 0);
-    bottom: 30px;
-    right: 20px;
-    color: var(--black-color);
-    font-size: 16px;
-}
 
-.notification {
-    display: block !important;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-}
+
+
+

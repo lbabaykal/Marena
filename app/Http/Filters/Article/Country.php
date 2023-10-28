@@ -9,6 +9,10 @@ class Country extends AbstractFilter
 {
     public function applyFilter(Builder $builder)
     {
-        $builder->where('country_id', request('country'));
+        $builder->where(function (Builder $query) {
+            foreach (request('country') as $item) {
+                $query->orWhere('country_id', $item);
+            }
+        });
     }
 }

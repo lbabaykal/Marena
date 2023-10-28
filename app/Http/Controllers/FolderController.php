@@ -23,5 +23,4 @@ class FolderController extends Controller
         return view('account.folder', compact('folder'));
     }
 
-
 }

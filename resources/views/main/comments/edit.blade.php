@@ -7,10 +7,10 @@
         <form id="comment_edit" onsubmit="return false">
             @csrf
             <label for="comment">Комментарий:</label>
-            <textarea id="comment" name="comment" rows="6" cols="10">{{$comment->comment}}</textarea>
+            <textarea id="comment" name="comment" rows="6" cols="10">{{ $comment->comment }}</textarea>
 
             <div class="window_buttons">
-                <button onclick="comment_edit({{$comment->id}})" type="submit" class="window_button button_save">Изменить</button>
+                <button onclick="comment_edit({{ $comment->id }})" type="submit" class="window_button button_save">Изменить</button>
                 <button onclick="HideComment()" class="window_button button_close">Отмена</button>
             </div>
         </form>

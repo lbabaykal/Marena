@@ -22,14 +22,22 @@ class RatingAssessmentController extends Controller
                 $ratingAssessment->where('user_id', $data['user_id'])
                                         ->where('article_id', $data['article_id'])
                                         ->update( ['assessment'=> $data['assessment']] );
-                return ['success' => 'Yess'];
+                return response()->json([
+                    'status' => 'success',
+                    'text' => 'Оценка изменена на ' . $data['assessment'],
+                ]);
             } else {
                 $ratingAssessment->create($data);
-                return ['success' => 'Yes'];
+                return response()->json([
+                    'status' => 'success',
+                    'text' => 'Оценка добавлена',
+                ]);
             }
-
-        } else  {
-            return ['success' => 'No'];
+        } else {
+            return response()->json([
+                'status' => 'warning',
+                'text' => 'Необходимо авторизоваться!',
+            ]);
         }
     }
 }

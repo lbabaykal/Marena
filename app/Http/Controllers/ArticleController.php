@@ -59,8 +59,8 @@ class ArticleController extends Controller
                 YearTo::class,
             ])
             ->thenReturn();
-        $articles = $articles->paginate(Marena::COUNT_ARTICLES_FULL);
 
+        $articles = $articles->paginate(Marena::COUNT_ARTICLES_FULL);
         $categories = \App\Models\Category::all();
         $types = \App\Models\Type::all();
         $genres = \App\Models\Genre::all();

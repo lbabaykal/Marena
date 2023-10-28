@@ -6,6 +6,7 @@ use App\Http\Requests\Favorite\DestroyRequest;
 use App\Http\Requests\Favorite\UpdateRequest;
 use App\Models\Favorites;
 use App\Models\Folder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
@@ -26,7 +27,7 @@ class FavoriteController extends Controller
         return view('account.favorites', compact('folders'));
     }
 
-    public function store(UpdateRequest $request)
+    public function store(UpdateRequest $request): JsonResponse
     {
         if (Auth::check()) {
             $data = $request->validated();
@@ -42,13 +43,19 @@ class FavoriteController extends Controller
                         'folder_id' => $data['folder_id']
                     ]
                 );
-            return ['success' => 'Yes'];
+            return response()->json([
+                'status' => 'success',
+                'text' => 'Добавлено в список!',
+            ]);
         } else  {
-            return ['success' => 'No'];
+            return response()->json([
+                'status' => 'warning',
+                'text' => 'Необходимо авторизоваться!',
+            ]);
         }
     }
 
-    public function destroy(DestroyRequest $request)
+    public function destroy(DestroyRequest $request): JsonResponse
     {
         if (Auth::check()) {
             $data = $request->validated();
@@ -57,9 +64,15 @@ class FavoriteController extends Controller
                 ->where($data)
                 ->delete();
 
-            return ['success' => 'Yes'];
+            return response()->json([
+                'status' => 'success',
+                'text' => 'Удалено из списка!',
+            ]);
         } else  {
-            return ['success' => 'No'];
+            return response()->json([
+                'status' => 'warning',
+                'text' => 'Необходимо авторизоваться!',
+            ]);
         }
     }
 

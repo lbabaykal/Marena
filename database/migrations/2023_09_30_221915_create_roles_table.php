@@ -12,11 +12,11 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->unsignedTinyInteger('isAdmin')->default(0);
-            $table->unsignedTinyInteger('allowView')->default(0);
-            $table->unsignedTinyInteger('allowCreate')->default(0);
-            $table->unsignedTinyInteger('allowUpdate')->default(0);
-            $table->unsignedTinyInteger('allowDelete')->default(0);
+            $table->boolean('isAdmin')->default(false);
+            $table->boolean('allowView')->default(false);
+            $table->boolean('allowCreate')->default(false);
+            $table->boolean('allowUpdate')->default(false);
+            $table->boolean('allowDelete')->default(false);
             $table->softDeletes();
         });
     }

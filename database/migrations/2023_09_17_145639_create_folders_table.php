@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedTinyInteger('isPublic')->default(0);
+            $table->boolean('isPublic')->default(false);
         });
     }
 

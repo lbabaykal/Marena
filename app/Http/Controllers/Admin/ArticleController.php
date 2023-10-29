@@ -13,9 +13,11 @@ use App\Models\Genre;
 use App\Models\Rating;
 use App\Models\Studio;
 use App\Models\Type;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
@@ -24,28 +26,30 @@ class ArticleController extends Controller
         $this->authorizeResource(Article::class, 'article');
     }
 
-    public function index()
+    public function index(): View
     {
-        $articles = Article::orderBY('id', 'DESC')->paginate(Marena::COUNT_ADMIN_ITEMS);
+        $articles = Article::query()
+            ->orderByDesc('articles.id')
+            ->paginate(Marena::COUNT_ADMIN_ITEMS);
         return view('admin.article.index', compact('articles'));
     }
 
-    public function show(Article $article)
+    public function show(Article $article): RedirectResponse
     {
         return redirect()->route('article.show', $article->id);
     }
 
-    public function create()
+    public function create(): View
     {
-        $categories = Category::all();
-        $types = Type::all();
-        $studios = Studio::all();
-        $countries = Country::all();
-        $genres = Genre::all();
-        return view('admin.article.create', compact('categories', 'types', 'studios', 'genres', 'countries'));
+        return view('admin.article.create')
+                    ->with('categories', Category::all())
+                    ->with('types', Type::all())
+                    ->with('studios', Studio::all())
+                    ->with('genres', Genre::all())
+                    ->with('countries', Country::all());
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
         if (isset($data['image'])) {
@@ -59,30 +63,32 @@ class ArticleController extends Controller
         $data['genre_id'] = null;
 
         DB::beginTransaction();
-        $article = Article::create($data);
-        Rating::create([
-            'article_id' => $article->id,
-            'rating' => 0,
-            'count_assessments' => 0
-        ]);
+            $article = Article::query()->firstOrCreate($data);
+            Rating::query()->firstOrCreate([
+                'article_id' => $article->id,
+                'rating' => 0,
+                'count_assessments' => 0
+            ]);
         DB::commit();
         $article->genres()->attach($genres);
 
         return redirect(route('admin.articles.index'));
     }
 
-    public function edit(Article $article)
+    public function edit(Article $article): View
     {
         $article->genre_id =  $article->genres;
-        $categories = Category::all();
-        $types = Type::all();
-        $studios = Studio::all();
-        $countries = Country::all();
-        $genres = Genre::all();
-        return view('admin.article.edit', compact('article', 'categories', 'types', 'studios', 'genres', 'countries'));
+
+        return view('admin.article.edit')
+            ->with('article', $article)
+            ->with('categories', Category::all())
+            ->with('types', Type::all())
+            ->with('studios', Studio::all())
+            ->with('genres', Genre::all())
+            ->with('countries', Country::all());
     }
 
-    public function update(UpdateRequest $request, Article $article)
+    public function update(UpdateRequest $request, Article $article): RedirectResponse
     {
         $data = $request->validated();
         if (isset($data['image']))
@@ -93,6 +99,7 @@ class ArticleController extends Controller
                 Storage::disk('images_articles')->delete($article->image);
             }
         }
+
         $data['is_show'] = isset($data['is_show']);
         $data['is_comment'] = isset($data['is_comment']);
         $data['is_rating'] = isset($data['is_rating']);
@@ -106,7 +113,7 @@ class ArticleController extends Controller
         return redirect(route('admin.articles.index'));
     }
 
-    public function destroy(Article $article)
+    public function destroy(Article $article): RedirectResponse
     {
         //Если не SoftDelete
 //        $article->genres()->detach();

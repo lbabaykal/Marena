@@ -1,5 +1,3 @@
-const Notification = document.querySelector('#notification');
-
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -32,6 +30,9 @@ function rating(article_id, assessment) {
                 position: 'right bottom',
                 customWrapper: '',
             })
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
         }
     });
 }
@@ -139,6 +140,8 @@ function comment_add(article_id) {
     });
 }
 
+
+const Notification = document.querySelector('#notification');
 const Modal_Comment = document.querySelector('.modal_comment');
 
 function HideComment() {

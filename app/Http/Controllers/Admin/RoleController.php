@@ -62,13 +62,13 @@ class RoleController extends Controller
         $data['allowDelete'] = isset($data['allowDelete']);
 
         $role->update($data);
-        return redirect(route('admin.roles.index'));
+        return redirect()->route('admin.roles.index');
     }
 
     public function destroy(Role $role): RedirectResponse
     {
         $role->delete();
-        return redirect(route('admin.roles.index'));
+        return redirect()->route('admin.roles.index');
     }
 
 }

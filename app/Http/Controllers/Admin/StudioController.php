@@ -34,7 +34,7 @@ class StudioController extends Controller
     {
         $data = $request->validated();
         Studio::query()->create($data);
-        return redirect(route('admin.studios.index'));
+        return redirect()->route('admin.studios.index');
     }
 
     public function edit(Studio $studio): View
@@ -46,12 +46,12 @@ class StudioController extends Controller
     {
         $data = $request->validated();
         $studio->update($data);
-        return redirect(route('admin.studios.index'));
+        return redirect()->route('admin.studios.index');
     }
 
     public function destroy(Studio $studio): RedirectResponse
     {
         $studio->delete();
-        return redirect(route('admin.studios.index'));
+        return redirect()->route('admin.studios.index');
     }
 }

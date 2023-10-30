@@ -34,7 +34,7 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
         Category::query()->create($data);
-        return redirect(route('admin.categories.index'));
+        return redirect()->route('admin.categories.index');
     }
 
     public function edit(Category $category): View
@@ -46,13 +46,13 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
         $category->update($data);
-        return redirect(route('admin.categories.index'));
+        return redirect()->route('admin.categories.index');
     }
 
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
-        return redirect(route('admin.categories.index'));
+        return redirect()->route('admin.categories.index');
     }
 
 }

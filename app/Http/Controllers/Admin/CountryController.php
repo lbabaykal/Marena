@@ -34,7 +34,7 @@ class CountryController extends Controller
     {
         $data = $request->validated();
         Country::query()->create($data);
-        return redirect(route('admin.countries.index'));
+        return redirect()->route('admin.countries.index');
     }
 
     public function edit(Country $country): View
@@ -46,13 +46,13 @@ class CountryController extends Controller
     {
         $data = $request->validated();
         $country->update($data);
-        return redirect(route('admin.countries.index'));
+        return redirect()->route('admin.countries.index');
     }
 
     public function destroy(Country $country): RedirectResponse
     {
         $country->delete();
-        return redirect(route('admin.countries.index'));
+        return redirect()->route('admin.countries.index');
     }
 
 }

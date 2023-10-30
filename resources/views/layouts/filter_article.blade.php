@@ -1,4 +1,4 @@
-@extends('layouts.main_without_footer')
+@extends('layouts.main')
 @section('title', $title . 'Поиск...')
 @section('main')
     <main class="main">

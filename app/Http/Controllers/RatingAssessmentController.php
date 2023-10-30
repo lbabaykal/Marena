@@ -14,25 +14,15 @@ class RatingAssessmentController extends Controller
         if (Auth::check())
         {
             $data = $request->validated();
-            $data['user_id'] = Auth::id();
-            if ($ratingAssessment::where('user_id',$data['user_id'])
-                                        ->where('article_id', $data['article_id'])
-                                        ->exists())
-            {
-                $ratingAssessment->where('user_id', $data['user_id'])
-                                        ->where('article_id', $data['article_id'])
-                                        ->update( ['assessment'=> $data['assessment']] );
-                return response()->json([
-                    'status' => 'success',
-                    'text' => 'Оценка изменена на ' . $data['assessment'],
-                ]);
-            } else {
-                $ratingAssessment->create($data);
-                return response()->json([
-                    'status' => 'success',
-                    'text' => 'Оценка добавлена',
-                ]);
-            }
+            RatingAssessment::query()->updateOrCreate(
+                ['user_id' => Auth::id(), 'article_id' => $data['article_id']],
+                ['assessment' => $data['assessment']]
+            );
+
+            return response()->json([
+                'status' => 'success',
+                'text' => 'Оценка добавлена/обновлена.',
+            ]);
         } else {
             return response()->json([
                 'status' => 'warning',

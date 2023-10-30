@@ -24,29 +24,32 @@ class FavoriteController extends Controller
                     $folder['articles'] = collect($favorites)->where('folder_id', $folder['id'])->all();
                 });*/
 
-        return view('account.favorites', compact('folders'));
+        return view('account.favorites')->with('folders', $folders);
     }
 
     public function store(UpdateRequest $request): JsonResponse
     {
         if (Auth::check()) {
             $data = $request->validated();
-            $folder = Folder::find($data['folder_id']);
+            $folder = Folder::query()->find($data['folder_id']);
 
-            if ($folder->user_id === Auth::id() || $folder->user_id === 0)
-                Favorites::updateOrCreate(
-                    [
-                        'user_id' => Auth::id(),
-                        'article_id' => $data['article_id']
-                    ],
-                    [
-                        'folder_id' => $data['folder_id']
-                    ]
+            if ($folder->user_id === Auth::id() || $folder->user_id === 0) {
+                Favorites::query()->updateOrCreate(
+                    ['user_id' => Auth::id(), 'article_id' => $data['article_id']],
+                    ['folder_id' => $data['folder_id']]
                 );
-            return response()->json([
-                'status' => 'success',
-                'text' => 'Добавлено в список!',
-            ]);
+
+                return response()->json([
+                    'status' => 'success',
+                    'text' => 'Добавлено в список!',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'warning',
+                    'text' => 'Это не твоя папка пёс!',
+                ]);
+            }
+
         } else  {
             return response()->json([
                 'status' => 'warning',
@@ -60,7 +63,8 @@ class FavoriteController extends Controller
         if (Auth::check()) {
             $data = $request->validated();
 
-            Favorites::where('user_id', Auth::id())
+            Favorites::query()
+                ->where('user_id', Auth::id())
                 ->where($data)
                 ->delete();
 

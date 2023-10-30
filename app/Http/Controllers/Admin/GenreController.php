@@ -34,7 +34,7 @@ class GenreController extends Controller
     {
         $data = $request->validated();
         Genre::query()->create($data);
-        return redirect(route('admin.genres.index'));
+        return redirect()->route('admin.genres.index');
     }
 
     public function edit(Genre $genre): View
@@ -46,13 +46,13 @@ class GenreController extends Controller
     {
         $data = $request->validated();
         $genre->update($data);
-        return redirect(route('admin.genres.index'));
+        return redirect()->route('admin.genres.index');
     }
 
     public function destroy(Genre $genre): RedirectResponse
     {
         $genre->delete();
-        return redirect(route('admin.genres.index'));
+        return redirect()->route('admin.genres.index');
     }
 
 }

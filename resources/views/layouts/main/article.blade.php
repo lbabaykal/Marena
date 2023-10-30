@@ -1,4 +1,4 @@
-@extends('layouts.main_without_footer')
+@extends('layouts.main_with_footer')
 @section('title', $title . $article->title_rus . '🔥︎')
 @section('main')
     <main class="main">
@@ -13,7 +13,7 @@
                             @endif
                             @foreach($folders as $folder)
                                 <option data-folder="{{ $folder->id }}" data-article="{{ $article->id }}"
-                                    {{ $folder->id === $favorite->value('folder_id') ? ' selected': '' }}>{{ $folder->title }}</option>
+                                        {{ $folder->id === $favorite->value('folder_id') ? ' selected': '' }}>{{ $folder->title }}</option>
                             @endforeach
                         </select>
                         @if($favorite->isNotEmpty())

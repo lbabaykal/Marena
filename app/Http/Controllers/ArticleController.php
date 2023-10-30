@@ -17,32 +17,39 @@ use App\Models\RatingAssessment;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
     public function show(Article $article)
     {
         if ($article->is_show === 0) {
-            return redirect(route('main.show'));
-        } else {
-                        $article->genre_id = $article->genres;
-            $article->user_assessment = RatingAssessment::query()
-                ->where('user_id', Auth::id())
-                ->where('article_id', $article->id)
-                ->value('assessment');
-            $articleComments = $article->comments;
-
-            $favorite = Favorites::query()
-                ->where('article_id', $article->id)
-                ->where('user_id', Auth::id())
-                ->get();
-            $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
-
-            return view('layouts.main.article', compact('article', 'articleComments', 'folders', 'favorite'));
+            return redirect()->route('main.show');
         }
+
+        $article->genre_id = $article->genres;
+        $article->user_assessment = RatingAssessment::query()
+            ->where('user_id', Auth::id())
+            ->where('article_id', $article->id)
+            ->value('assessment');
+
+        $articleComments = $article->comments;
+
+        $favorite = Favorites::query()
+            ->where('article_id', $article->id)
+            ->where('user_id', Auth::id())
+            ->get();
+
+        $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
+
+        return view('layouts.main.article')
+            ->with('article', $article)
+            ->with('articleComments', $articleComments)
+            ->with('folders', $folders)
+            ->with('favorite', $favorite);
     }
 
-    public function filter_article()
+    public function filter_article(): View
     {
         $articles = app()->make(Pipeline::class)
             ->send(Article::query()
@@ -60,12 +67,11 @@ class ArticleController extends Controller
             ])
             ->thenReturn();
 
-        $articles = $articles->paginate(Marena::COUNT_ARTICLES_FULL);
-        $categories = \App\Models\Category::all();
-        $types = \App\Models\Type::all();
-        $genres = \App\Models\Genre::all();
-        $countries = \App\Models\Country::all();
-
-        return view('layouts.filter_article', compact('articles', 'categories', 'types', 'genres', 'countries'));
+        return view('layouts.filter_article')
+            ->with('articles', $articles->paginate(Marena::COUNT_ARTICLES_FULL))
+            ->with('categories', \App\Models\Category::all())
+            ->with('types', \App\Models\Type::all())
+            ->with('genres', \App\Models\Genre::all())
+            ->with('countries', \App\Models\Country::all());
     }
 }

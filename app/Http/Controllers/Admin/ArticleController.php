@@ -31,7 +31,7 @@ class ArticleController extends Controller
         $articles = Article::query()
             ->orderByDesc('articles.id')
             ->paginate(Marena::COUNT_ADMIN_ITEMS);
-        return view('admin.article.index', compact('articles'));
+        return view('admin.article.index')->with('articles', $articles);
     }
 
     public function show(Article $article): RedirectResponse
@@ -63,8 +63,8 @@ class ArticleController extends Controller
         $data['genre_id'] = null;
 
         DB::beginTransaction();
-            $article = Article::query()->firstOrCreate($data);
-            Rating::query()->firstOrCreate([
+            $article = Article::query()->create($data);
+            Rating::query()->create([
                 'article_id' => $article->id,
                 'rating' => 0,
                 'count_assessments' => 0
@@ -72,7 +72,7 @@ class ArticleController extends Controller
         DB::commit();
         $article->genres()->attach($genres);
 
-        return redirect(route('admin.articles.index'));
+        return redirect()->route('admin.articles.index');
     }
 
     public function edit(Article $article): View
@@ -110,7 +110,7 @@ class ArticleController extends Controller
         $article->update($data);
         $article->genres()->sync($genres);
 
-        return redirect(route('admin.articles.index'));
+        return redirect()->route('admin.articles.index');
     }
 
     public function destroy(Article $article): RedirectResponse
@@ -119,6 +119,6 @@ class ArticleController extends Controller
 //        $article->genres()->detach();
 //        if ($article->image !== 'no_image.png') Storage::disk('images_articles')->delete($article->image);
         $article->delete();
-        return redirect(route('admin.articles.index'));
+        return redirect()->route('admin.articles.index');
     }
 }

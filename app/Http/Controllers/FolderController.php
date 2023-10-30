@@ -20,7 +20,7 @@ class FolderController extends Controller
             ->where('user_id', Auth::id())
             ->get();
 
-        return view('account.folder', compact('folder'));
+        return view('account.folder')->with('folder', $folder);
     }
 
 }

@@ -34,7 +34,7 @@ class TypeController extends Controller
     {
         $data = $request->validated();
         Type::query()->create($data);
-        return redirect(route('admin.types.index'));
+        return redirect()->route('admin.types.index');
     }
 
     public function edit(Type $type): View
@@ -46,13 +46,13 @@ class TypeController extends Controller
     {
         $data = $request->validated();
         $type->update($data);
-        return redirect(route('admin.types.index'));
+        return redirect()->route('admin.types.index');
     }
 
     public function destroy(Type $type): RedirectResponse
     {
         $type->delete();
-        return redirect(route('admin.types.index'));
+        return redirect()->route('admin.types.index');
     }
 
 }

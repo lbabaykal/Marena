@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Country;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -22,14 +23,14 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:1|max:255|unique:countries',
+            'title' => ['required', 'string', 'min:1', 'max:255', 'unique:countries,title'],
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'title.unique' => 'Такая страна уже существует'
+            'title.unique' => 'Такая страна уже существует.'
         ];
     }
 }

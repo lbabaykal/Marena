@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin\Category;
 
+use App\Http\Filters\Article\Category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,14 +24,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:1|max:255|unique:categories',
+            'title' => ['required', 'string', 'min:1', 'max:255', Rule::unique('categories')->ignore($this->category)],
         ];
     }
 
     public function messages()
     {
         return [
-            'title.unique' => 'Такая категория уже существует'
+            'title.unique' => 'Такая категория уже существует.'
         ];
     }
 }

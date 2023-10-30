@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Studio;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,14 +23,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:1|max:255|unique:studios',
+            'title' => ['required', 'string', 'min:1', 'max:255', Rule::unique('studios')->ignore($this->studio)],
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'title.unique' => 'Такая студия уже существует'
+            'title.unique' => 'Такая студия уже существует.'
         ];
     }
 }

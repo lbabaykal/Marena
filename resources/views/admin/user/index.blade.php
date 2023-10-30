@@ -18,19 +18,19 @@
                 <tbody>
                     @foreach($users as $user)
                         <tr>
-                            <td class="ct">{{$user->id}}</td>
-                            <td class="fix_width">{{$user->username}}</td>
-                            <td class="fix_width">{{$user->role->title}}</td>
+                            <td class="ct">{{ $user->id }}</td>
+                            <td class="fix_width">{{ $user->username }}</td>
+                            <td class="fix_width">{{ $user->role->title }}</td>
                             <td class="ct">
                                 @can('update', $user)
-                                    <a href="{{route('admin.users.edit', $user->id)}}">
+                                    <a href="{{ route('admin.users.edit', $user->id) }}">
                                         <div class="button button_E"></div>
                                     </a>
                                 @endcan
                             </td>
                             <td class="ct">
                                 @can('delete', $user)
-                                    <form action="{{route('admin.users.destroy', $user->id)}}" method="POST">
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('Delete')
                                         <input type="submit" value="" class="button button_D">
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    {{$users->links()}}
+    {{ $users->links() }}
 
     <div class="modal_windows"></div>
 @endsection

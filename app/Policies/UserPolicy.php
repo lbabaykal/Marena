@@ -30,9 +30,13 @@ class UserPolicy
 
     public function update(User $user, User $model): Response
     {
-        return $user->role->allowUpdate === 1
-            ? Response::allow()
-            : Response::denyWithStatus(403);
+        if ($user->role->id === 1) {
+            return Response::allow();
+        } elseif ($user->role->allowUpdate === 1 && $model->role->id !== 1) {
+            return Response::allow();
+        } else {
+            return Response::denyWithStatus(403);
+        }
     }
 
     public function delete(User $user, User $model): Response

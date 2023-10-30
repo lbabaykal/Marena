@@ -7,47 +7,52 @@ use App\Http\Requests\Admin\Category\StoreRequest;
 use App\Http\Requests\Admin\Category\UpdateRequest;
 use App\Marena;
 use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(): View
     {
-        $categories = Category::orderBY('id', 'ASC')->paginate(Marena::COUNT_ADMIN_ITEMS);
-        return view('admin.category.index', compact('categories'));
+        $categories = Category::query()
+            ->orderBy('categories.id')
+            ->paginate(Marena::COUNT_ADMIN_ITEMS);
+        return view('admin.category.index')->with('categories', $categories);
     }
 
-    public function create()
-    {
-        return view('admin.category.create');
-    }
-
-    public function store(StoreRequest $request)
-    {
-        $data = $request->validated();
-        Category::create($data);
-        return redirect(route('admin.categories.index'));
-    }
-
-    public function show(Category $category)
+    public function show(Category $category): RedirectResponse
     {
         return redirect()->route('admin.category.index');
     }
 
-    public function edit(Category $category)
+    public function create(): View
     {
-        return view('admin.category.edit', compact('category'));
+        return view('admin.category.create');
     }
 
-    public function update(UpdateRequest $request, Category $category)
+    public function store(StoreRequest $request): RedirectResponse
+    {
+        $data = $request->validated();
+        Category::query()->create($data);
+        return redirect(route('admin.categories.index'));
+    }
+
+    public function edit(Category $category): View
+    {
+        return view('admin.category.edit')->with('category', $category);
+    }
+
+    public function update(UpdateRequest $request, Category $category): RedirectResponse
     {
         $data = $request->validated();
         $category->update($data);
         return redirect(route('admin.categories.index'));
     }
 
-    public function destroy(Category $category)
+    public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
         return redirect(route('admin.categories.index'));
     }
+
 }

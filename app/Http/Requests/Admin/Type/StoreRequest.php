@@ -22,14 +22,14 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:1|max:255|unique:types',
+            'title' => ['required', 'string', 'min:1', 'max:255', 'unique:types,title'],
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'title.unique' => 'Такой тип уже существует'
+            'title.unique' => 'Такой тип уже существует.'
         ];
     }
 }

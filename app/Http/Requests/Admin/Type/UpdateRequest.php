@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Type;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
@@ -22,14 +23,14 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:1|max:255|unique:types',
+            'title' => ['required', 'string', 'min:1', 'max:255', Rule::unique('types')->ignore($this->type)],
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'title.unique' => 'Такой тип уже существует'
+            'title.unique' => 'Такой тип уже существует.'
         ];
     }
 }

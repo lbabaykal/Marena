@@ -5,6 +5,13 @@
         <div class="window_title">Редактирование роли</div>
         <div class="window_close">❌</div>
     </div>
+
+    @if(session('error'))
+        <div>
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="window_content">
         <form id="book_add" action="{{ route('admin.roles.update', $role->id) }}" method="POST">
             @csrf

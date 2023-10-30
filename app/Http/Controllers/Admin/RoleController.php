@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\Role\UpdateRequest;
 use App\Marena;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class RoleController extends Controller
 {
@@ -16,40 +18,23 @@ class RoleController extends Controller
         $this->authorizeResource(Role::class, 'role');
     }
 
-    public function index()
+    public function index(): View
     {
-        $roles = Role::paginate(Marena::COUNT_ADMIN_ITEMS);
-        return view('admin.role.index', compact('roles'));
+        $roles = Role::query()->paginate(Marena::COUNT_ADMIN_ITEMS);
+        return view('admin.role.index')->with('roles', $roles);
     }
 
-    public function create()
-    {
-        return view('admin.role.create');
-    }
-
-    public function store(StoreRequest $request)
-    {
-        $data = $request->validated();
-        $data['isAdmin'] = isset($data['isAdmin']);
-        $data['allowView'] = isset($data['allowView']);
-        $data['allowCreate'] = isset($data['allowCreate']);
-        $data['allowUpdate'] = isset($data['allowUpdate']);
-        $data['allowDelete'] = isset($data['allowDelete']);
-        Role::create($data);
-        return redirect()->route('admin.roles.index');
-    }
-
-    public function show(Role $role)
+    public function show(Role $role): RedirectResponse
     {
         return redirect()->route('admin.index');
     }
 
-    public function edit(Role $role)
+    public function create(): View
     {
-        return view('admin.role.edit', compact('role'));
+        return view('admin.role.create');
     }
 
-    public function update(UpdateRequest $request, Role $role)
+    public function store(StoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
         $data['isAdmin'] = isset($data['isAdmin']);
@@ -57,15 +42,33 @@ class RoleController extends Controller
         $data['allowCreate'] = isset($data['allowCreate']);
         $data['allowUpdate'] = isset($data['allowUpdate']);
         $data['allowDelete'] = isset($data['allowDelete']);
+
+        Role::query()->create($data);
+        return redirect()->route('admin.roles.index');
+    }
+
+    public function edit(Role $role): View
+    {
+        return view('admin.role.edit')->with('role', $role);
+    }
+
+    public function update(UpdateRequest $request, Role $role): RedirectResponse
+    {
+        $data = $request->validated();
+        $data['isAdmin'] = isset($data['isAdmin']);
+        $data['allowView'] = isset($data['allowView']);
+        $data['allowCreate'] = isset($data['allowCreate']);
+        $data['allowUpdate'] = isset($data['allowUpdate']);
+        $data['allowDelete'] = isset($data['allowDelete']);
+
         $role->update($data);
         return redirect(route('admin.roles.index'));
     }
 
-    public function destroy(Role $role)
+    public function destroy(Role $role): RedirectResponse
     {
         $role->delete();
-        //Удалить оценки, заблокировать пользователя
-        //if ($article->image !== 'no_image.png') Storage::disk('images_articles')->delete($article->image);
-        return redirect(route('admin.users.index'));
+        return redirect(route('admin.roles.index'));
     }
+
 }

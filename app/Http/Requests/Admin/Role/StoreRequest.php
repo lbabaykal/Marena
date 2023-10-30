@@ -19,12 +19,19 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:1|max:255|unique:roles',
-            'isAdmin' => 'nullable|string',
-            'allowView' => 'nullable|string',
-            'allowCreate' => 'nullable|string',
-            'allowUpdate' => 'nullable|string',
-            'allowDelete' => 'nullable|string',
+            'title' => ['required', 'string', 'min:3', 'max:255', 'unique:roles,title'],
+            'isAdmin' => ['nullable', 'string'],
+            'allowView' => ['nullable', 'string'],
+            'allowCreate' => ['nullable', 'string'],
+            'allowUpdate' => ['nullable', 'string'],
+            'allowDelete' => ['nullable', 'string'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'title.unique' => 'Такая роль уже существует.'
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Admin\Category;
 
-use App\Http\Filters\Article\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,7 +27,7 @@ class UpdateRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'title.unique' => 'Такая категория уже существует.'

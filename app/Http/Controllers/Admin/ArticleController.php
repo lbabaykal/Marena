@@ -55,9 +55,10 @@ class ArticleController extends Controller
         if (isset($data['image'])) {
             $data['image'] = $request->file('image')->store(date('Y-m'), 'images_articles');
         }
-        $data['is_show'] = isset($data['is_show']);
-        $data['is_comment'] = isset($data['is_comment']);
-        $data['is_rating'] = isset($data['is_rating']);
+
+        $data['is_show'] = $request->boolean('is_show');
+        $data['is_comment'] = $request->boolean('is_comment');
+        $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
         $genres = $data['genre_id'] ?? null;
         $data['genre_id'] = null;
@@ -100,9 +101,9 @@ class ArticleController extends Controller
             }
         }
 
-        $data['is_show'] = isset($data['is_show']);
-        $data['is_comment'] = isset($data['is_comment']);
-        $data['is_rating'] = isset($data['is_rating']);
+        $data['is_show'] = $request->boolean('is_show');
+        $data['is_comment'] = $request->boolean('is_comment');
+        $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
         $genres = $data['genre_id'] ?? null;
         $data['genre_id'] = null;

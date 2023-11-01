@@ -37,11 +37,11 @@ class RoleController extends Controller
     public function store(StoreRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['isAdmin'] = isset($data['isAdmin']);
-        $data['allowView'] = isset($data['allowView']);
-        $data['allowCreate'] = isset($data['allowCreate']);
-        $data['allowUpdate'] = isset($data['allowUpdate']);
-        $data['allowDelete'] = isset($data['allowDelete']);
+        $data['isAdmin'] = $request->boolean('isAdmin');
+        $data['allowView'] = $request->boolean('allowView');
+        $data['allowCreate'] = $request->boolean('allowCreate');
+        $data['allowUpdate'] = $request->boolean('allowUpdate');
+        $data['allowDelete'] = $request->boolean('allowDelete');
 
         Role::query()->create($data);
         return redirect()->route('admin.roles.index');
@@ -55,11 +55,11 @@ class RoleController extends Controller
     public function update(UpdateRequest $request, Role $role): RedirectResponse
     {
         $data = $request->validated();
-        $data['isAdmin'] = isset($data['isAdmin']);
-        $data['allowView'] = isset($data['allowView']);
-        $data['allowCreate'] = isset($data['allowCreate']);
-        $data['allowUpdate'] = isset($data['allowUpdate']);
-        $data['allowDelete'] = isset($data['allowDelete']);
+        $data['isAdmin'] = $request->boolean('isAdmin');
+        $data['allowView'] = $request->boolean('allowView');
+        $data['allowCreate'] = $request->boolean('allowCreate');
+        $data['allowUpdate'] = $request->boolean('allowUpdate');
+        $data['allowDelete'] = $request->boolean('allowDelete');
 
         $role->update($data);
         return redirect()->route('admin.roles.index');

@@ -43,13 +43,13 @@ class ArticlePolicy
             : Response::denyWithStatus(403);
     }
 
-    public function restore(User $user, Article $article): bool
+    public function restore(User $user, Article $article): Response
     {
-        return 0;
+        return Response::denyWithStatus(403);
     }
 
-    public function forceDelete(User $user, Article $article): bool
+    public function forceDelete(User $user, Article $article): Response
     {
-        return 0;
+        return Response::denyWithStatus(403);
     }
 }

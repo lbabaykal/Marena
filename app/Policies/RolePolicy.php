@@ -43,13 +43,13 @@ class RolePolicy
             : Response::denyWithStatus(403);
     }
 
-    public function restore(User $user, Role $role): bool
+    public function restore(User $user, Role $role): Response
     {
-        return 0;
+        return Response::denyWithStatus(403);
     }
 
-    public function forceDelete(User $user, Role $role): bool
+    public function forceDelete(User $user, Role $role): Response
     {
-        return 0;
+        return Response::denyWithStatus(403);
     }
 }

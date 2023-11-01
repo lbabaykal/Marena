@@ -46,13 +46,13 @@ class UserPolicy
             : Response::denyWithStatus(403);
     }
 
-    public function restore(User $user, User $model): bool
+    public function restore(User $user, User $model): Response
     {
-        return 0;
+        return Response::denyWithStatus(403);
     }
 
-    public function forceDelete(User $user, User $model): bool
+    public function forceDelete(User $user, User $model): Response
     {
-        return 0;
+        return Response::denyWithStatus(403);
     }
 }

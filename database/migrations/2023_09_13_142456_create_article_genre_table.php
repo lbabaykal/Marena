@@ -13,18 +13,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Article::class)->constrained();
             $table->foreignIdFor(\App\Models\Genre::class)->constrained();
-//            $table->unsignedBigInteger('article_id');
-//            $table->unsignedBigInteger('genre_id');
-//
-//            $table->index('article_id', 'article_genre_article_idx');
-//            $table->index('genre_id', 'article_genre_genre_idx');
-//
-//            $table->foreign('article_id', 'article_genre_article_fk')
-//                ->on('articles')
-//                ->references('id');
-//            $table->foreign('genre_id', 'article_genre_genre_fk')
-//                ->on('genres')
-//                ->references('id');
         });
     }
 

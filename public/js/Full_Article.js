@@ -42,7 +42,7 @@ Favorite.addEventListener("change", function() {
     let data = Favorite.options[Favorite.selectedIndex];
 
     $.ajax({
-        url: '/favorites',
+        url: '/account/favorites',
         method: 'POST',
         dataType: 'json',
         data: { folder_id: data.getAttribute("data-folder"),
@@ -77,7 +77,7 @@ function favorite_del(article_id) {
     const Favorite = document.querySelector('#folder');
 
     $.ajax({
-        url: '/favorites',
+        url: '/account/favorites',
         method: 'DELETE',
         dataType: 'json',
         data: { article_id: article_id },

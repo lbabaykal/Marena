@@ -9,6 +9,6 @@ class YearTo extends AbstractFilter
 {
     public function applyFilter(Builder $builder)
     {
-        $builder->where('year', '<=', request('year_to'));
+        $builder->whereYear('release', '<=', request('year_to'));
     }
 }

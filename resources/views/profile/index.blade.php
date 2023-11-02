@@ -1,4 +1,4 @@
-@extends('layouts.main_with_footer')
+@extends('layouts.main')
 @section('title', $title . \Illuminate\Support\Facades\Auth::user()->username)
 @section('content')
 

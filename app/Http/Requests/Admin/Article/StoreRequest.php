@@ -32,7 +32,7 @@ class StoreRequest extends FormRequest
             'country_id' => ['required', 'integer'],
             'genre_id' => ['nullable', 'array'],
             'episodes' => ['nullable', 'string', 'max:255'],
-            'year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'release' => ['required', 'date', 'after:1980-01-01|', 'before:2100-01-01'],
             'age_limit' => ['nullable', 'integer'],
             'description' => ['nullable', 'string'],
             'is_show' => ['nullable', 'string'],

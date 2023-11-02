@@ -36,22 +36,26 @@
                     <div class="info_value">{{ $article->title_eng }}</div>
                     <div class="info_key">Категория:</div>
                     <div class="info_value">
-                        <a href="{{ route('article.filter_article', ['category[]' => $article->category->id]) }}">{{ $article->category->title }}</a>
+                        <a href="{{ route('article.filter_article', ['category[]' => $article->category->id]) }}">
+                            {{ $article->category->title }}
+                        </a>
                     </div>
                     <div class="info_key">Тип:</div>
                     <div class="info_value">{{ $article->type->title }}</div>
                     <div class="info_key">Жанр:</div>
                     <div class="info_value">
                         @foreach($article->genre_id as $genre)
-                            <a href="{{ route('article.filter_article', ['genre[]' => $genre->id]) }}">{{ $genre->title }}</a>
+                            <a href="{{ route('article.filter_article', ['genre[]' => $genre->id, 'category[]' => $article->category->id]) }}">
+                                {{ $genre->title }}
+                            </a>
                         @endforeach
                     </div>
                     @isset($article->episodes)
                         <div class="info_key">Эпизоды:</div>
                         <div class="info_value">{{ $article->episodes }}</div>
                     @endisset
-                    <div class="info_key">Год:</div>
-                    <div class="info_value">{{ $article->year }}</div>
+                    <div class="info_key">Выпуск:</div>
+                    <div class="info_value">{{ \Carbon\Carbon::parse($article->release)->format('d.m.Y') }}</div>
                     <div class="info_key">Страна:</div>
                     <div class="info_value">{{ $article->country->title }}</div>
                     <div class="info_key">Студия:</div>

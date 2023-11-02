@@ -1,10 +1,10 @@
 @extends('layouts.main')
-@section('title', $title . 'Создание папки')
+@section('title', $title . 'Редактирование папки')
 @section('main')
     <main class="main">
         <section class="content_My_Profile">
             <div class="My_Profile">
-                <form action="{{ route('account.favorites.folders.update', $folder->id) }}" method="POST" >
+                <form action="{{ route('account.folders.update', $folder->id) }}" method="POST" >
                     @csrf
                     @method('PATCH')
 
@@ -18,7 +18,7 @@
 
                 <br>
 
-                <form action="{{ route('account.favorites.folders.destroy', $folder->id) }}" method="POST">
+                <form action="{{ route('account.folders.destroy', $folder->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
 

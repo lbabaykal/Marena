@@ -11,7 +11,9 @@ class FolderPolicy
 {
     public function viewAny(User $user): Response
     {
-        return Response::denyWithStatus(403);
+        return $user->id === Auth::id()
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     public function view(User $user, Folder $folder): Response
@@ -51,4 +53,5 @@ class FolderPolicy
     {
         return Response::denyWithStatus(403);
     }
+
 }

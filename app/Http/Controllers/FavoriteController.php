@@ -12,22 +12,6 @@ use Illuminate\View\View;
 
 class FavoriteController extends Controller
 {
-
-    public function index(): View
-    {
-        $folders = Folder::findUserFolders(Auth::id());
-        //Для Вывода всего и вся сразу
-        /*        $favorites = Favorites::query()
-                    ->where('user_id', Auth::id())
-                    ->get();
-
-                $folders->each(function ($folder) use ($favorites) {
-                    $folder['articles'] = collect($favorites)->where('folder_id', $folder['id'])->all();
-                });*/
-
-        return view('account.favorites')->with('folders', $folders);
-    }
-
     public function store(UpdateRequest $request): JsonResponse
     {
         if (Auth::check()) {

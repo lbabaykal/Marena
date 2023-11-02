@@ -69,6 +69,7 @@ class ArticleController extends Controller
 
         return view('layouts.filter_article')
             ->with('articles', $articles->paginate(Marena::COUNT_ARTICLES_FULL))
+//            ->with('categories', \App\Models\Category::query()->whereIn('id', [1, 2])->get())
             ->with('categories', \App\Models\Category::all())
             ->with('types', \App\Models\Type::all())
             ->with('genres', \App\Models\Genre::all())

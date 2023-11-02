@@ -67,7 +67,7 @@
 }
 
 .advance-search {
-    background: var(--white-color);
+    background: var(--white-bg);
     padding-top: 10px;
     padding-bottom: 15px;
     padding-inline: 20px;
@@ -172,7 +172,7 @@
     left: 0;
     border: 1px solid var(--gray-color);
     border-top: none;
-    background: var(--white-color);
+    background: var(--white-bg);
     color: #000;
     z-index: 9999;
     overflow: auto;
@@ -219,7 +219,7 @@
 }
 
 .toggle-wrapper .toggle-slider {
-    background-color: #ccc;
+    background-color: var(--white-bg);
     color: #000;
     position: absolute;
     border-radius: 100px;

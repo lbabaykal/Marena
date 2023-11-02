@@ -68,4 +68,10 @@ class User extends Authenticatable
         return $this->hasMany(Folder::class);
     }
 
+    public function articles()
+    {
+        return $this->hasManyThrough(Article::class, Favorites::class, 'user_id', 'id', 'id', 'article_id')
+            ->where('user_id', Auth::id());
+    }
+
 }

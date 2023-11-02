@@ -27,6 +27,15 @@ use Illuminate\Support\Facades\Route;
 //========AUTH========
 require __DIR__.'/auth.php';
 
+Route::pattern('folder', '\d+');
+Route::pattern('article', '\d+');
+Route::pattern('category', '\d+');
+Route::pattern('country', '\d+');
+Route::pattern('genre', '\d+');
+Route::pattern('studio', '\d+');
+Route::pattern('type', '\d+');
+Route::pattern('user', '\d+');
+Route::pattern('role', '\d+');
 //==============================================================================================
 Route::prefix('account')
     ->name('account.')
@@ -35,36 +44,34 @@ Route::prefix('account')
         //========ACCOUNT========
         Route::get('/', [AccountController::class, 'index'])->name('index');
 
+        //========ACCOUNT_FOLDERS========
+        Route::resource('folders', FolderController::class);
+
+        //========ACCOUNT_FAVORITES========
         Route::prefix('favorites')
             ->name('favorites.')
             ->group(function () {
-                //========ACCOUNT_FAVORITES========
-                Route::pattern('folder', '[0-9]+');
-                Route::get('/', [FavoriteController::class, 'index'])->name('index');
-
-                Route::prefix('folders')
-                    ->name('folders.')
-                    ->group(function () {
-                        //========ACCOUNT_FAVORITES_FOLDERS========
-                        Route::get('/{folder}', [FolderController::class, 'show'])->name('show');
-                });
+                Route::post('/', [FavoriteController::class, 'store']);
+                Route::delete('/', [FavoriteController::class, 'destroy']);
             }
         );
     }
 );
 //ДОБАВЬ МИДЛВАРЕ ДЛЯ ПРОВЕРКИ РАЗРЕШЕНИЯ ДЛЯ ПРОСМОТРА ПУБЛИЧНОЙ ПАПКИ ДРУГОГО ЧЕЛОВЕКА
 
+
+
 //========MAIN_PAGE========
 Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
 //========FULL_ARTICLE========
 Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])
     ->name('article.show');
+//========FULL_ARTICLE_RATING_AND_FAVORITE========
 Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
-Route::post('/favorites', [\App\Http\Controllers\FavoriteController::class, 'store']);
-Route::delete('/favorites', [\App\Http\Controllers\FavoriteController::class, 'destroy']);
 //========FILTER_ARTICLE========
 Route::get('/filter_article', [\App\Http\Controllers\ArticleController::class, 'filter_article'])
     ->name('article.filter_article');
+
 //========COMMENTS========
 Route::pattern('comment', '[0-9]+');
 Route::namespace('App\Http\Controllers\Comments')
@@ -85,14 +92,6 @@ Route::namespace('App\Http\Controllers\Admin')
     ->group(function () {
         //========ADMIN_PANEL========
         Route::get('/', 'IndexController')->name('index');
-        Route::pattern('article', '\d+');
-        Route::pattern('category', '\d+');
-        Route::pattern('country', '\d+');
-        Route::pattern('genre', '\d+');
-        Route::pattern('studio', '\d+');
-        Route::pattern('type', '\d+');
-        Route::pattern('user', '\d+');
-        Route::pattern('role', '\d+');
         Route::resources([
             'articles' => ArticleController::class,
             'categories' => CategoryController::class,

@@ -4,7 +4,7 @@
     <main class="main">
         <section class="content_My_Profile">
             <div class="My_Profile">
-                <form action="{{ route('account.favorites.folders.store') }}" method="POST">
+                <form action="{{ route('account.folders.store') }}" method="POST">
                     @csrf
                     <label for="title">Название</label> @error('title') {{ $message }} @enderror
                     <input id="title" name="title" type="text" value="{{ old('title') }}" />

@@ -51,8 +51,8 @@
                 <input id="episodes" type="text" name="episodes" value="{{ old('episodes') }}" placeholder="?/?"/>
             </label>
 
-            <label for="year">Год: @error('year') {{ $message }} @enderror
-                <input id="year" type="number" name="year" value="{{ old('year') }}"/>
+            <label for="release">Год: @error('release') {{ $message }} @enderror
+                <input id="release" type="date" name="release" value="{{ old('release') }}"/>
             </label>
 
             <label>Страна: @error('country_id') {{ $message }} @enderror

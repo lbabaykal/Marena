@@ -22,7 +22,7 @@
                     <img src="{{ asset('images_icon/profile.png') }}" alt="">
                     <span>Мой Аккаунт</span>
                 </a>
-                <a class="profile-menu-button" href="{{ route('account.favorites.index') }}">
+                <a class="profile-menu-button" href="{{ route('account.folders.index') }}">
                     <img src="{{ asset('images_icon/favorite.png') }}" alt="">
                     <span>Избранное</span>
                 </a>

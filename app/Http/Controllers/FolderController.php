@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Folder\StoreRequest;
 use App\Http\Requests\Folder\UpdateRequest;
+use App\Marena;
 use App\Models\Favorites;
 use App\Models\Folder;
 use Illuminate\Http\Request;
@@ -18,19 +19,31 @@ class FolderController extends Controller
         $this->authorizeResource(Folder::class, 'folder');
     }
 
-    public function index(): RedirectResponse
+    public function index(): View
     {
-        return redirect()->route('account.favorites.index');
+        $folders = Folder::findUserFolders(Auth::id());
+        $articles = Favorites::query()
+            ->where('user_id', Auth::id())
+            ->join('articles', 'article_id', '=', 'articles.id')
+            ->join('ratings', 'ratings.article_id', '=', 'articles.id')
+            ->join('types', 'types.id', '=', 'articles.type_id')
+            ->paginate(Marena::COUNT_ARTICLES_FOLDERS);
+
+        return view('account.folder.show')->with('folders', $folders)->with('articles', $articles);
     }
 
     public function show(Folder $folder): View
     {
-        $folder['articles'] = Favorites::query()
+        $folders = Folder::findUserFolders(Auth::id());
+        $articles = Favorites::query()
             ->where('folder_id', $folder->id)
             ->where('user_id', Auth::id())
-            ->get();
+            ->join('articles', 'article_id', '=', 'articles.id')
+            ->join('ratings', 'ratings.article_id', '=', 'articles.id')
+            ->join('types', 'types.id', '=', 'articles.type_id')
+            ->paginate(Marena::COUNT_ARTICLES_FOLDERS);
 
-        return view('account.folder.index')->with('folder', $folder);
+        return view('account.folder.show')->with('folders', $folders)->with('articles', $articles);
     }
 
     public function create(): View
@@ -48,10 +61,10 @@ class FolderController extends Controller
 
             Folder::query()->create($data);
 
-            return redirect()->route('account.favorites.index')
+            return redirect()->route('account.folders.index')
                 ->with('success', 'Папка ' . $data['title'] . ' создана.');
         } else {
-            return redirect()->route('account.favorites.index')
+            return redirect()->route('account.folders.index')
                 ->with('error', 'Максимум можно создать 10 папок.');
         }
     }
@@ -67,14 +80,14 @@ class FolderController extends Controller
         $data['isPublic'] = $request->boolean('isPublic');
 
         $folder->update($data);
-        return redirect()->route('account.favorites.index')
+        return redirect()->route('account.folders.index')
             ->with('success', 'Папка ' . $data['title'] . ' обновлена.');
     }
 
     public function destroy(Folder $folder): RedirectResponse
     {
         $folder->delete();
-        return redirect()->route('account.favorites.index')
+        return redirect()->route('account.folders.index')
             ->with('success', 'Папка ' . $folder->title . ' удалена.');
     }
 

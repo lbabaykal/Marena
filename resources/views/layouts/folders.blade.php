@@ -13,7 +13,7 @@
                             </div>
                         </a>
                         @can('create', \App\Models\Folder::class)
-                            <a href="{{ route('account.folders.create') }}">
+                            <a onclick="ShowCreateFolderWindow()">
                                 <div class="folder_add"></div>
                             </a>
                         @endcan
@@ -28,7 +28,7 @@
                                 </div>
                             </a>
                             @can('delete', $folder)
-                                <a href="{{ route('account.folders.edit', $folder->id) }}">
+                                <a onclick="ShowEditeFolderWindow({{ $folder->id }})">
                                     <div class="folder_edit"></div>
                                 </a>
                             @endcan
@@ -38,18 +38,29 @@
             </section>
 
             <section class="favorite_main">
-
-                @if(session('success'))
-                    <div>Success: {{ session('success') }}</div>
-                @endif
-
-                @if(session('error'))
-                    <div>Error: {{ session('error') }}</div>
-                @endif
-
                 @yield('folders')
             </section>
         </article>
     </main>
     {{$articles->withQueryString()->links()}}
+
+    <div class="modal_window"></div>
+
+    <script>
+        const Modal = document.querySelector('.modal_window');
+
+        function ShowCreateFolderWindow() {
+            $(".modal_window").load("{{ route('account.folders.create') }}");
+            Modal.classList.toggle("show-modal");
+        }
+
+        function ShowEditeFolderWindow(id) {
+            $(".modal_window").load("{{ route('account.folders.index') }}/" + id + "/edit");
+            Modal.classList.toggle("show-modal");
+        }
+
+        function HideModalWindow () {
+            Modal.classList.toggle("show-modal");
+        }
+    </script>
 @endsection

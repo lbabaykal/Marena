@@ -7,6 +7,7 @@ use App\Http\Requests\Folder\UpdateRequest;
 use App\Marena;
 use App\Models\Favorites;
 use App\Models\Folder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -51,7 +52,7 @@ class FolderController extends Controller
         return view('account.folder.create');
     }
 
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request): JsonResponse
     {
         $countFolders =  Folder::query()->where('user_id', Auth::id())->count();
         if ($countFolders < 10) {
@@ -61,11 +62,15 @@ class FolderController extends Controller
 
             Folder::query()->create($data);
 
-            return redirect()->route('account.folders.index')
-                ->with('success', 'Папка ' . $data['title'] . ' создана.');
+            return response()->json([
+                'status' => 'success',
+                'text' => 'Папка ' . $data['title'] . ' создана.',
+            ]);
         } else {
-            return redirect()->route('account.folders.index')
-                ->with('error', 'Максимум можно создать 10 папок.');
+            return response()->json([
+                'status' => 'warning',
+                'text' => 'Максимум можно создать 10 папок.',
+            ]);
         }
     }
 
@@ -74,14 +79,17 @@ class FolderController extends Controller
         return view('account.folder.edit')->with('folder', $folder);
     }
 
-    public function update(UpdateRequest $request, Folder $folder): RedirectResponse
+    public function update(UpdateRequest $request, Folder $folder): JsonResponse
     {
         $data = $request->validated();
         $data['isPublic'] = $request->boolean('isPublic');
 
         $folder->update($data);
-        return redirect()->route('account.folders.index')
-            ->with('success', 'Папка ' . $data['title'] . ' обновлена.');
+
+        return response()->json([
+            'status' => 'success',
+            'text' => 'Папка обновлена.',
+        ]);
     }
 
     public function destroy(Folder $folder): RedirectResponse

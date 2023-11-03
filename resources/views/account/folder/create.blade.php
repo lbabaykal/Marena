@@ -1,19 +1,78 @@
-@extends('layouts.main')
-@section('title', $title . 'Создание папки')
-@section('main')
-    <main class="main">
-        <section class="content_My_Profile">
-            <div class="My_Profile">
-                <form action="{{ route('account.folders.store') }}" method="POST">
-                    @csrf
-                    <label for="title">Название</label> @error('title') {{ $message }} @enderror
-                    <input id="title" name="title" type="text" value="{{ old('title') }}" />
+<div class="window">
+    <div class="window_container">
+        <div class="window_heading">
+            <div class="window_title">Создание папки</div>
+            <div onclick="HideModalWindow()" class="window_close">❌</div>
+        </div>
+        <div class="window_content">
 
-                    <label for="isPublic">Сделать общедоступным?</label> @error('isPublic') {{ $message }} @enderror
-                    <input id="isPublic" name="isPublic" type="checkbox" @checked(old('isPublic')) />
-                    <button type="submit">Создать</button>
-                </form>
-            </div>
-        </section>
-    </main>
-@endsection
+            <form id="create_folder">
+                <div class="label_input">
+                    <div class="label">Название</div>
+                    <div class="input"><input name="title" type="text" placeholder="Название..."/></div>
+                </div>
+                <div class="label_input">
+                    <div class="label">
+                        Публичная?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label class="toggle-wrapper">
+                            <input type="checkbox" name="isPublic" />
+                            <div class="toggle-slider">
+                                <div class="toggle-knob"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="buttons">
+            <button type="button" onclick="createFolder()" class="button_save">Создать</button>
+            <button type="button" onclick="HideModalWindow()" class="button_close">Отмена</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    function createFolder() {
+        let Form = new FormData(document.getElementById('create_folder'));
+
+        $.ajax({
+            url: '{{ route('account.folders.store') }}',
+            method: 'POST',
+            dataType: 'json',
+            data: Form,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success (data) {
+                new Notify ({
+                    status: data.status,
+                    title: 'Избранное',
+                    text: data.text,
+                    effect: 'fade',
+                    speed: 300,
+                    customClass: '',
+                    customIcon: '',
+                    showIcon: true,
+                    showCloseButton: true,
+                    autoclose: true,
+                    autotimeout: 2500,
+                    gap: 15,
+                    distance: 15,
+                    type: 2,
+                    position: 'right bottom',
+                    customWrapper: '',
+                })
+                HideModalWindow();
+                setTimeout(() => {
+                    location.reload();
+                }, 2500);
+            }
+        });
+    }
+</script>

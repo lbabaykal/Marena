@@ -73,9 +73,6 @@
                     customWrapper: '',
                 })
                 HideModalWindow();
-                setTimeout(() => {
-                    location.reload();
-                }, 2500);
             }
         });
     }

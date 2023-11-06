@@ -93,7 +93,7 @@
                     Найдено&nbsp;<span>{{ $articles->total() }}</span>
                 </div>
                 <div class="group-btn">
-                    <a href="{{ route('article.filter_article') }}">
+                    <a href="#" onClick="window.location.replace(location.pathname);">
                         <button type="button" class="btn-delete">СБРОСИТЬ</button>
                     </a>
                     <button type="submit" class="btn-search">ПОИСК</button>

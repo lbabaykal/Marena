@@ -55,7 +55,7 @@ class FolderController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $countFolders =  Folder::query()->where('user_id', Auth::id())->count();
-        if ($countFolders < 10) {
+        if ($countFolders < Marena::COUNT_FOLDERS) {
             $data = $request->validated();
             $data['isPublic'] = $request->boolean('isPublic');
             $data['user_id'] = Auth::id();
@@ -69,7 +69,7 @@ class FolderController extends Controller
         } else {
             return response()->json([
                 'status' => 'warning',
-                'text' => 'Максимум можно создать 10 папок.',
+                'text' => 'Максимум можно создать ' . Marena::COUNT_FOLDERS . ' папок.',
             ]);
         }
     }

@@ -741,7 +741,7 @@ button.profile-menu-button {
 }
 
 .favorite_nav {
-    width: 300px;
+    width: 280px;
 }
 
 .favorite_container {
@@ -761,7 +761,7 @@ button.profile-menu-button {
 }
 
 .favorite_item {
-    width: 300px;
+    width: 100%;
     height: 40px;
     display: flex;
     line-height: 40px;
@@ -807,7 +807,7 @@ button.profile-menu-button {
 }
 
 .folder_title {
-    width: 200px;
+    width: 190px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

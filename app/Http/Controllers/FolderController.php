@@ -25,7 +25,7 @@ class FolderController extends Controller
         $folders = Folder::findUserFolders(Auth::id());
         $articles = Favorites::query()
             ->where('user_id', Auth::id())
-            ->join('articles', 'article_id', '=', 'articles.id')
+            ->join('articles', 'favorites.article_id', '=', 'articles.id')
             ->join('ratings', 'ratings.article_id', '=', 'articles.id')
             ->join('types', 'types.id', '=', 'articles.type_id')
             ->paginate(Marena::COUNT_ARTICLES_FOLDERS);
@@ -39,7 +39,7 @@ class FolderController extends Controller
         $articles = Favorites::query()
             ->where('folder_id', $folder->id)
             ->where('user_id', Auth::id())
-            ->join('articles', 'article_id', '=', 'articles.id')
+            ->join('articles', 'favorites.article_id', '=', 'articles.id')
             ->join('ratings', 'ratings.article_id', '=', 'articles.id')
             ->join('types', 'types.id', '=', 'articles.type_id')
             ->paginate(Marena::COUNT_ARTICLES_FOLDERS);

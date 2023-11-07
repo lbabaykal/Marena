@@ -5,7 +5,7 @@
         <section class="content_article">
             <div class="article_full">
                 <div class="article_image">
-                    <img src="{{ asset('images_articles/' . $article->image) }}" alt="">
+                    <img src="{{ $article->image ? asset('articles/' . $article->image) : asset('storage/no_image.png') }}" alt="">
                     <div class="my_list_cont">
                         <select class="my_list @if($favorite->isNotEmpty()) favourite_active @endif" id="folder">
                             @if($favorite->isEmpty())

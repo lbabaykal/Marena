@@ -1,7 +1,7 @@
 <div class="article_short">
-    <a href="{{ route('article.show', $article->id) }}">
+    <a href="{{ route('article.show', $article->article_id) }}">
         <div class="article">
-            <div class="article_image" style="background-image: url('{{ asset('images_articles/' . $article->image) }}')"></div>
+            <div class="article_image" style="background-image: url('{{ $article->image ? asset('articles/' . $article->image) : asset('storage/no_image.png') }}')"></div>
             <div class="article_count_series">
                 @isset($article->episodes) EPS: {{ $article->episodes }} @endisset
             </div>

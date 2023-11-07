@@ -663,9 +663,6 @@ button.profile-menu-button {
     right: -4px;
     top: 10px;
     background-color: var(--violet-color);
-    z-index: 2;
-    font-weight: 600;
-    border-radius: 0 var(--border-radius);
 }
 
 .article_rating {
@@ -673,14 +670,11 @@ button.profile-menu-button {
     left: -4px;
     top: 10px;
     background-color: var(--scarlet-color);
-    z-index: 2;
-    font-weight: 600;
-    border-radius: var(--border-radius) 0;
 }
 
 .article_count_series {
     position: absolute;
-    z-index: 2;
+
     bottom: 5px;
     left: 5px;
     background-color: rgba(0, 0, 0, 0.8);
@@ -730,6 +724,7 @@ button.profile-menu-button {
     color: #ffffff;
     text-align: center;
     padding-inline: 5px;
+    z-index: 2;
 }
 
 /*--------------FOLDERS---------------*/
@@ -737,7 +732,6 @@ button.profile-menu-button {
     display: flex;
     width: 100%;
     user-select: none;
-    font-size: 18px;
 }
 
 .favorite_nav {

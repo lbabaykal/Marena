@@ -56,7 +56,7 @@ return [
             'throw' => false,
         ],
 
-        'images_articles' => [
+        'articles' => [
             'driver' => 'local',
             'root' => storage_path('app/images/articles'),
             'url' => env('APP_URL').'/images/articles',
@@ -64,10 +64,10 @@ return [
             'throw' => false,
         ],
 
-        'images_articles_medium' => [
+        'articles_preview' => [
             'driver' => 'local',
-            'root' => storage_path('app/images/articles_medium'),
-            'url' => env('APP_URL').'/images/articles_medium',
+            'root' => storage_path('app/images/articles_preview'),
+            'url' => env('APP_URL').'/images/articles_preview',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -95,8 +95,8 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('images_articles') => storage_path('app/images/articles'),
-        public_path('images_articles_medium') => storage_path('app/images/articles_medium'),
+        public_path('articles') => storage_path('app/images/articles'),
+        public_path('articles_preview') => storage_path('app/images/articles_preview'),
         public_path('avatars') => storage_path('app/images/avatars'),
     ],
 

@@ -1,4 +1,4 @@
-@extends('layouts.main_with_footer')
+@extends('layouts.main')
 @section('title', $title)
 @section('main')
     <main class="main">
@@ -24,4 +24,7 @@
             </div>
         </section>
     </main>
+
+    @include('layouts.footer')
+
 @endsection

@@ -61,7 +61,7 @@ class ArticleController extends Controller
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
         $genres = $data['genre_id'] ?? null;
-        $data['genre_id'] = null;
+        unset($data['genre_id']);
 
         DB::beginTransaction();
             $article = Article::query()->create($data);
@@ -103,7 +103,7 @@ class ArticleController extends Controller
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
         $genres = $data['genre_id'] ?? null;
-        $data['genre_id'] = null;
+        unset($data['genre_id']);
 
         $article->update($data);
         $article->genres()->sync($genres);

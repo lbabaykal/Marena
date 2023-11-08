@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Rating;
-use App\Models\RatingAssessment;
 use Illuminate\Console\Command;
 
 class RatingUpdate extends Command
@@ -14,19 +13,21 @@ class RatingUpdate extends Command
 
     public function handle()
     {
-        $ratingArticle = Rating::all();
-        $ids = $ratingArticle->pluck('article_id');
-        foreach ($ids as $id) {
-            $articleRating = Rating::where('article_id', $id);
-            $countRatingAssessment = RatingAssessment::where('article_id', $id)->count();
-            $avgRatingAssessment = RatingAssessment::where('article_id', $id)->avg('assessment');
 
-            $articleRating->update([
-                'rating' => round($avgRatingAssessment, 1),
-                'count_assessments' => $countRatingAssessment
-            ]);
+//        Rating::query()->chunk(100, function ($ratings) {
+//            foreach ($ratings as $rating) {
+//                $rating->rating = round($rating->rating_assessments()->avg('assessment'), 1);
+//                $rating->count_assessments = $rating->rating_assessments_count;
+//                $rating->save();
+//            }
+//        });
+
+        foreach (Rating::cursor() as $rating) {
+            $rating->rating = round($rating->rating_assessments()->avg('assessment'), 1);
+            $rating->count_assessments = $rating->rating_assessments_count;
+            $rating->save();
         }
-        echo memory_get_usage() / 1014 / 1024;
-        return 0;
+
+        echo 'Рейтинг обновлён - ' . memory_get_usage() / 1014 / 1024 . ' mb';
     }
 }

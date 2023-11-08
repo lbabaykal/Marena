@@ -3,7 +3,7 @@
         <ul>
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
-                <a class="pagination-previous-none" href="javascript:void(0);"><li>Previous</li></a>
+                <a class="pagination-previous-none" href="javascript:void(0);"><li>Сюда</li></a>
             @else
                 <a class="pagination-previous" href="{{ $paginator->previousPageUrl() }}"><li>Сюда</li></a>
             @endif
@@ -31,7 +31,7 @@
             @if ($paginator->hasMorePages())
                 <a class="pagination-next" href="{{ $paginator->nextPageUrl() }}"><li>Туда</li></a>
             @else
-                <a class="pagination-next-none" href="javascript:void(0);"><li>Previous</li></a>
+                <a class="pagination-next-none" href="javascript:void(0);"><li>Туда</li></a>
             @endif
         </ul>
     </div>

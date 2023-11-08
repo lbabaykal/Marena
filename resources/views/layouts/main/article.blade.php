@@ -71,7 +71,7 @@
 
             @if($article->is_comment == 1)
                 <div class="comments_cont">
-                    <div class="comments_title">КОММЕНТАРИИ:</div>
+                    <div class="comments_title">КОММЕНТАРИЕВ ({{ $article->comments_count }}):</div>
                     @include('layouts.comment')
                 </div>
                 @include('layouts.add_comment')

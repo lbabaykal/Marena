@@ -56,6 +56,7 @@ class ArticleController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store(date('Y-m'), 'articles');
         }
+
         $data['is_show'] = $request->boolean('is_show');
         $data['is_comment'] = $request->boolean('is_comment');
         $data['is_rating'] = $request->boolean('is_rating');
@@ -63,14 +64,19 @@ class ArticleController extends Controller
         $genres = $data['genre_id'] ?? null;
         unset($data['genre_id']);
 
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
             $article = Article::query()->create($data);
             Rating::query()->create([
                 'article_id' => $article->id,
                 'rating' => 0,
                 'count_assessments' => 0
             ]);
-        DB::commit();
+            DB::commit();
+        }
+        catch (\Exception $exception) {
+            DB::rollBack();
+        }
         $article->genres()->attach($genres);
 
         return redirect()->route('admin.articles.index');

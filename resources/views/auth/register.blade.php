@@ -4,7 +4,7 @@
     <title>@yield('title', $title . ' Регистрация')</title>
     <meta charset="UTF-8">
     <meta name="description" content="{DESCRIPTION}" />
-    <link rel="icon" type="image/png" sizes="256x256" href="{{ asset('images_icon/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="256x256" href="{{ asset('public/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 </head>
 <body>
@@ -13,9 +13,7 @@
             <div class="image" style="background-image: url('{{ asset('images_icon/community.png') }}');"></div>
         </div>
         <div class="authorization_left">
-            <a href="/">
-                <img src="{{ asset('images_icon/cancel.png') }}" class="window_close" alt="Закрыть">
-            </a>
+            <a href="/" class="window_close"></a>
             <div class="authorization_container">
                 <span>Регистрация</span>
                 <form action="{{ route('register') }}" method="POST" autocomplete="off">

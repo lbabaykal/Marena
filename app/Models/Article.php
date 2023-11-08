@@ -12,6 +12,7 @@ class Article extends Model
     protected $table = 'articles';
     protected $guarded = false;
     protected $with = ['rating', 'type'];
+    protected $withCount = ['comments'];
 
     public function author() {
         return $this->belongsTo(User::class, 'author_id');
@@ -37,24 +38,24 @@ class Article extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function rating()
-    {
-        return $this->hasOne(Rating::class);
-    }
-
     public function genres()
     {
         return $this->belongsToMany(Genre::class);
     }
 
-    public function comments()
+    public function rating()
     {
-        return $this->morphMany(Comments::class, 'commentable');
+        return $this->hasOne(Rating::class);
     }
 
     public function rating_assessments()
     {
         return $this->belongsToMany(User::class, 'rating_assessments', 'article_id', 'user_id');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comments::class, 'commentable');
     }
 
 }

@@ -12,9 +12,14 @@ class Rating extends Model
     protected $table = 'ratings';
     protected $guarded = false;
     public $timestamps = false;
+    protected $withCount = ['rating_assessments'];
 
     public function article()
     {
         return $this->belongsTo(Article::class);
+    }
+
+    public function rating_assessments() {
+        return $this->hasMany(RatingAssessment::class, 'article_id', 'article_id');
     }
 }

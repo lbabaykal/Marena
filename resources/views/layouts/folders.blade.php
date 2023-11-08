@@ -24,7 +24,7 @@
                             <a href="{{ route('account.folders.show', $folder->id) }}" class="folder_button @if(request()->is('account/folders/' . $folder->id)) folder_button_active @endif">
                                 <div class="folder_img"></div>
                                 <div class="folder_title">
-                                    {{ $folder->title }} - {{ \App\Models\Favorites::query()->where('folder_id', $folder->id)->where('user_id', \Illuminate\Support\Facades\Auth::id())->count() }}
+                                    {{ $folder->title }} - {{ $folder->articles_count }}
                                 </div>
                             </a>
                             @can('delete', $folder)

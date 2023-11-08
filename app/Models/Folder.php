@@ -12,10 +12,14 @@ class Folder extends Model
     protected $table = 'folders';
     protected $guarded = false;
     public $timestamps = false;
+    protected $withCount = ['articles'];
 
-    public static function findUserFolders(int $id)
+    public static function findUserFolders(int $id): \Illuminate\Database\Eloquent\Collection|array
     {
-        return Folder::where('user_id', $id)->orWhere('user_id', 0)->get();
+        return Folder::query()
+            ->where('user_id', $id)
+            ->orWhere('user_id', 0)
+            ->get();
     }
 
     public function articles()

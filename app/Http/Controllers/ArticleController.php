@@ -29,27 +29,24 @@ class ArticleController extends Controller
 
         $article->genre_id = $article->genres;
         $article->user_assessment = RatingAssessment::query()
-            ->where('user_id', Auth::id())
+            ->where('user_id', auth()->id())
             ->where('article_id', $article->id)
             ->value('assessment');
 
-        $articleComments = $article->comments;
-
         $favorite = Favorites::query()
             ->where('article_id', $article->id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', auth()->id())
             ->get();
 
         $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
 
         return view('layouts.main.article')
             ->with('article', $article)
-            ->with('articleComments', $articleComments)
             ->with('folders', $folders)
             ->with('favorite', $favorite);
     }
 
-    public function filter_article(): View
+    public function filterArticle(): View
     {
         $articles = app()->make(Pipeline::class)
             ->send(Article::query()

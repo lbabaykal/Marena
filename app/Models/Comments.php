@@ -11,6 +11,7 @@ class Comments extends Model
     protected $table = 'comments';
     protected $guarded = false;
     public $timestamps = false;
+    protected $with = ['user'];
 
     public function user()
     {
@@ -21,6 +22,5 @@ class Comments extends Model
     {
         return $this->morphTo('commentable');
     }
-
 
 }

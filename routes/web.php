@@ -69,7 +69,7 @@ Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::clas
 //========FULL_ARTICLE_RATING_AND_FAVORITE========
 Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
 //========FILTER_ARTICLE========
-Route::get('/filter_article', [\App\Http\Controllers\ArticleController::class, 'filter_article'])
+Route::get('/filter_article', [\App\Http\Controllers\ArticleController::class, 'filterArticle'])
     ->name('article.filter_article');
 
 //========COMMENTS========

@@ -6,9 +6,9 @@ namespace App\Providers;
 use App\Models\Article;
 use App\Models\Role;
 use App\Models\User;
-use App\Policies\ArticlePolicy;
-use App\Policies\RolePolicy;
-use App\Policies\UserPolicy;
+use App\Policies\Admin\ArticlePolicy;
+use App\Policies\Admin\RolePolicy;
+use App\Policies\Admin\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

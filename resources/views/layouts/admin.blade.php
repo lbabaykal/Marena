@@ -27,16 +27,6 @@
         </div>
         <div class="list_name">Настройки скриптов</div>
         <div class="list">
-            @can('viewAny', \App\Models\User::class)
-            <a href="{{ route('admin.users.index') }}" class="@if(request()->routeIs('admin.users.*')) list_item_active @endif">
-                <div class="list_item">Пользователи</div>
-            </a>
-            @endcan
-            @can('viewAny', \App\Models\Role::class)
-                <a href="{{ route('admin.roles.index') }}" class="@if(request()->routeIs('admin.roles.*')) list_item_active @endif">
-                    <div class="list_item">Роли пользователей</div>
-                </a>
-            @endcan
             @can('viewAny', \App\Models\Article::class)
                 <a href="{{ route('admin.articles.index') }}" class="@if(request()->routeIs('admin.articles.*')) list_item_active @endif">
                     <div class="list_item">Статьи</div>
@@ -66,8 +56,16 @@
         </div>
         <div class="list_name">Пользователи</div>
         <div class="list">
-            <a href="/Admin_Panel/Users"><div class="list_item">Список пользователей</div></a>
-            <a href="/"><div class="list_item">Группы пользователей</div></a>
+            @can('viewAny', \App\Models\User::class)
+                <a href="{{ route('admin.users.index') }}" class="@if(request()->routeIs('admin.users.*')) list_item_active @endif">
+                    <div class="list_item">Пользователи</div>
+                </a>
+            @endcan
+            @can('viewAny', \App\Models\Role::class)
+                <a href="{{ route('admin.roles.index') }}" class="@if(request()->routeIs('admin.roles.*')) list_item_active @endif">
+                    <div class="list_item">Роли пользователей</div>
+                </a>
+            @endcan
         </div>
         <div class="list_name">Другие разделы</div>
         <div class="list">

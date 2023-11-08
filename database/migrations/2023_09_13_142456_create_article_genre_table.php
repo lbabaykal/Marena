@@ -11,8 +11,14 @@ return new class extends Migration
     {
         Schema::create('article_genre', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Article::class)->constrained();
-            $table->foreignIdFor(\App\Models\Genre::class)->constrained();
+            $table->foreignIdFor(\App\Models\Article::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Genre::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
     }
 

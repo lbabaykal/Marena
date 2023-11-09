@@ -9,6 +9,7 @@ use App\Http\Filters\Article\Title;
 use App\Http\Filters\Article\Type;
 use App\Http\Filters\Article\YearFrom;
 use App\Http\Filters\Article\YearTo;
+use App\Http\Resources\ArticleResource;
 use App\Marena;
 use App\Models\Article;
 use App\Models\Favorites;
@@ -21,11 +22,9 @@ use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
-    public function show(Article $article)
+    public function show(Article $article): View
     {
-        if ($article->is_show === 0) {
-            return redirect()->route('main.show');
-        }
+        $this->authorize('view', $article);
 
         $article->genre_id = $article->genres;
         $article->user_assessment = RatingAssessment::query()
@@ -72,4 +71,17 @@ class ArticleController extends Controller
             ->with('genres', \App\Models\Genre::all())
             ->with('countries', \App\Models\Country::all());
     }
+
+    public function articleResource(Article $article) {
+        return new ArticleResource($article);
+    }
+
+    public function articlesResource(Request $request) {
+
+        $articles = Article::query()
+            ->paginate($request['per_page'], ['*'], 'page', $request['page']);
+
+        return ArticleResource::collection($articles);
+    }
+
 }

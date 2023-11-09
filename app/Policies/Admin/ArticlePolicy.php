@@ -15,9 +15,9 @@ class ArticlePolicy
             : Response::denyWithStatus(403);
     }
 
-    public function view(User $user, Article $article): Response
+    public function view(?User $user, Article $article): Response
     {
-        return $user->role->allowView === 1
+        return $article->is_show === 1 || (isset($user) && $user->role->isAdmin === 1)
             ? Response::allow()
             : Response::denyWithStatus(403);
     }

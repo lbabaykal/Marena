@@ -125,8 +125,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-inline: 15px;
-    max-width: 1860px;
+    margin-inline: 20px;
 }
 
 .header-logo {

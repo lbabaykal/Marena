@@ -23,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//TEST
+Route::get('/articleResource/{article}', [\App\Http\Controllers\ArticleController::class, 'articleResource']);
+Route::get('/articlesResource', [\App\Http\Controllers\ArticleController::class, 'articlesResource']);
 
 //========AUTH========
 require __DIR__.'/auth.php';
@@ -57,20 +60,18 @@ Route::prefix('account')
         );
     }
 );
-//ДОБАВЬ МИДЛВАРЕ ДЛЯ ПРОВЕРКИ РАЗРЕШЕНИЯ ДЛЯ ПРОСМОТРА ПУБЛИЧНОЙ ПАПКИ ДРУГОГО ЧЕЛОВЕКА
-
-
 
 //========MAIN_PAGE========
 Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
 //========FULL_ARTICLE========
 Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])
     ->name('article.show');
-//========FULL_ARTICLE_RATING_AND_FAVORITE========
-Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
-//========FILTER_ARTICLE========
+
 Route::get('/filter_article', [\App\Http\Controllers\ArticleController::class, 'filterArticle'])
     ->name('article.filter_article');
+//========FULL_ARTICLE_RATING========
+Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
+
 
 //========COMMENTS========
 Route::pattern('comment', '[0-9]+');
@@ -90,7 +91,6 @@ Route::namespace('App\Http\Controllers\Admin')
     ->name('admin.')
     ->middleware(['auth', 'isAdmin'])
     ->group(function () {
-        //========ADMIN_PANEL========
         Route::get('/', 'IndexController')->name('index');
         Route::resources([
             'articles' => ArticleController::class,

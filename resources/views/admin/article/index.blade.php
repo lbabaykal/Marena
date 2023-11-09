@@ -26,7 +26,7 @@
                             <td class="ct">{{ $article->id }}</td>
                             <td class="fix_width"><a href="{{ route('article.show', $article->id) }}" target="_blank">{{ $article->title_rus }}</a></td>
                             <td class="fix_width">{{ $article->category->title }}</td>
-                            <td>{{ $article->year }}</td>
+                            <td>{{ $article->release }}</td>
                             <td>{{ $article->type->title }}</td>
                             <td class="ct">
                                 @can('update', $article)

@@ -22,8 +22,7 @@
         "phpunit/phpunit": "^10.1",
         "spatie/laravel-ignition": "^2.0",
         "laravel-lang/common": "^v4.0.0",
-        "barryvdh/laravel-debugbar": "v3.9.2",
-        "barryvdh/laravel-ide-helper": "^v2.13.0"
+        "barryvdh/laravel-debugbar": "v3.9.2"
     },
     "autoload": {
         "psr-4": {

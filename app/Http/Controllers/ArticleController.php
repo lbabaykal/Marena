@@ -57,7 +57,7 @@ class ArticleController extends Controller
                 YearFrom::class,
                 YearTo::class,
             ])
-            ->thenReturn()->dd();
+            ->thenReturn();
 
         return view('layouts.filter_article')
             ->with('articles', $articles->paginate(Marena::COUNT_ARTICLES_FULL))

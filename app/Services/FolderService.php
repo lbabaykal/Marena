@@ -37,16 +37,6 @@ class FolderService
         return $folder->update($request->toArray());
     }
 
-    public function getArticlesInFolders()
-    {
-        return Favorites::query()
-            ->where('user_id', auth()->id())
-            ->join('articles', 'favorites.article_id', '=', 'articles.id')
-            ->join('ratings', 'ratings.article_id', '=', 'articles.id')
-            ->join('types', 'types.id', '=', 'articles.type_id')
-            ->paginate(Marena::COUNT_ARTICLES_FOLDERS);
-    }
-
     public function getArticlesInFolder(Folder $folder)
     {
         return Favorites::query()

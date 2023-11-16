@@ -737,10 +737,17 @@ button.profile-menu-button {
     width: 280px;
 }
 
-.favorite_container {
-    margin-top: 10px;
+.favorite_nav_container {
+    position: sticky;
+    top: 80px;
+    z-index: 100;
+}
+
+/*--------------FOLDERS_ITEM---------------*/
+.favorite_container_item {
     background-color: var(--bg-color);
-    box-shadow: 0 9px 6px -3px rgba(255, 0, 140, 0.8);
+    box-shadow: 0 9px 6px -3px var(--red-color);
+    margin-top: 10px;
 }
 
 .favorite_main {
@@ -845,7 +852,6 @@ button.profile-menu-button {
     padding-inline: 10px;
     background-color: var(--blue-color);
     color: var(--white-color);
-    z-index: 9999;
     display: block;
 }
 
@@ -860,7 +866,6 @@ button.profile-menu-button {
     padding-inline: 10px;
     background-color: var(--scarlet-color);
     color: var(--white-color);
-    z-index: 9999;
     display: block;
 }
 
@@ -895,7 +900,227 @@ button.profile-menu-button {
 .favorite_item:nth-child(5) .folder_button .folder_img  {
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='30px' viewBox='0 0 24 24' width='30px' fill='%23F53347'%3E%3Cpath d='M0 0h24v24H0V0z' fill='none'/%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z'/%3E%3C/svg%3E") no-repeat center;
 }
+/*--------------FOLDERS_FILTER---------------*/
+.favorite_filter {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    background: var(--bg-color);
+    box-shadow: 0 9px 6px -3px var(--violet-color);
+}
 
+.favorite_filter_item {
+
+}
+
+.favorite_filter_label {
+    background: var(--bg-color);
+    color: var(--white-color);
+    font-size: 18px;
+    text-align: center;
+    line-height: 34px;
+}
+
+.favorite_filter_input {
+    text-align: center;
+}
+
+
+.favorite_filter .check_select {
+    position: relative;
+    display: inline-block;
+    width: 90%;
+    text-align: left;
+}
+
+.favorite_filter .check_select-control {
+    position: relative;
+    padding: 0 !important;
+}
+
+.favorite_filter .check_select-control select:focus {
+    border-color: var(--scarlet-color);
+}
+
+.favorite_filter .check_select-control select {
+    outline: none;
+    background: #fff url("data:image/svg+xml,<svg width='16px' height='16px' viewBox='0 0 1920 1920' xmlns='http://www.w3.org/2000/svg'><path d='m.153 526.146 92.168-92.299 867.767 867.636 867.636-867.636 92.429 92.299-960.065 959.935z' fill-rule='evenodd'/></svg>") no-repeat calc(100% - 10px) center;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 32px;
+    margin: 0;
+    padding-left: 5px;
+    border: 1px solid var(--gray-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.favorite_filter .check_select-over {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.favorite_filter .check_select-popup {
+    display: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-height: 320px;
+    position: absolute;
+    bottom: 0;
+    right: -100%;
+    border: 1px solid var(--gray-color);
+    background: var(--white-bg);
+    color: #000;
+    z-index: 9999;
+    overflow: auto;
+    user-select: none;
+}
+
+.favorite_filter .check_select label {
+    position: relative;
+    display: block;
+    margin: 0;
+    cursor: pointer;
+    width: 100%;
+    line-height: 32px;
+    padding-left: 25px;
+    padding-right: 10px;
+}
+
+.favorite_filter .check_select-popup input {
+    position: absolute;
+    width: 17px;
+    top: 7px;
+    left: 0;
+}
+
+.favorite_filter .check_select-popup label:hover {
+    background: var(--green-color);
+    color: var(--black-color);
+}
+
+.favorite_filter .toggle-wrapper {
+    box-shadow: 0 0 1px 1px var(--gray-color);
+    display: block;
+    height: 16px;
+    cursor: pointer;
+    position: relative;
+    margin-inline: auto;
+}
+
+.favorite_filter .toggle-wrapper input[type="checkbox"] {
+    display: none;
+}
+
+.favorite_filter .toggle-wrapper input[type="checkbox"]:checked+.toggle-slider {
+    background-color: var(--green-color);
+}
+
+.favorite_filter .toggle-wrapper .toggle-slider {
+    background-color: var(--white-bg);
+    color: #000;
+    position: absolute;
+    border-radius: 100px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.4s ease;
+}
+
+.favorite_filter .toggle-wrapper .toggle-knob {
+    position: absolute;
+    transition: all 0.4s ease;
+}
+
+.favorite_filter .toggle-wrapper {
+    width: 48px;
+    margin-block: 8px;
+}
+
+.favorite_filter .toggle-wrapper input[type="checkbox"]:checked+.toggle-slider {
+    border-color: var(--green-color);
+}
+
+.favorite_filter .toggle-wrapper input[type="checkbox"]:checked+.toggle-slider .toggle-knob {
+    left: calc(100% - 24px);
+}
+
+.favorite_filter .toggle-wrapper input[type="checkbox"]:checked+.toggle-slider .toggle-knob:after {
+    content: 'ON';
+}
+
+.favorite_filter .toggle-wrapper .toggle-slider {
+    border-radius: 0;
+    background-color:var(--red-color);
+}
+
+.favorite_filter .toggle-wrapper .toggle-knob {
+    width: 24px;
+    height: 16px;
+    border-radius: 0;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+}
+
+.favorite_filter .toggle-wrapper .toggle-knob:after {
+    content: 'OFF';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 70%;
+    transition: all 0.4s ease;
+}
+
+/*--------------FOLDERS_FILTER_BUTTON---------------*/
+.favorite_filter .group-btn {
+    margin-inline: auto;
+    margin-block: 10px;
+}
+
+.favorite_filter .group-btn button {
+    min-width: 100px;
+    line-height: 30px;
+    padding-inline: 10px;
+    margin-inline: 10px;
+    background: transparent;
+    color: var(--white-color);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .4s ease;
+}
+
+.favorite_filter .btn-search {
+    box-shadow: 0 0 2px 2px var(--scarlet-color);
+}
+
+.favorite_filter .btn-search:hover,
+.favorite_filter .btn-search:focus {
+    background: var(--scarlet-color);
+    box-shadow: 0 0 2px 2px var(--scarlet-color);
+    color: var(--white-color);
+}
+
+.favorite_filter .btn-delete {
+    box-shadow: 0 0 2px 2px var(--orange-color);
+}
+
+.favorite_filter .btn-delete:hover,
+.favorite_filter .btn-delete:focus {
+    background: var(--orange-color);
+    box-shadow: 0 0 2px 2px var(--orange-color);
+    color: var(--white-color);
+}
 /*--------------FOLDERS_WINDOW---------------*/
 .modal_window {
     position: fixed;

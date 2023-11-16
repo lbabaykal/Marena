@@ -46,7 +46,6 @@ Route::prefix('account')
     ->group(function () {
         //========ACCOUNT========
         Route::get('/', [AccountController::class, 'index'])->name('index');
-        Route::get('/folders/kek', [FolderController::class, 'kek'])->name('kek');
 
         //========ACCOUNT_FOLDERS========
         Route::resource('folders', FolderController::class);

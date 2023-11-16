@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Filters\Folder\Title;
+use App\Http\Filters\Folder\Category;
+use App\Http\Filters\Folder\Genre;
+use App\Http\Filters\Folder\Type;
 use App\Http\Requests\Folder\StoreRequest;
 use App\Http\Requests\Folder\UpdateRequest;
 use App\Marena;
@@ -23,12 +25,27 @@ class FolderController extends Controller
 
     public function index(FolderService $folderService): View
     {
-        $folders = $folderService->getUserFolders();
-        $articles = $folderService->getArticlesInFolders();
+        $articles = app()->make(Pipeline::class)
+            ->send(Favorites::query()
+                ->where('is_show', 1)
+                ->where('user_id', auth()->id())
+                ->join('articles', 'favorites.article_id', '=', 'articles.id')
+                ->join('ratings', 'ratings.article_id', '=', 'articles.id')
+                ->join('types', 'types.id', '=', 'articles.type_id')
+            )
+            ->through([
+                Category::class,
+                Genre::class,
+                Type::class,
+            ])
+            ->thenReturn();
 
         return view('account.folder.show')
-            ->with('folders', $folders)
-            ->with('articles', $articles);
+            ->with('categories', \App\Models\Category::all())
+            ->with('types', \App\Models\Type::all())
+            ->with('genres', \App\Models\Genre::all())
+            ->with('folders', $folderService->getUserFolders())
+            ->with('articles', $articles->paginate(Marena::COUNT_ARTICLES_FOLDERS));
     }
 
     public function show(Folder $folder, FolderService $folderService): View
@@ -76,24 +93,6 @@ class FolderController extends Controller
         return redirect()->route('account.folders.index');
     }
 
-    public function kek()
-    {
-        $articles = app()->make(Pipeline::class)
-            ->send(Favorites::query()
-                ->where('is_show', 1)
-                ->where('user_id', auth()->id())
-                ->join('articles', 'favorites.article_id', '=', 'articles.id')
-                ->join('ratings', 'ratings.article_id', '=', 'articles.id')
-                ->join('types', 'types.id', '=', 'articles.type_id')
-            )
-            ->through([
-                Title::class,
-            ])
-            ->thenReturn();
-
-        dd($articles->dd());
-//        dd($articles->get()->toArray());
-    }
 }
 
 

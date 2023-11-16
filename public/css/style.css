@@ -1121,6 +1121,7 @@ button.profile-menu-button {
     box-shadow: 0 0 2px 2px var(--orange-color);
     color: var(--white-color);
 }
+
 /*--------------FOLDERS_WINDOW---------------*/
 .modal_window {
     position: fixed;

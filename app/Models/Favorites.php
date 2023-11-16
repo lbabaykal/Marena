@@ -12,4 +12,8 @@ class Favorites extends Model
     protected $guarded = false;
     public $timestamps = false;
 
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'article_genre', 'article_genre.article_id', 'article_genre.genre_id', 'favorites.article_id');
+    }
 }

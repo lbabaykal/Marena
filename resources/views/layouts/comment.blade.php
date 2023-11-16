@@ -1,4 +1,4 @@
-@if(!$article->comments->isEmpty())
+@if($article->comments->isNotEmpty())
     @foreach($article->comments as $comment)
         <div class="comments">
             <img class="user_comment_avatar" src="{{ asset('avatars/' . $comment->user->avatar) }}" alt="">

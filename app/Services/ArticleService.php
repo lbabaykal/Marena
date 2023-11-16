@@ -4,7 +4,7 @@ namespace App\Services;
 
 class ArticleService
 {
-    public function store() {
+    public function show() {
 
     }
 

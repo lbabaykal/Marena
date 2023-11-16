@@ -9,7 +9,7 @@
                         <a href="{{ route('account.folders.index') }}" class="folder_button @if(request()->is('account/folders')) folder_button_active @endif">
                             <div class="folder_img"></div>
                             <div class="folder_title">
-                                Все - {{ \App\Models\Favorites::query()->where('user_id', \Illuminate\Support\Facades\Auth::id())->count() }}
+                                Все - {{ \App\Models\Favorites::query()->where('user_id', auth()->id())->count() }}
                             </div>
                         </a>
                         @can('create', \App\Models\Folder::class)

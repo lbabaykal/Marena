@@ -44,7 +44,7 @@
                     <div class="info_value">{{ $article->type->title }}</div>
                     <div class="info_key">Жанр:</div>
                     <div class="info_value">
-                        @foreach($article->genre_id as $genre)
+                        @foreach($article->genres as $genre)
                             <a href="{{ route('article.filter_article', ['genre[]' => $genre->id, 'category[]' => $article->category->id]) }}">
                                 {{ $genre->title }}
                             </a>

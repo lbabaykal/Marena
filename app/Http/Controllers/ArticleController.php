@@ -13,20 +13,19 @@ use App\Http\Resources\ArticleResource;
 use App\Marena;
 use App\Models\Article;
 use App\Models\Favorites;
-use App\Models\Folder;
 use App\Models\RatingAssessment;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Services\FolderService;
 
 class ArticleController extends Controller
 {
-    public function show(Article $article): View
+    public function show(Article $article, FolderService $folderService): View
     {
         $this->authorize('view', $article);
 
-        $article->genre_id = $article->genres;
+        $article->comments_count = $article->comments()->count();
         $article->user_assessment = RatingAssessment::query()
             ->where('user_id', auth()->id())
             ->where('article_id', $article->id)
@@ -37,7 +36,7 @@ class ArticleController extends Controller
             ->where('user_id', auth()->id())
             ->get();
 
-        $folders = Auth::id() ? Folder::findUserFolders(Auth::id()) : Folder::findUserFolders(0);
+        $folders = $folderService->getUserFolders();
 
         return view('layouts.main.article')
             ->with('article', $article)
@@ -45,13 +44,10 @@ class ArticleController extends Controller
             ->with('favorite', $favorite);
     }
 
-    public function filterArticle(): View
+    public function filter(): View
     {
         $articles = app()->make(Pipeline::class)
-            ->send(Article::query()
-                ->where('is_show', 1)
-                ->orderByDesc('articles.id')
-            )
+            ->send(Article::query()->where('is_show', 1))
             ->through([
                 Title::class,
                 Category::class,
@@ -65,19 +61,19 @@ class ArticleController extends Controller
 
         return view('layouts.filter_article')
             ->with('articles', $articles->paginate(Marena::COUNT_ARTICLES_FULL))
-//            ->with('categories', \App\Models\Category::query()->whereIn('id', [1, 2])->get())
             ->with('categories', \App\Models\Category::all())
             ->with('types', \App\Models\Type::all())
             ->with('genres', \App\Models\Genre::all())
             ->with('countries', \App\Models\Country::all());
     }
 
-    public function articleResource(Article $article) {
+    public function articleResource(Article $article)
+    {
         return new ArticleResource($article);
     }
 
-    public function articlesResource(Request $request) {
-
+    public function articlesResource(Request $request)
+    {
         $articles = Article::query()
             ->paginate($request['per_page'], ['*'], 'page', $request['page']);
 

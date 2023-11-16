@@ -14,14 +14,6 @@ class Folder extends Model
     public $timestamps = false;
     protected $withCount = ['articles'];
 
-    public static function findUserFolders(int $id): \Illuminate\Database\Eloquent\Collection|array
-    {
-        return Folder::query()
-            ->where('user_id', $id)
-            ->orWhere('user_id', 0)
-            ->get();
-    }
-
     public function articles()
     {
         return $this->hasManyThrough(Article::class, Favorites::class, 'folder_id', 'id', 'id', 'article_id')

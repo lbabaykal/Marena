@@ -4,7 +4,7 @@
     <title>@yield('title')</title>
     <meta charset="UTF-8">
     <meta name="description" content="{DESCRIPTION}" />
-    <link rel="icon" type="image/png" sizes="256x256" href="{{ asset('public/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="256x256" href="{{ asset('favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/simple-notify.css') }}">
     <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>

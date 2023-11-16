@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\Folder\Title;
 use App\Http\Requests\Folder\StoreRequest;
 use App\Http\Requests\Folder\UpdateRequest;
 use App\Marena;
 use App\Models\Favorites;
 use App\Models\Folder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Pipeline\Pipeline;
 use Illuminate\View\View;
+use App\Services\FolderService;
 
 class FolderController extends Controller
 {
@@ -20,31 +21,24 @@ class FolderController extends Controller
         $this->authorizeResource(Folder::class, 'folder');
     }
 
-    public function index(): View
+    public function index(FolderService $folderService): View
     {
-        $folders = Folder::findUserFolders(Auth::id());
-        $articles = Favorites::query()
-            ->where('user_id', Auth::id())
-            ->join('articles', 'favorites.article_id', '=', 'articles.id')
-            ->join('ratings', 'ratings.article_id', '=', 'articles.id')
-            ->join('types', 'types.id', '=', 'articles.type_id')
-            ->paginate(Marena::COUNT_ARTICLES_FOLDERS);
+        $folders = $folderService->getUserFolders();
+        $articles = $folderService->getArticlesInFolders();
 
-        return view('account.folder.show')->with('folders', $folders)->with('articles', $articles);
+        return view('account.folder.show')
+            ->with('folders', $folders)
+            ->with('articles', $articles);
     }
 
-    public function show(Folder $folder): View
+    public function show(Folder $folder, FolderService $folderService): View
     {
-        $folders = Folder::findUserFolders(Auth::id());
-        $articles = Favorites::query()
-            ->where('folder_id', $folder->id)
-            ->where('user_id', Auth::id())
-            ->join('articles', 'favorites.article_id', '=', 'articles.id')
-            ->join('ratings', 'ratings.article_id', '=', 'articles.id')
-            ->join('types', 'types.id', '=', 'articles.type_id')
-            ->paginate(Marena::COUNT_ARTICLES_FOLDERS);
+        $folders = $folderService->getUserFolders();
+        $articles = $folderService->getArticlesInFolder($folder);
 
-        return view('account.folder.show')->with('folders', $folders)->with('articles', $articles);
+        return view('account.folder.show')
+            ->with('folders', $folders)
+            ->with('articles', $articles);
     }
 
     public function create(): View
@@ -52,26 +46,15 @@ class FolderController extends Controller
         return view('account.folder.create');
     }
 
-    public function store(StoreRequest $request): JsonResponse
+    public function store(StoreRequest $request, FolderService $folderService): RedirectResponse
     {
-        $countFolders =  Folder::query()->where('user_id', Auth::id())->count();
-        if ($countFolders < Marena::COUNT_FOLDERS) {
-            $data = $request->validated();
-            $data['isPublic'] = $request->boolean('isPublic');
-            $data['user_id'] = Auth::id();
-
-            Folder::query()->create($data);
-
-            return response()->json([
-                'status' => 'success',
-                'text' => 'Папка ' . $data['title'] . ' создана.',
-            ]);
-        } else {
-            return response()->json([
-                'status' => 'warning',
-                'text' => 'Максимум можно создать ' . Marena::COUNT_FOLDERS . ' папок.',
-            ]);
+        if ($folderService->getCountUserFolders() > Marena::COUNT_FOLDERS) {
+            return redirect()->route('account.folders.index');
         }
+
+        $folderService->createFolder($request);
+
+        return redirect()->route('account.folders.index');
     }
 
     public function edit(Folder $folder): View
@@ -79,24 +62,38 @@ class FolderController extends Controller
         return view('account.folder.edit')->with('folder', $folder);
     }
 
-    public function update(UpdateRequest $request, Folder $folder): JsonResponse
+    public function update(UpdateRequest $request, Folder $folder, FolderService $folderService): RedirectResponse
     {
-        $data = $request->validated();
-        $data['isPublic'] = $request->boolean('isPublic');
+        $folderService->updateFolder($request, $folder);
 
-        $folder->update($data);
-
-        return response()->json([
-            'status' => 'success',
-            'text' => 'Папка обновлена.',
-        ]);
+        return redirect()->route('account.folders.index');
     }
 
     public function destroy(Folder $folder): RedirectResponse
     {
         $folder->delete();
-        return redirect()->route('account.folders.index')
-            ->with('success', 'Папка ' . $folder->title . ' удалена.');
+
+        return redirect()->route('account.folders.index');
     }
 
+    public function kek()
+    {
+        $articles = app()->make(Pipeline::class)
+            ->send(Favorites::query()
+                ->where('is_show', 1)
+                ->where('user_id', auth()->id())
+                ->join('articles', 'favorites.article_id', '=', 'articles.id')
+                ->join('ratings', 'ratings.article_id', '=', 'articles.id')
+                ->join('types', 'types.id', '=', 'articles.type_id')
+            )
+            ->through([
+                Title::class,
+            ])
+            ->thenReturn();
+
+        dd($articles->dd());
+//        dd($articles->get()->toArray());
+    }
 }
+
+

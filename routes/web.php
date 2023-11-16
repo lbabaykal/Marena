@@ -46,6 +46,7 @@ Route::prefix('account')
     ->group(function () {
         //========ACCOUNT========
         Route::get('/', [AccountController::class, 'index'])->name('index');
+        Route::get('/folders/kek', [FolderController::class, 'kek'])->name('kek');
 
         //========ACCOUNT_FOLDERS========
         Route::resource('folders', FolderController::class);
@@ -67,7 +68,7 @@ Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
 Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])
     ->name('article.show');
 
-Route::get('/filter_article', [\App\Http\Controllers\ArticleController::class, 'filterArticle'])
+Route::get('/filter', [\App\Http\Controllers\ArticleController::class, 'filter'])
     ->name('article.filter_article');
 //========FULL_ARTICLE_RATING========
 Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);

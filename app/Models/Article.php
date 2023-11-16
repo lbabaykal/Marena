@@ -12,7 +12,8 @@ class Article extends Model
     protected $table = 'articles';
     protected $guarded = false;
     protected $with = ['rating', 'type'];
-    protected $withCount = ['comments'];
+
+//    protected $withCount = ['comments'];
 
     public function author() {
         return $this->belongsTo(User::class, 'author_id');

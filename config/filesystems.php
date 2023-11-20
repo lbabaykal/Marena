@@ -80,6 +80,14 @@ return [
             'throw' => false,
         ],
 
+        'teams' => [
+            'driver' => 'local',
+            'root' => storage_path('app/images/teams'),
+            'url' => env('APP_URL').'/images/teams',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*
@@ -98,6 +106,7 @@ return [
         public_path('articles') => storage_path('app/images/articles'),
         public_path('articles_preview') => storage_path('app/images/articles_preview'),
         public_path('avatars') => storage_path('app/images/avatars'),
+        public_path('teams') => storage_path('app/images/teams'),
     ],
 
 ];

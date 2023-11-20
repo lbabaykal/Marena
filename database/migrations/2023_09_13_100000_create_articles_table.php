@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('title_eng');
             $table->foreignIdFor(\App\Models\Category::class)->constrained();
             $table->foreignIdFor(\App\Models\Type::class)->constrained();
+            $table->foreignIdFor(\App\Models\AgeLimit::class)->constrained();
             $table->foreignIdFor(\App\Models\Studio::class)->constrained();
             $table->foreignIdFor(\App\Models\Country::class)->constrained();
             $table->foreignIdFor(\App\Models\Genre::class)->nullable()->constrained();
             $table->string('episodes')->nullable();
             $table->date('release');
-            $table->string('age_limit')->nullable();
             $table->text('description')->nullable();
             $table->foreignIdFor(\App\Models\User::class, 'author_id')->constrained('users');
             $table->boolean('is_show')->default(false);

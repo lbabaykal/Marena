@@ -28,44 +28,85 @@
                 </div>
 
                 <div class="article_info">
-                    <div class="info_key">Russia:</div>
-                    <div class="info_value">{{ $article->title_rus }}</div>
-                    <div class="info_key">Original:</div>
-                    <div class="info_value">{{ $article->title_orig }}</div>
-                    <div class="info_key">English:</div>
-                    <div class="info_value">{{ $article->title_eng }}</div>
-                    <div class="info_key">Категория:</div>
-                    <div class="info_value">
-                        <a href="{{ route('article.filter_article', ['category[]' => $article->category->id]) }}">
-                            {{ $article->category->title }}
-                        </a>
+                    <div class="article_info_titles">
+                        <div>{{ $article->title_rus }}</div>
+                        <div>{{ $article->title_eng }}</div>
+                        <div>{{ $article->title_orig }}</div>
                     </div>
-                    <div class="info_key">Тип:</div>
-                    <div class="info_value">{{ $article->type->title }}</div>
-                    <div class="info_key">Жанр:</div>
-                    <div class="info_value">
-                        @foreach($article->genres as $genre)
-                            <a href="{{ route('article.filter_article', ['genre[]' => $genre->id, 'category[]' => $article->category->id]) }}">
-                                {{ $genre->title }}
-                            </a>
-                        @endforeach
+                    <div class="article_info_container">
+                        <div class="article_info_block_left">
+                            <div class="article_info_line">
+                                <div class="info_key">Тип:</div>
+                                <div class="info_value">
+                                    {{ $article->type->title }} - <div class="info_value_age_limit">{{ $article->age_limit->title }}</div>
+                                </div>
+                            </div>
+                            <div class="article_info_line">
+                                @isset($article->episodes)
+                                    <div class="info_key">Эпизоды:</div>
+                                    <div class="info_value">{{ $article->episodes }}</div>
+                                @endisset
+                            </div>
+                            <div class="article_info_line">
+                                <div class="info_key">Жанр:</div>
+                                <div class="info_value">
+                                    @foreach($article->genres as $genre)
+                                        <a href="{{ route('article.filter_article', ['genre[]' => $genre->id, 'category[]' => $article->category->id]) }}">
+                                            {{ $genre->title }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="article_info_block_right">
+                            <div class="article_info_line">
+                                <div class="info_key">Выпуск:</div>
+                                <div class="info_value">{{ \Carbon\Carbon::parse($article->release)->format('d.m.Y') }}</div>
+                            </div>
+                            <div class="article_info_line">
+                                <div class="info_key">Страна:</div>
+                                <div class="info_value">{{ $article->country->title }}</div>
+                            </div>
+                            <div class="article_info_line">
+                                <div class="info_key">Студия:</div>
+                                <div class="info_value">{{ $article->studio->title }}</div>
+                            </div>
+                        </div>
                     </div>
-                    @isset($article->episodes)
-                        <div class="info_key">Эпизоды:</div>
-                        <div class="info_value">{{ $article->episodes }}</div>
-                    @endisset
-                    <div class="info_key">Выпуск:</div>
-                    <div class="info_value">{{ \Carbon\Carbon::parse($article->release)->format('d.m.Y') }}</div>
-                    <div class="info_key">Страна:</div>
-                    <div class="info_value">{{ $article->country->title }}</div>
-                    <div class="info_key">Студия:</div>
-                    <div class="info_value">{{ $article->studio->title }}</div>
-                    @isset($article->age_limit)
-                        <div class="info_key">Возрастной рейтинг:</div>
-                        <div class="info_value">{{ $article->age_limit }}</div>
-                    @endisset
-                    <div class="info_key">Описание:</div>
-                    <div class="description_value">{{ $article->description }}</div>
+
+                    <div class="article_info_description">
+                        <span>Описание:</span>
+                        {{ $article->description }}
+                    </div>
+
+                    <div class="article_info_teams">
+                        <div>Озвучено коммандами</div>
+                        <div class="teams_container">
+
+                            <div class="team">
+                                <div class="team_img">
+                                    <img src="{{ asset('storage/no_image.png') }}">
+
+                                </div>
+                                <div class="team_block">
+                                    <div class="team_name">AniLibria</div>
+                                    <div class="team_voiced_episodes">1/12</div>
+                                </div>
+                            </div>
+
+                            <div class="team">
+                                <div class="team_img">
+                                    <img src="{{ asset('storage/no_image.png') }}">
+                                </div>
+                                <div class="team_block">
+                                    <div class="team_name">AniLibria</div>
+                                    <div class="team_voiced_episodes">1/12</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 

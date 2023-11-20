@@ -62,7 +62,11 @@
             </label>
 
             <label for="age_limit">Возрастное ограничение: @error('age_limit') {{ $message }} @enderror
-                <input id="age_limit" type="text" name="age_limit" value="{{ $article->age_limit }}"/>
+                <select name="age_limit_id">
+                    @foreach($age_limits as $age_limit)
+                        <option value="{{ $age_limit->id }}"  @selected($age_limit->id === $article->age_limit_id)>{{ $age_limit->title }}</option>
+                    @endforeach
+                </select>
             </label>
 
             <label for="is_show">Разрешить показ? @error('is_show') {{ $message }} @enderror

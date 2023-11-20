@@ -8,6 +8,7 @@
     --white-bg: #EEEEEE;
     --bg-color: #24282F;
     --bg-color-2: #35385B;
+    --bg-color-3: #222222;
     --green-color: #AEED7F;
     --green-color-2: #71ff00;
     --red-color: #DB073D;
@@ -187,7 +188,6 @@ body {
 .header-profile-up-text {
     max-width: 180px;
     line-height: 28px;
-
     text-align: center;
     margin-inline: 15px;
     color: var(--blue-color);
@@ -196,7 +196,6 @@ body {
 .header-profile-down-text {
     max-width: 180px;
     line-height: 28px;
-
     text-align: center;
     margin-inline: 15px;
     font-weight: 700;
@@ -347,7 +346,7 @@ button.profile-menu-button {
     height: 100%;
     font-size: 16px;
     padding: 10px;
-    background-color: var(--bg-color);
+    background-color: var(--bg-color-3);
     color: var(--white-color);
     border-radius: 5px 0 0 5px;
     transition: background-color 0.5s;
@@ -1367,9 +1366,8 @@ button.profile-menu-button {
 .article_full {
     display: flex;
     align-items: flex-start;
-    color: var(--black-color);
-    border-radius: var(--border-radius);
-    background-color: var(--white-bg);
+    width: 100%;
+    user-select: none;
 }
 
 .article_image {
@@ -1378,39 +1376,142 @@ button.profile-menu-button {
 
 .article_full img {
     width: 100%;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
     border-radius: var(--border-radius);
 }
 
 .article_info {
-    background-color: var(--white-bg);
     display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
     width: 67%;
     margin: 0 1.5%;
     font-size: 18px;
+    color: var(--white-color);
+    flex-direction: column;
+}
+
+.article_info_titles {
+    width: 100%;
+}
+
+.article_info_titles div {
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.article_info_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--bg-color-3);
+    padding-top: 5px;
+}
+
+.article_info_line {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    line-height: 32px;
+}
+
+.article_info_block_left {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-left: 15px;
+}
+
+.article_info_block_right {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-left: 15px;
 }
 
 .info_key {
-    width: 35%;
-    line-height: 2;
-    color: #7a7f83;
+    width: 95px;
+    color: var(--gray-color);
 }
 
 .info_value {
-    width: 65%;
-    line-height: 2;
+    width: calc(100% - 105px);
 }
 
-.description_value {
-    font-size: 16px;
+.info_value a {
+    color: var(--red-color-2);
+}
+
+.info_value a:hover {
+    color: var(--blue-color);
+}
+
+.info_value_age_limit {
+    display: inline;
+    width: 40px;
+    text-align: center;
+    background-color: var(--red-color-2);
+    padding-inline: 5px;
+}
+
+.article_info_description {
+    width: 100%;
+    background-color: var(--bg-color-3);
     text-align: justify;
+    padding-inline: 15px;
+    font-size: 16px;
+}
+
+.article_info_description span {
+    width: 95px;
+    color: var(--gray-color);
+    font-size: 18px;
+}
+
+.article_info_teams {
+    width: 100%;
+    background-color: var(--bg-color-3);
+    padding: 15px;
+}
+
+/*--------------TEAMS---------------*/
+.article_info_teams {
+
+}
+
+.teams_container {
+
+}
+
+.team {
+
+}
+
+.team_img {
+
+}
+
+.team_img img {
+    width: 50px;
+    height: 50px;
+    background: no-repeat;
+    background-size: contain;
+}
+
+.team_block {
+
+}
+
+.team_name {
+
+}
+
+.team_voiced_episodes {
+
 }
 
 /*--------------Rating---------------*/
 .rating_cont {
-    width: 95%;
     padding: 0 2.5%;
     margin-bottom: 10px;
 }
@@ -1495,7 +1596,6 @@ button.profile-menu-button {
 
 /*--------------Favorites---------------*/
 .my_list_cont {
-    width: 95%;
     padding: 2.5%;
     display: flex;
     flex-direction: row;
@@ -1508,7 +1608,6 @@ button.profile-menu-button {
     height: 40px;
     background-color: #463e68;
     color: #fff;
-    border-radius: var(--border-radius);
     text-align: center;
     font-size: 20px;
 }
@@ -1534,7 +1633,6 @@ button.profile-menu-button {
     width: 20%;
     height: 40px;
     background-color: #463e68;
-    border-radius: var(--border-radius);
 }
 
 .favourite:hover {
@@ -1552,7 +1650,6 @@ button.profile-menu-button {
 .favourite_active {
     background-color: var(--green-color) !important;
     color: #000;
-    border-radius: var(--border-radius);
 }
 
 /*--------------Comments---------------*/

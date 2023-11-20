@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Article\StoreRequest;
 use App\Http\Requests\Admin\Article\UpdateRequest;
 use App\Marena;
+use App\Models\AgeLimit;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Country;
@@ -44,6 +45,7 @@ class ArticleController extends Controller
         return view('admin.article.create')
                     ->with('categories', Category::all())
                     ->with('types', Type::all())
+                    ->with('age_limits', AgeLimit::all())
                     ->with('studios', Studio::all())
                     ->with('genres', Genre::all())
                     ->with('countries', Country::all());
@@ -90,6 +92,7 @@ class ArticleController extends Controller
             ->with('article', $article)
             ->with('categories', Category::all())
             ->with('types', Type::all())
+            ->with('age_limits', AgeLimit::all())
             ->with('studios', Studio::all())
             ->with('genres', Genre::all())
             ->with('countries', Country::all());

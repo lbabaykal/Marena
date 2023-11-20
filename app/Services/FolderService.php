@@ -41,7 +41,7 @@ class FolderService
     {
         return Favorites::query()
             ->where('folder_id', $folder->id)
-            ->where('user_id', auth()->id())
+            ->where('user_id', $folder->user_id)
             ->join('articles', 'favorites.article_id', '=', 'articles.id')
             ->join('ratings', 'ratings.article_id', '=', 'articles.id')
             ->join('types', 'types.id', '=', 'articles.type_id')

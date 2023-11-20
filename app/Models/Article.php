@@ -29,6 +29,11 @@ class Article extends Model
         return $this->belongsTo(Type::class);
     }
 
+    public function age_limit()
+    {
+        return $this->belongsTo(AgeLimit::class);
+    }
+
     public function studio()
     {
         return $this->belongsTo(Studio::class);

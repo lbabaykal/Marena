@@ -30,6 +30,7 @@ class ArticleController extends Controller
     public function index(): View
     {
         $articles = Article::query()
+            ->status('PUBLISHED')
             ->orderByDesc('articles.id')
             ->paginate(Marena::COUNT_ADMIN_ITEMS);
         return view('admin.article.index')->with('articles', $articles);
@@ -43,12 +44,13 @@ class ArticleController extends Controller
     public function create(): View
     {
         return view('admin.article.create')
-                    ->with('categories', Category::all())
-                    ->with('types', Type::all())
-                    ->with('age_limits', AgeLimit::all())
-                    ->with('studios', Studio::all())
-                    ->with('genres', Genre::all())
-                    ->with('countries', Country::all());
+            ->with('categories', Category::all())
+            ->with('types', Type::all())
+            ->with('age_limits', AgeLimit::all())
+            ->with('studios', Studio::all())
+            ->with('genres', Genre::all())
+            ->with('statuses', Article::statuses())
+            ->with('countries', Country::all());
     }
 
     public function store(StoreRequest $request): RedirectResponse
@@ -59,7 +61,6 @@ class ArticleController extends Controller
             $data['image'] = $request->file('image')->store(date('Y-m'), 'articles');
         }
 
-        $data['is_show'] = $request->boolean('is_show');
         $data['is_comment'] = $request->boolean('is_comment');
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
@@ -68,25 +69,26 @@ class ArticleController extends Controller
 
         try {
             DB::beginTransaction();
+
             $article = Article::query()->create($data);
             Rating::query()->create([
                 'article_id' => $article->id,
                 'rating' => 0,
                 'count_assessments' => 0
             ]);
+            $article->genres()->attach($genres);
+
             DB::commit();
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             DB::rollBack();
         }
-        $article->genres()->attach($genres);
 
         return redirect()->route('admin.articles.index');
     }
 
     public function edit(Article $article): View
     {
-        $article->genre_id =  $article->genres;
+        $article->genre_id = $article->genres;
 
         return view('admin.article.edit')
             ->with('article', $article)
@@ -95,6 +97,7 @@ class ArticleController extends Controller
             ->with('age_limits', AgeLimit::all())
             ->with('studios', Studio::all())
             ->with('genres', Genre::all())
+            ->with('statuses', Article::statuses())
             ->with('countries', Country::all());
     }
 
@@ -107,7 +110,6 @@ class ArticleController extends Controller
             $oldImage = $article->image ?? null;
         }
 
-        $data['is_show'] = $request->boolean('is_show');
         $data['is_comment'] = $request->boolean('is_comment');
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
@@ -131,5 +133,23 @@ class ArticleController extends Controller
 //        Storage::disk('articles')->delete($article->image);
         $article->delete();
         return redirect()->route('admin.articles.index');
+    }
+
+    public function drafts(): View
+    {
+        $articles = Article::query()
+            ->status('DRAFT')
+            ->orderByDesc('articles.id')
+            ->paginate(Marena::COUNT_ADMIN_ITEMS);
+        return view('admin.article.index')->with('articles', $articles);
+    }
+
+    public function archive(): View
+    {
+        $articles = Article::query()
+            ->status('ARCHIVE')
+            ->orderByDesc('articles.id')
+            ->paginate(Marena::COUNT_ADMIN_ITEMS);
+        return view('admin.article.index')->with('articles', $articles);
     }
 }

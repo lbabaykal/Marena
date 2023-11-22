@@ -41,12 +41,7 @@
                                     {{ $article->type->title }} - <div class="info_value_age_limit">{{ $article->age_limit->title }}</div>
                                 </div>
                             </div>
-                            <div class="article_info_line">
-                                @isset($article->episodes)
-                                    <div class="info_key">Эпизоды:</div>
-                                    <div class="info_value">{{ $article->episodes }}</div>
-                                @endisset
-                            </div>
+
                             <div class="article_info_line">
                                 <div class="info_key">Жанр:</div>
                                 <div class="info_value">
@@ -56,6 +51,13 @@
                                         </a>
                                     @endforeach
                                 </div>
+                            </div>
+
+                            <div class="article_info_line">
+                                @isset($article->episodes)
+                                    <div class="info_key">Эпизоды:</div>
+                                    <div class="info_value">{{ $article->episodes }}</div>
+                                @endisset
                             </div>
                         </div>
 
@@ -84,26 +86,66 @@
                         <div>Озвучено коммандами</div>
                         <div class="teams_container">
 
-                            <div class="team">
+                            <a href="#" class="team">
                                 <div class="team_img">
-                                    <img src="{{ asset('storage/no_image.png') }}">
+                                    <img src="{{ asset('teams/anidub.png') }}">
 
                                 </div>
                                 <div class="team_block">
                                     <div class="team_name">AniLibria</div>
-                                    <div class="team_voiced_episodes">1/12</div>
+                                    <div class="team_voiced_episodes">Озвучено: 1/12</div>
                                 </div>
-                            </div>
+                            </a>
 
-                            <div class="team">
+                            <a href="#" class="team">
                                 <div class="team_img">
-                                    <img src="{{ asset('storage/no_image.png') }}">
+                                    <img src="{{ asset('teams/anilibria.jpg') }}">
                                 </div>
                                 <div class="team_block">
-                                    <div class="team_name">AniLibria</div>
-                                    <div class="team_voiced_episodes">1/12</div>
+                                    <div class="team_name">AniDub</div>
+                                    <div class="team_voiced_episodes">Озвучено: 6/12</div>
                                 </div>
-                            </div>
+                            </a>
+
+                            <a href="#" class="team">
+                                <div class="team_img">
+                                    <img src="{{ asset('teams/shiza_project.jpg') }}">
+                                </div>
+                                <div class="team_block">
+                                    <div class="team_name">SHIZA Project</div>
+                                    <div class="team_voiced_episodes">Субтитры: 8/12</div>
+                                </div>
+                            </a>
+
+                            <a href="#" class="team">
+                                <div class="team_img">
+                                    <img src="{{ asset('teams/amazing_dubbing.jpg') }}">
+                                </div>
+                                <div class="team_block">
+                                    <div class="team_name">Amazing Dubbing</div>
+                                    <div class="team_voiced_episodes">Озвучено: 5/12</div>
+                                </div>
+                            </a>
+
+                            <a href="#" class="team">
+                                <div class="team_img">
+                                    <img src="{{ asset('teams/sovet_romantica.jpg') }}">
+                                </div>
+                                <div class="team_block">
+                                    <div class="team_name">Sovet Romantica</div>
+                                    <div class="team_voiced_episodes">Субтитры: 5/12</div>
+                                </div>
+                            </a>
+
+                            <a href="#" class="team">
+                                <div class="team_img">
+                                    <img src="{{ asset('teams/dream_cast.jpg') }}">
+                                </div>
+                                <div class="team_block">
+                                    <div class="team_name">Dream Cast</div>
+                                    <div class="team_voiced_episodes">Озвучено: 3/12</div>
+                                </div>
+                            </a>
 
                         </div>
                     </div>

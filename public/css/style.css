@@ -1374,7 +1374,7 @@ button.profile-menu-button {
     width: 30%;
 }
 
-.article_full img {
+.article_full > img {
     width: 100%;
     border-radius: var(--border-radius);
 }
@@ -1468,48 +1468,73 @@ button.profile-menu-button {
     font-size: 18px;
 }
 
+/*--------------TEAMS---------------*/
 .article_info_teams {
     width: 100%;
     background-color: var(--bg-color-3);
-    padding: 15px;
-}
-
-/*--------------TEAMS---------------*/
-.article_info_teams {
-
+    padding: 10px;
 }
 
 .teams_container {
-
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .team {
-
+    display: flex;
+    flex-direction: row;
+    width: 180px;
+    height: 44px;
+    margin-block: 10px;
+    margin-inline: 8px;
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.4);
+    border-radius: var(--border-radius);
+    overflow: hidden;
 }
 
 .team_img {
-
+    margin-right: 6px;
 }
 
 .team_img img {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     background: no-repeat;
     background-size: contain;
 }
 
 .team_block {
-
+    width: calc(100% - 50px);
+    font-size: 14px;
+    font-weight: 700;
 }
 
 .team_name {
-
+    color: var(--red-color-2);
+    line-height: 22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .team_voiced_episodes {
-
+    color: var(--gray-color);
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+.team:hover {
+    background: var(--white-bg);
+    box-shadow: 0 0 6px 2px rgba(255, 0, 0, 0.4);
+}
+
+.team:hover .team_name {
+    color: var(--black-color);
+}
 /*--------------Rating---------------*/
 .rating_cont {
     padding: 0 2.5%;

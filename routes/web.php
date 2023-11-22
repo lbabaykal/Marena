@@ -92,6 +92,13 @@ Route::namespace('App\Http\Controllers\Admin')
     ->middleware(['auth', 'isAdmin'])
     ->group(function () {
         Route::get('/', 'IndexController')->name('index');
+        Route::prefix('articles')
+            ->name('articles.')
+            ->group(function () {
+                Route::get('/drafts', [ArticleController::class, 'drafts'])->name('drafts');
+                Route::get('/archive', [ArticleController::class, 'archive'])->name('archive');
+        });
+
         Route::resources([
             'articles' => ArticleController::class,
             'categories' => CategoryController::class,

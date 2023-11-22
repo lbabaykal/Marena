@@ -74,7 +74,7 @@ body {
     width: 100%;
     height: 100%;
     font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+    background: var(--bg-color);
     user-select: none;
 }
 

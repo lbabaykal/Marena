@@ -47,7 +47,7 @@ class ArticleController extends Controller
     public function filter(): View
     {
         $articles = app()->make(Pipeline::class)
-            ->send(Article::query()->where('is_show', 1))
+            ->send(Article::query()->status('PUBLISHED'))
             ->through([
                 Title::class,
                 Category::class,

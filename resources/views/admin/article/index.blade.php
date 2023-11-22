@@ -2,9 +2,11 @@
 @section('content')
     <div class="static_page_cont">
         <div class="static_page_head">
-            <div class="static_page_title">Список статей</div>
+            <a href="{{ route('admin.articles.index') }}" class="static_page_title">Список статей</a>
             @can('create', \App\Models\Article::class)
-            <div class="static_page_add_new"><a href="{{ route('admin.articles.create') }}">+ Добавить статью</a></div>
+            <a href="{{ route('admin.articles.drafts') }}" class="static_page_add_new">Черновики</a>
+            <a href="{{ route('admin.articles.archive') }}" class="static_page_add_new">Архив</a>
+            <a href="{{ route('admin.articles.create') }}" class="static_page_add_new">+ Добавить статью</a>
             @endcan
         </div>
         <div class="static_page_content">

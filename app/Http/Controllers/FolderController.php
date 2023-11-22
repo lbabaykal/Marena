@@ -27,7 +27,6 @@ class FolderController extends Controller
     {
         $articles = app()->make(Pipeline::class)
             ->send(Favorites::query()
-                ->where('is_show', 1)
                 ->where('user_id', auth()->id())
                 ->join('articles', 'favorites.article_id', '=', 'articles.id')
                 ->join('ratings', 'ratings.article_id', '=', 'articles.id')

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Article extends Model
 {
@@ -12,9 +13,17 @@ class Article extends Model
     protected $table = 'articles';
     protected $guarded = false;
     protected $with = ['rating', 'type'];
-
 //    protected $withCount = ['comments'];
 
+    public static function statuses(): \Illuminate\Support\Collection
+    {
+        return collect(['PUBLISHED', 'DRAFT', 'ARCHIVE', 'DELETED']);
+    }
+
+    public function scopeStatus(Builder $query, string $status): Builder
+    {
+        return $query->where('status', $status);
+    }
     public function author() {
         return $this->belongsTo(User::class, 'author_id');
     }

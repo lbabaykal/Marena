@@ -61,7 +61,7 @@
                 </select>
             </label>
 
-            <label for="age_limit">Возрастное ограничение: @error('age_limit') {{ $message }} @enderror
+            <label>Возрастное ограничение: @error('age_limit_id') {{ $message }} @enderror
                 <select name="age_limit_id">
                     @foreach($age_limits as $age_limit)
                         <option value="{{ $age_limit->id }}"  @selected($age_limit->id === $article->age_limit_id)>{{ $age_limit->title }}</option>
@@ -69,8 +69,13 @@
                 </select>
             </label>
 
-            <label for="is_show">Разрешить показ? @error('is_show') {{ $message }} @enderror
-                <input type="checkbox" id="is_show" name="is_show" @checked($article->is_show === 1) />
+            <label>Статус: @error('status') {{ $message }} @enderror
+                <select name="status">
+                    <option value="">Нету</option>
+                    @foreach($statuses as $status)
+                        <option value="{{ $status }}"  @selected($article->status === $status)>{{ $status }}</option>
+                    @endforeach
+                </select>
             </label>
 
             <label for="is_comment">Разрешить комментарии? @error('is_comment') {{ $message }} @enderror

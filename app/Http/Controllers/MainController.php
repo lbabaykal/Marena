@@ -12,15 +12,15 @@ class MainController extends Controller
     public function __invoke(): View
     {
         $articles_anime = Article::query()
+            ->status('PUBLISHED')
             ->where('category_id', 1)
-            ->where('is_show', 1)
             ->limit(Marena::COUNT_ARTICLES_MAIN)
             ->latest('updated_at')
             ->get();
 
         $articles_dorams = Article::query()
+            ->status('PUBLISHED')
             ->where('category_id', 2)
-            ->where('is_show', 1)
             ->limit(Marena::COUNT_ARTICLES_MAIN)
             ->latest('updated_at')
             ->get();

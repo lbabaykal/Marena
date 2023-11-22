@@ -35,7 +35,7 @@ class UpdateRequest extends FormRequest
             'episodes' => ['nullable', 'string', 'max:255'],
             'release' => ['required', 'date', 'after:1980-01-01|', 'before:2100-01-01'],
             'description' => ['nullable', 'string'],
-            'is_show' => ['nullable', 'string'],
+            'status' => ['required', 'in:PUBLISHED,DRAFT,ARCHIVE,DELETED'],
             'is_comment' => ['nullable', 'string'],
             'is_rating' => ['nullable', 'string'],
         ];

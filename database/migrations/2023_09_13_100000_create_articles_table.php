@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('release');
             $table->text('description')->nullable();
             $table->foreignIdFor(\App\Models\User::class, 'author_id')->constrained('users');
-            $table->boolean('is_show')->default(false);
+            $table->enum('status', ['PUBLISHED', 'DRAFT', 'ARCHIVE', 'DELETED'])->default('DRAFT');
             $table->boolean('is_comment')->default(false);
             $table->boolean('is_rating')->default(false);
             $table->timestamps();

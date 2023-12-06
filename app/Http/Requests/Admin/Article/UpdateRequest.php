@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin\Article;
 
+use App\Models\Article;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -28,14 +29,14 @@ class UpdateRequest extends FormRequest
             'title_eng' => ['required', 'string', 'min:1', 'max:255'],
             'category_id' => ['required', 'integer'],
             'type_id' => ['required', 'integer'],
-            'age_limit_id' => ['required', 'integer'],
-            'studio_id' => ['required', 'integer'],
+            'age_limit' => ['required', 'in:' . Article::age_limits()->implode(',')],
             'country_id' => ['required', 'integer'],
             'genre_id' => ['nullable', 'array'],
+            'studio_id' => ['nullable', 'array'],
             'episodes' => ['nullable', 'string', 'max:255'],
             'release' => ['required', 'date', 'after:1980-01-01|', 'before:2100-01-01'],
             'description' => ['nullable', 'string'],
-            'status' => ['required', 'in:PUBLISHED,DRAFT,ARCHIVE,DELETED'],
+            'status' => ['required', 'in:' . Article::statuses()->implode(',')],
             'is_comment' => ['nullable', 'string'],
             'is_rating' => ['nullable', 'string'],
         ];

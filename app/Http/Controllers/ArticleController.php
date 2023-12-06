@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Filters\Article\Category;
 use App\Http\Filters\Article\Country;
 use App\Http\Filters\Article\Genre;
+use App\Http\Filters\Article\Studio;
 use App\Http\Filters\Article\Title;
 use App\Http\Filters\Article\Type;
 use App\Http\Filters\Article\YearFrom;
@@ -54,6 +55,7 @@ class ArticleController extends Controller
                 Type::class,
                 Genre::class,
                 Country::class,
+                Studio::class,
                 YearFrom::class,
                 YearTo::class,
             ])
@@ -64,6 +66,7 @@ class ArticleController extends Controller
             ->with('categories', \App\Models\Category::all())
             ->with('types', \App\Models\Type::all())
             ->with('genres', \App\Models\Genre::all())
+            ->with('studios', \App\Models\Studio::all())
             ->with('countries', \App\Models\Country::all());
     }
 

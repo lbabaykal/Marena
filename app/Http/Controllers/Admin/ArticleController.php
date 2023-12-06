@@ -46,7 +46,7 @@ class ArticleController extends Controller
         return view('admin.article.create')
             ->with('categories', Category::all())
             ->with('types', Type::all())
-            ->with('age_limits', AgeLimit::all())
+            ->with('age_limits', Article::age_limits())
             ->with('studios', Studio::all())
             ->with('genres', Genre::all())
             ->with('statuses', Article::statuses())
@@ -65,7 +65,8 @@ class ArticleController extends Controller
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
         $genres = $data['genre_id'] ?? null;
-        unset($data['genre_id']);
+        $studios = $data['studio_id'] ?? null;
+        unset($data['genre_id'], $data['studio_id']);
 
         try {
             DB::beginTransaction();
@@ -77,6 +78,7 @@ class ArticleController extends Controller
                 'count_assessments' => 0
             ]);
             $article->genres()->attach($genres);
+            $article->studios()->attach($studios);
 
             DB::commit();
         } catch (\Exception $exception) {
@@ -89,12 +91,13 @@ class ArticleController extends Controller
     public function edit(Article $article): View
     {
         $article->genre_id = $article->genres;
+        $article->studio_id = $article->studios;
 
         return view('admin.article.edit')
             ->with('article', $article)
             ->with('categories', Category::all())
             ->with('types', Type::all())
-            ->with('age_limits', AgeLimit::all())
+            ->with('age_limits', Article::age_limits())
             ->with('studios', Studio::all())
             ->with('genres', Genre::all())
             ->with('statuses', Article::statuses())
@@ -114,10 +117,12 @@ class ArticleController extends Controller
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
         $genres = $data['genre_id'] ?? null;
-        unset($data['genre_id']);
+        $studios = $data['studio_id'] ?? null;
+        unset($data['genre_id'], $data['studio_id']);
 
         $article->update($data);
         $article->genres()->sync($genres);
+        $article->studios()->sync($studios);
 
         if (isset($oldImage)) {
             Storage::disk('articles')->delete($oldImage);

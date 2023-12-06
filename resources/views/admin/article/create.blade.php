@@ -39,10 +39,11 @@
             </label>
 
             <label>Студия: @error('studio_id') {{ $message }} @enderror
-                <select name="studio_id">
-                    <option value="">Нету</option>
+                <select class="studio_id" name="studio_id[]" multiple>
                     @foreach($studios as $studio)
-                        <option value="{{ $studio->id }}" @selected($studio->id == old('studio_id')) >{{ $studio->title }}</option>
+                        <option value="{{ $studio->id }}"
+                                @if(in_array($studio->id, old('studio_id', []))) selected @endif
+                        >{{ $studio->title }}</option>
                     @endforeach
                 </select>
             </label>
@@ -64,11 +65,11 @@
                 </select>
             </label>
 
-            <label>Возрастное ограничение: @error('age_limit_id') {{ $message }} @enderror
-                <select name="age_limit_id">
+            <label>Возрастное ограничение: @error('age_limit') {{ $message }} @enderror
+                <select name="age_limit">
                     <option value="">Нету</option>
                     @foreach($age_limits as $age_limit)
-                        <option value="{{ $age_limit->id }}"  @selected($age_limit->id == old('age_limit_id'))>{{ $age_limit->title }}</option>
+                        <option value="{{ $age_limit }}"  @selected($age_limit === old('age_limit'))>{{ $age_limit }}</option>
                     @endforeach
                 </select>
             </label>
@@ -93,7 +94,9 @@
             <label>Жанр: @error('genre_id') {{ $message }} @enderror
                 <select class="genre_id" name="genre_id[]" multiple>
                     @foreach($genres as $genre)
-                        <option value="{{ $genre->id }}">{{ $genre->title }}</option>
+                        <option value="{{ $genre->id }}"
+                                @if(in_array($genre->id, old('genre_id', []))) selected @endif
+                        >{{ $genre->title }}</option>
                     @endforeach
                 </select>
             </label>

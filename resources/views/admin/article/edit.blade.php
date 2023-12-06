@@ -38,9 +38,13 @@
             </label>
 
             <label>Студия: @error('studio_id') {{ $message }} @enderror
-                <select name="studio_id">
+                <select class="studio_id" name="studio_id[]" multiple>
                     @foreach($studios as $studio)
-                        <option value="{{ $studio->id }}" @selected($studio->id === $article->studio_id) >{{ $studio->title }}</option>
+                        <option value="{{ $studio->id }}"
+                        @foreach($article->studio_id as $articleStudio)
+                            @selected($studio->id === $articleStudio->id)
+                            @endforeach
+                        >{{ $studio->title }}</option>
                     @endforeach
                 </select>
             </label>
@@ -61,10 +65,10 @@
                 </select>
             </label>
 
-            <label>Возрастное ограничение: @error('age_limit_id') {{ $message }} @enderror
-                <select name="age_limit_id">
+            <label>Возрастное ограничение: @error('age_limit') {{ $message }} @enderror
+                <select name="age_limit">
                     @foreach($age_limits as $age_limit)
-                        <option value="{{ $age_limit->id }}"  @selected($age_limit->id === $article->age_limit_id)>{{ $age_limit->title }}</option>
+                        <option value="{{ $age_limit }}"  @selected($article->age_limit === $age_limit)>{{ $age_limit }}</option>
                     @endforeach
                 </select>
             </label>

@@ -1430,12 +1430,12 @@ button.profile-menu-button {
 }
 
 .info_key {
-    width: 95px;
+    width: 90px;
     color: var(--gray-color);
 }
 
 .info_value {
-    width: calc(100% - 105px);
+    width: calc(100% - 100px);
 }
 
 .info_value a {
@@ -1463,7 +1463,7 @@ button.profile-menu-button {
 }
 
 .article_info_description span {
-    width: 95px;
+    width: 90px;
     color: var(--gray-color);
     font-size: 18px;
 }

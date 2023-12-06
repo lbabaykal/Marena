@@ -20,6 +20,11 @@ class Article extends Model
         return collect(['PUBLISHED', 'DRAFT', 'ARCHIVE', 'DELETED']);
     }
 
+    public static function age_limits(): \Illuminate\Support\Collection
+    {
+        return collect(['0+', '6+', '12+', '16+', '18+']);
+    }
+
     public function scopeStatus(Builder $query, string $status): Builder
     {
         return $query->where('status', $status);
@@ -38,14 +43,9 @@ class Article extends Model
         return $this->belongsTo(Type::class);
     }
 
-    public function age_limit()
+    public function studios()
     {
-        return $this->belongsTo(AgeLimit::class);
-    }
-
-    public function studio()
-    {
-        return $this->belongsTo(Studio::class);
+        return $this->belongsToMany(Studio::class);
     }
 
     public function country()

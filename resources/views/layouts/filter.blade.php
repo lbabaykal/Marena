@@ -85,7 +85,20 @@
                     </label>
                 </div>
 
-                <div class="colum"></div>
+                <div class="colum">
+                    <div>Студия:</div>
+                    <div class="check_select">
+                        @foreach($studios as $studio)
+                            <label><input type="checkbox" name="studio[]" value="{{$studio->id}}"
+                                @if(request()->exists('studio'))
+                                    @foreach(request('studio') as $studioValue)
+                                        @checked($studio->id === (int) $studioValue)
+                                        @endforeach
+                                    @endif
+                                >{{$studio->title}}</label>
+                        @endforeach
+                    </div>
+                </div>
             </div>
 
             <div class="filter-footer">

@@ -38,7 +38,7 @@
                             <div class="article_info_line">
                                 <div class="info_key">Тип:</div>
                                 <div class="info_value">
-                                    {{ $article->type->title }} - <div class="info_value_age_limit">{{ $article->age_limit->title }}</div>
+                                    {{ $article->type->title }} - <div class="info_value_age_limit">{{ $article->age_limit }}</div>
                                 </div>
                             </div>
 
@@ -72,7 +72,13 @@
                             </div>
                             <div class="article_info_line">
                                 <div class="info_key">Студия:</div>
-                                <div class="info_value">{{ $article->studio->title }}</div>
+                                <div class="info_value">
+                                    @foreach($article->studios as $studio)
+                                        <a href="{{ route('article.filter_article', ['studio[]' => $studio->id]) }}">
+                                            {{ $studio->title }}
+                                        </a>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>

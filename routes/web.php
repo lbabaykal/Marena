@@ -23,13 +23,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//TEST
-Route::get('/articleResource/{article}', [\App\Http\Controllers\ArticleController::class, 'articleResource']);
-Route::get('/articlesResource', [\App\Http\Controllers\ArticleController::class, 'articlesResource']);
 
 //========AUTH========
 require __DIR__.'/auth.php';
 
+Route::pattern('team', '\d+');
 Route::pattern('folder', '\d+');
 Route::pattern('article', '\d+');
 Route::pattern('category', '\d+');
@@ -40,6 +38,7 @@ Route::pattern('type', '\d+');
 Route::pattern('user', '\d+');
 Route::pattern('role', '\d+');
 //==============================================================================================
+
 Route::prefix('account')
     ->name('account.')
     ->middleware(['auth', 'verified'])
@@ -63,13 +62,17 @@ Route::prefix('account')
 
 //========MAIN_PAGE========
 Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
+Route::resource('teams', \App\Http\Controllers\TeamController::class);
 //========FULL_ARTICLE========
 Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])
     ->name('article.show');
 
+Route::get('/articles/{article}/teams/{team}', [\App\Http\Controllers\ArticleController::class, 'team'])
+    ->name('article.team');
+
 Route::get('/filter', [\App\Http\Controllers\ArticleController::class, 'filter'])
     ->name('article.filter_article');
-//========FULL_ARTICLE_RATING========
+
 Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
 
 
@@ -80,8 +83,7 @@ Route::namespace('App\Http\Controllers\Comments')
     ->name('comments.')
     ->group(function () {
         Route::post('/', \App\Http\Controllers\Comments\StoreController::class);
-        Route::get('/{comment}/edit', \App\Http\Controllers\Comments\EditController::class)
-            ->name('edit');
+        Route::get('/{comment}/edit', \App\Http\Controllers\Comments\EditController::class)->name('edit');
         Route::patch('/{comment}', \App\Http\Controllers\Comments\UpdateController::class);
 });
 
@@ -110,3 +112,8 @@ Route::namespace('App\Http\Controllers\Admin')
             'roles' => RoleController::class,
         ]);
 });
+
+
+//TEST Resource
+Route::get('/articleResource/{article}', [\App\Http\Controllers\ArticleController::class, 'articleResource']);
+Route::get('/articlesResource', [\App\Http\Controllers\ArticleController::class, 'articlesResource']);

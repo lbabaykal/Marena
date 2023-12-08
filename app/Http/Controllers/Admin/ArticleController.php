@@ -6,22 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Article\StoreRequest;
 use App\Http\Requests\Admin\Article\UpdateRequest;
 use App\Marena;
-use App\Models\AgeLimit;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Genre;
-use App\Models\Rating;
 use App\Models\Studio;
 use App\Models\Type;
+use App\Services\ArticleService;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ArticleController extends Controller
 {
+
     public function __construct()
     {
         $this->authorizeResource(Article::class, 'article');
@@ -33,6 +30,7 @@ class ArticleController extends Controller
             ->status('PUBLISHED')
             ->orderByDesc('articles.id')
             ->paginate(Marena::COUNT_ADMIN_ITEMS);
+
         return view('admin.article.index')->with('articles', $articles);
     }
 
@@ -53,37 +51,9 @@ class ArticleController extends Controller
             ->with('countries', Country::all());
     }
 
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request, ArticleService $articleService): RedirectResponse
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store(date('Y-m'), 'articles');
-        }
-
-        $data['is_comment'] = $request->boolean('is_comment');
-        $data['is_rating'] = $request->boolean('is_rating');
-        $data['author_id'] = Auth::id();
-        $genres = $data['genre_id'] ?? null;
-        $studios = $data['studio_id'] ?? null;
-        unset($data['genre_id'], $data['studio_id']);
-
-        try {
-            DB::beginTransaction();
-
-            $article = Article::query()->create($data);
-            Rating::query()->create([
-                'article_id' => $article->id,
-                'rating' => 0,
-                'count_assessments' => 0
-            ]);
-            $article->genres()->attach($genres);
-            $article->studios()->attach($studios);
-
-            DB::commit();
-        } catch (\Exception $exception) {
-            DB::rollBack();
-        }
+        $articleService->store($request);
 
         return redirect()->route('admin.articles.index');
     }
@@ -104,29 +74,9 @@ class ArticleController extends Controller
             ->with('countries', Country::all());
     }
 
-    public function update(UpdateRequest $request, Article $article): RedirectResponse
+    public function update(UpdateRequest $request, Article $article, ArticleService $articleService): RedirectResponse
     {
-        $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store(date('Y-m'), 'articles');
-            $oldImage = $article->image ?? null;
-        }
-
-        $data['is_comment'] = $request->boolean('is_comment');
-        $data['is_rating'] = $request->boolean('is_rating');
-        $data['author_id'] = Auth::id();
-        $genres = $data['genre_id'] ?? null;
-        $studios = $data['studio_id'] ?? null;
-        unset($data['genre_id'], $data['studio_id']);
-
-        $article->update($data);
-        $article->genres()->sync($genres);
-        $article->studios()->sync($studios);
-
-        if (isset($oldImage)) {
-            Storage::disk('articles')->delete($oldImage);
-        }
+        $articleService->update($request, $article);
 
         return redirect()->route('admin.articles.index');
     }
@@ -137,6 +87,7 @@ class ArticleController extends Controller
 //        $article->genres()->detach();
 //        Storage::disk('articles')->delete($article->image);
         $article->delete();
+
         return redirect()->route('admin.articles.index');
     }
 
@@ -146,6 +97,7 @@ class ArticleController extends Controller
             ->status('DRAFT')
             ->orderByDesc('articles.id')
             ->paginate(Marena::COUNT_ADMIN_ITEMS);
+
         return view('admin.article.index')->with('articles', $articles);
     }
 
@@ -155,6 +107,7 @@ class ArticleController extends Controller
             ->status('ARCHIVE')
             ->orderByDesc('articles.id')
             ->paginate(Marena::COUNT_ADMIN_ITEMS);
+
         return view('admin.article.index')->with('articles', $articles);
     }
 }

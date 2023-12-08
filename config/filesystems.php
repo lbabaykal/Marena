@@ -103,10 +103,10 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-        public_path('articles') => storage_path('app/images/articles'),
-        public_path('articles_preview') => storage_path('app/images/articles_preview'),
-        public_path('avatars') => storage_path('app/images/avatars'),
-        public_path('teams') => storage_path('app/images/teams'),
+        public_path('images/articles') => storage_path('app/images/articles'),
+        public_path('images/articles_preview') => storage_path('app/images/articles_preview'),
+        public_path('images/avatars') => storage_path('app/images/avatars'),
+        public_path('images/teams') => storage_path('app/images/teams'),
     ],
 
 ];

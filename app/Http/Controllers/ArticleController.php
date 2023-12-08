@@ -15,6 +15,7 @@ use App\Marena;
 use App\Models\Article;
 use App\Models\Favorites;
 use App\Models\RatingAssessment;
+use App\Models\Team;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\View\View;
@@ -22,6 +23,7 @@ use App\Services\FolderService;
 
 class ArticleController extends Controller
 {
+
     public function show(Article $article, FolderService $folderService): View
     {
         $this->authorize('view', $article);
@@ -70,7 +72,12 @@ class ArticleController extends Controller
             ->with('countries', \App\Models\Country::all());
     }
 
-    public function articleResource(Article $article)
+    public function team(Article $article, Team $team)
+    {
+        return $article->id . ' - ' . $team->id;
+    }
+
+    public function articleResource(Article $article): ArticleResource
     {
         return new ArticleResource($article);
     }

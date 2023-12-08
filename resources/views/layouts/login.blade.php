@@ -2,10 +2,10 @@
     <div id="menu-button" class="header-profile">
         <div id="welcome" class="header-profile-up-text"></div>
         <div class="header-profile-down-text">{{ Auth::user()->username }}</div>
-        <div class="header-profile-avatar" style="background-image: url('{{ asset('avatars/' . Auth::user()->avatar) }}')"></div>
+        <div class="header-profile-avatar" style="background-image: url('{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}')"></div>
         <div id="profile-menu" class="header-profile-menu">
             <div class="profile-menu-info">
-                <div class="profile-menu-info-avatar" style="background-image: url('{{ asset('avatars/' . Auth::user()->avatar) }}')"></div>
+                <div class="profile-menu-info-avatar" style="background-image: url('{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}')"></div>
                 <div class="profile-menu-text">
                     <div class="profile-menu-nickname profile-menu-hidden">{{ Auth::user()->username }}</div>
                     <div class="profile-menu-email profile-menu-hidden">{{ Auth::user()->role->title }}</div>
@@ -65,7 +65,7 @@
         <div id="menu-change" class="header-profile">
             <div class="header-profile-up-text">Авторизация</div>
             <div class="header-profile-down-text">Регистрация</div>
-            <div class="header-profile-avatar" style="background-image: url('{{ asset('avatars/no_avatar.png') }}')"></div>
+            <div class="header-profile-avatar" style="background-image: url('{{ asset('images/no_avatar.png') }}')"></div>
         </div>
     </a>
 @endguest

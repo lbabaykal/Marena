@@ -7,20 +7,6 @@
         <div class="advance-search">
             <div class="row">
                 <div class="colum">
-                    <div>Тип:</div>
-                    <div class="check_select">
-                        @foreach($types as $type)
-                            <label><input type="checkbox" name="type[]" value="{{$type->id}}"
-                                @if(request()->exists('type'))
-                                    @foreach(request('type') as $typeValue)
-                                        @checked($type->id === (int) $typeValue)
-                                        @endforeach
-                                    @endif
-                                >{{$type->title}}</label>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="colum">
                     <div>Категория:</div>
                     <div class="check_select">
                         @foreach($categories as $category)
@@ -31,6 +17,20 @@
                                         @endforeach
                                     @endif
                                 >{{$category->title}}</label>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="colum">
+                    <div>Тип:</div>
+                    <div class="check_select">
+                        @foreach($types as $type)
+                            <label><input type="checkbox" name="type[]" value="{{$type->id}}"
+                                @if(request()->exists('type'))
+                                    @foreach(request('type') as $typeValue)
+                                        @checked($type->id === (int) $typeValue)
+                                        @endforeach
+                                    @endif
+                                >{{$type->title}}</label>
                         @endforeach
                     </div>
                 </div>

@@ -20,22 +20,18 @@
                         <tr>
                             <td class="ct">{{ $user->id }}</td>
                             <td class="fix_width">{{ $user->username }}</td>
-                            <td class="fix_width">{{ $user->role->title }}</td>
+                            <td class="fix_width">{{ $user->rolesRus->first() }}</td>
                             <td class="ct">
-                                @can('update', $user)
                                     <a href="{{ route('admin.users.edit', $user->id) }}">
                                         <div class="button button_E"></div>
                                     </a>
-                                @endcan
                             </td>
                             <td class="ct">
-                                @can('delete', $user)
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('Delete')
                                         <input type="submit" value="" class="button button_D">
                                     </form>
-                                @endcan
                             </td>
                         </tr>
                     @endforeach

@@ -11,6 +11,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FolderController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,33 +49,44 @@ Route::prefix('account')
 
         //========ACCOUNT_FOLDERS========
         Route::resource('folders', FolderController::class);
-
-        //========ACCOUNT_FAVORITES========
-        Route::prefix('favorites')
-            ->name('favorites.')
-            ->group(function () {
-                Route::post('/', [FavoriteController::class, 'store']);
-                Route::delete('/', [FavoriteController::class, 'destroy']);
-            }
-        );
     }
 );
 
 //========MAIN_PAGE========
 Route::get('/', \App\Http\Controllers\MainController::class)->name('main.show');
+
+//========TEAMS========
 Route::resource('teams', \App\Http\Controllers\TeamController::class);
+Route::get('/teams/{team}/description', [\App\Http\Controllers\TeamController::class, 'description']);
+
 //========FULL_ARTICLE========
-Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])
-    ->name('article.show');
+    Route::get('/articles/{article}', [\App\Http\Controllers\ArticleController::class, 'show'])
+        ->name('article.show');
 
-Route::get('/articles/{article}/teams/{team}', [\App\Http\Controllers\ArticleController::class, 'team'])
-    ->name('article.team');
+    Route::get('/articles/{article}/teams/{team}', [\App\Http\Controllers\ArticleController::class, 'team'])
+        ->name('article.team');
 
-Route::get('/filter', [\App\Http\Controllers\ArticleController::class, 'filter'])
-    ->name('article.filter_article');
+    Route::get('/filter', [\App\Http\Controllers\ArticleController::class, 'filter'])
+        ->name('article.filter_article');
 
-Route::post('/rating_assessments', \App\Http\Controllers\RatingAssessmentController::class);
+    //========FAVORITES========
+    Route::prefix('favorites')
+        ->name('favorites.')
+        ->group(function () {
+            Route::post('/', [FavoriteController::class, 'store']);
+            Route::delete('/', [FavoriteController::class, 'destroy']);
+        }
+    );
 
+    //========RATING========
+    Route::prefix('rating')
+        ->name('rating.')
+        ->group(function () {
+            Route::post('/', [RatingController::class, 'store']);
+            Route::delete('/', [RatingController::class, 'destroy']);
+        }
+    );
+//========/FULL_ARTICLE/========
 
 //========COMMENTS========
 Route::pattern('comment', '[0-9]+');
@@ -91,7 +103,7 @@ Route::namespace('App\Http\Controllers\Comments')
 Route::namespace('App\Http\Controllers\Admin')
     ->prefix('admin')
     ->name('admin.')
-    ->middleware(['auth', 'isAdmin'])
+    ->middleware(['auth', 'permission:Admin_Panel'])
     ->group(function () {
         Route::get('/', 'IndexController')->name('index');
         Route::prefix('articles')

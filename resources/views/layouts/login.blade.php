@@ -2,17 +2,17 @@
     <div id="menu-button" class="header-profile">
         <div id="welcome" class="header-profile-up-text"></div>
         <div class="header-profile-down-text">{{ Auth::user()->username }}</div>
-        <div class="header-profile-avatar" style="background-image: url('{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}')"></div>
+        <div class="header-profile-avatar" style="background-image: url('{{ Auth::user()->avatar ? Storage::disk('avatars')->url(Auth::user()->avatar) : asset('images/no_avatar.png') }}')"></div>
         <div id="profile-menu" class="header-profile-menu">
             <div class="profile-menu-info">
-                <div class="profile-menu-info-avatar" style="background-image: url('{{ Storage::disk('avatars')->url(Auth::user()->avatar) }}')"></div>
+                <div class="profile-menu-info-avatar" style="background-image: url('{{ Auth::user()->avatar ? Storage::disk('avatars')->url(Auth::user()->avatar) : asset('images/no_avatar.png') }}')"></div>
                 <div class="profile-menu-text">
                     <div class="profile-menu-nickname profile-menu-hidden">{{ Auth::user()->username }}</div>
-                    <div class="profile-menu-email profile-menu-hidden">{{ Auth::user()->role->title }}</div>
+                    <div class="profile-menu-email profile-menu-hidden">{{ Auth::user()->rolesRus->first() }}</div>
                 </div>
             </div>
             <div class="profile-menu">
-                @if(Auth::user()->role->isAdmin === 1)
+                @if(Auth::user()->can('Admin_Panel'))
                     <a class="profile-menu-button" href="{{ route('admin.index') }}">
                         <img src="{{ asset('images_icon/admin.png') }}" alt="">
                         <span>Admin_Panel</span>

@@ -12,10 +12,10 @@ return new class extends Migration
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
             $table->string('logo')->nullable();
-            $table->foreignIdFor(\App\Models\User::class)
-                ->constrained();
+            $table->foreignIdFor(\App\Models\User::class)->constrained();
             $table->string('title')->unique();
             $table->text('description')->nullable();
+            $table->unsignedBigInteger('likes')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

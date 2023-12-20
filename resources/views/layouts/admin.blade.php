@@ -17,13 +17,27 @@
         </div>
         <div class="list_name">Настройки системы</div>
         <div class="list">
-            <a href="/"><div class="list_item">Общие</div></a>
-            <a href="/"><div class="list_item">Безопасность</div></a>
-            <a href="/"><div class="list_item">Посетители</div></a>
-            <a href="/"><div class="list_item">Статьи</div></a>
-            <a href="/"><div class="list_item">Комментарии</div></a>
-            <a href="/"><div class="list_item">Файлы</div></a>
-            <a href="/"><div class="list_item">Изображения</div></a>
+            <a href="/">
+                <div class="list_item">Общие</div>
+            </a>
+            <a href="/">
+                <div class="list_item">Безопасность</div>
+            </a>
+            <a href="/">
+                <div class="list_item">Посетители</div>
+            </a>
+            <a href="/">
+                <div class="list_item">Статьи</div>
+            </a>
+            <a href="/">
+                <div class="list_item">Комментарии</div>
+            </a>
+            <a href="/">
+                <div class="list_item">Файлы</div>
+            </a>
+            <a href="/">
+                <div class="list_item">Изображения</div>
+            </a>
         </div>
         <div class="list_name">Настройки скриптов</div>
         <div class="list">
@@ -54,22 +68,23 @@
                 <div class="list_item">Категории Персон</div>
             </a>
         </div>
-        <div class="list_name">Пользователи</div>
-        <div class="list">
-            @can('viewAny', \App\Models\User::class)
+        @role('Administrator')
+            <div class="list_name">Пользователи</div>
+            <div class="list">
                 <a href="{{ route('admin.users.index') }}" class="@if(request()->routeIs('admin.users.*')) list_item_active @endif">
                     <div class="list_item">Пользователи</div>
                 </a>
-            @endcan
-            @can('viewAny', \App\Models\Role::class)
                 <a href="{{ route('admin.roles.index') }}" class="@if(request()->routeIs('admin.roles.*')) list_item_active @endif">
                     <div class="list_item">Роли пользователей</div>
                 </a>
-            @endcan
-        </div>
+            </div>
+        @endrole
+
         <div class="list_name">Другие разделы</div>
         <div class="list">
-            <a href="/Admin_Panel/Static_Pages"><div class="list_item">Статические страницы</div></a>
+            <a href="/Admin_Panel/Static_Pages">
+                <div class="list_item">Статические страницы</div>
+            </a>
         </div>
     </div>
     <div id="notification"></div>

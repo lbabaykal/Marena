@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
-    protected $with = ['role'];
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
+    protected $with = 'roles';
 
     /**
      * The attributes that are mass assignable.
@@ -49,19 +49,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function role()
+    public function ratings()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasMany(Rating::class);
     }
 
     public function favorites()
     {
-        return $this->belongsToMany(Article::class, 'favorites', 'user_id', 'article_id');
-    }
-
-    public function rating_assessments()
-    {
-        return $this->belongsToMany(Article::class, 'rating_assessments', 'user_id', 'article_id');
+        return $this->hasMany(Favorites::class);
     }
 
     public function folders()
@@ -69,10 +64,8 @@ class User extends Authenticatable
         return $this->hasMany(Folder::class);
     }
 
-    public function articles()
+    public function getRolesRusAttribute(): Collection
     {
-        return $this->hasManyThrough(Article::class, Favorites::class, 'user_id', 'id', 'id', 'article_id')
-            ->where('user_id', Auth::id());
+        return $this->roles->pluck('name_rus');
     }
-
 }

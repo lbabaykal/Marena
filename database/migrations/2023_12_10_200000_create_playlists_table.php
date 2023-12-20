@@ -6,24 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     public function up(): void
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('playlists', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Article::class)
-                ->index()
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->unsignedFloat('rating');
-            $table->unsignedInteger('count_assessments');
-            $table->softDeletes();
+            $table->foreignIdFor(\App\Models\Team::class)
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->enum('type', ['SUB', 'MVO', 'DUB']);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('playlists');
     }
 };

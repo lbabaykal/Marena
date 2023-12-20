@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Role extends Model
+class Playlist extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $table = 'roles';
+    protected $table = 'playlists';
     protected $guarded = false;
     public $timestamps = false;
 
-    public function users()
+    public static function types(): \Illuminate\Support\Collection
     {
-        return $this->hasMany(User::class);
+        return collect(['SUB', 'MVO', 'DUB']);
     }
+
 }

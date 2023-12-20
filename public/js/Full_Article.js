@@ -6,11 +6,43 @@ $.ajaxSetup({
 
 function rating(article_id, assessment) {
     $.ajax({
-        url: '/rating_assessments',
+        url: '/rating',
         method: 'POST',
         dataType: 'json',
         data: { article_id: article_id,
                 assessment: assessment },
+        success (data) {
+            new Notify ({
+                status: data.status,
+                title: 'Рейтинг',
+                text: data.text,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2500,
+                gap: 15,
+                distance: 15,
+                type: 2,
+                position: 'right bottom',
+                customWrapper: '',
+            })
+            setTimeout(() => {
+                location.reload();
+            }, 2500);
+        }
+    });
+}
+
+function rating_del(article_id) {
+    $.ajax({
+        url: '/rating',
+        method: 'DELETE',
+        dataType: 'json',
+        data: { article_id: article_id },
         success (data) {
             new Notify ({
                 status: data.status,
@@ -42,7 +74,7 @@ Favorite.addEventListener("change", function() {
     let data = Favorite.options[Favorite.selectedIndex];
 
     $.ajax({
-        url: '/account/favorites',
+        url: '/favorites',
         method: 'POST',
         dataType: 'json',
         data: { folder_id: data.getAttribute("data-folder"),
@@ -77,7 +109,7 @@ function favorite_del(article_id) {
     const Favorite = document.querySelector('#folder');
 
     $.ajax({
-        url: '/account/favorites',
+        url: '/favorites',
         method: 'DELETE',
         dataType: 'json',
         data: { article_id: article_id },

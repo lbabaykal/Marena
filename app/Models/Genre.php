@@ -15,7 +15,6 @@ class Genre extends Model
 
     public function articles()
     {
-//        return $this->belongsToMany(Article::class, 'article_genre', 'genre_id', 'article_id');
         return $this->belongsToMany(Article::class);
     }
 

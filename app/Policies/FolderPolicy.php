@@ -18,7 +18,7 @@ class FolderPolicy
 
     public function view(User $user, Folder $folder): Response
     {
-        return $user->id === $folder->user_id || $folder->isPublic === 1
+        return $user->id === $folder->user_id || $folder->user_id === 0
             ? Response::allow()
             : Response::denyWithStatus(403);
     }

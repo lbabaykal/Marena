@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Favorite\DestroyRequest;
-use App\Http\Requests\Favorite\UpdateRequest;
-use App\Models\Favorites;
+use App\Http\Requests\FavoriteRequest;
 use App\Models\Folder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class FavoriteController extends Controller
 {
-    public function store(UpdateRequest $request): JsonResponse
+
+    public function store(FavoriteRequest $request): JsonResponse
     {
         if (Auth::check()) {
             $data = $request->validated();
-            $folder = Folder::query()->find($data['folder_id']);
+            $folder = Folder::query()->findOrFail($data['folder_id']);
 
             if ($folder->user_id === Auth::id() || $folder->user_id === 0) {
-                Favorites::query()->updateOrCreate(
-                    ['user_id' => Auth::id(), 'article_id' => $data['article_id']],
+
+                \auth()->user()->favorites()->updateOrCreate(
+                    ['article_id' => $data['article_id']],
                     ['folder_id' => $data['folder_id']]
                 );
 
@@ -43,15 +42,12 @@ class FavoriteController extends Controller
         }
     }
 
-    public function destroy(DestroyRequest $request): JsonResponse
+    public function destroy(FavoriteRequest $request): JsonResponse
     {
         if (Auth::check()) {
             $data = $request->validated();
 
-            Favorites::query()
-                ->where('user_id', Auth::id())
-                ->where($data)
-                ->delete();
+            \auth()->user()->favorites()->where($data)->delete();
 
             return response()->json([
                 'status' => 'success',

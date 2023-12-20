@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +14,11 @@ class Favorites extends Model
 
     public function genres()
     {
-        return $this->belongsToMany(Genre::class, 'article_genre', 'article_genre.article_id', 'article_genre.genre_id', 'favorites.article_id');
+        return $this->belongsToMany(Genre::class,
+            'article_genre',
+            'article_genre.article_id',
+            'article_genre.genre_id',
+            'favorites.article_id');
     }
+
 }

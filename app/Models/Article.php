@@ -12,7 +12,7 @@ class Article extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'articles';
     protected $guarded = false;
-    protected $with = ['rating', 'type'];
+    protected $with = ['articleExtended', 'type'];
 //    protected $withCount = ['comments'];
 
     public static function statuses(): \Illuminate\Support\Collection
@@ -20,15 +20,16 @@ class Article extends Model
         return collect(['PUBLISHED', 'DRAFT', 'ARCHIVE', 'DELETED']);
     }
 
+    public function scopeStatus(Builder $query, string $status): Builder
+    {
+        return $query->where('status', $status);
+    }
+
     public static function age_limits(): \Illuminate\Support\Collection
     {
         return collect(['0+', '6+', '12+', '16+', '18+']);
     }
 
-    public function scopeStatus(Builder $query, string $status): Builder
-    {
-        return $query->where('status', $status);
-    }
     public function author() {
         return $this->belongsTo(User::class, 'author_id');
     }
@@ -58,14 +59,9 @@ class Article extends Model
         return $this->belongsToMany(Genre::class);
     }
 
-    public function rating()
+    public function articleExtended()
     {
-        return $this->hasOne(Rating::class);
-    }
-
-    public function rating_assessments()
-    {
-        return $this->belongsToMany(User::class, 'rating_assessments', 'article_id', 'user_id');
+        return $this->hasOne(ArticleExtended::class);
     }
 
     public function comments()

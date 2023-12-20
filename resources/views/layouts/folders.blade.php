@@ -10,7 +10,7 @@
                             <a href="{{ route('account.folders.index') }}" class="folder_button @if(request()->is('account/folders')) folder_button_active @endif">
                                 <div class="folder_img"></div>
                                 <div class="folder_title">
-                                    Все - {{ \App\Models\Favorites::query()->where('user_id', auth()->id())->count() }}
+                                    Все - {{ auth()->user()->favorites()->count() }}
                                 </div>
                             </a>
                             @can('create', \App\Models\Folder::class)
@@ -25,7 +25,7 @@
                                 <a href="{{ route('account.folders.show', $folder->id) }}" class="folder_button @if(request()->is('account/folders/' . $folder->id)) folder_button_active @endif">
                                     <div class="folder_img"></div>
                                     <div class="folder_title">
-                                        {{ $folder->title }} - {{ $folder->articles_count }}
+                                        {{ $folder->title }} - {{ $folder->articles_user_count }}
                                     </div>
                                 </a>
                                 @can('delete', $folder)
@@ -40,22 +40,6 @@
                     @if(request()->routeIs('account.folders.index'))
                         <form class="favorite_filter">
                             <div class="favorite_filter_item">
-                                <div class="favorite_filter_label">Тип</div>
-                                <div class="favorite_filter_input">
-                                    <div class="check_select">
-                                        @foreach($types as $type)
-                                            <label><input type="checkbox" name="type[]" value="{{$type->id}}"
-                                                @if(request()->exists('type'))
-                                                    @foreach(request('type') as $typeValue)
-                                                        @checked($type->id === (int) $typeValue)
-                                                        @endforeach
-                                                    @endif
-                                                >{{$type->title}}</label>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="favorite_filter_item">
                                 <div class="favorite_filter_label">Категория</div>
                                 <div class="favorite_filter_input">
                                     <div class="check_select">
@@ -67,6 +51,22 @@
                                                         @endforeach
                                                     @endif
                                                 >{{$category->title}}</label>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="favorite_filter_item">
+                                <div class="favorite_filter_label">Тип</div>
+                                <div class="favorite_filter_input">
+                                    <div class="check_select">
+                                        @foreach($types as $type)
+                                            <label><input type="checkbox" name="type[]" value="{{$type->id}}"
+                                                @if(request()->exists('type'))
+                                                    @foreach(request('type') as $typeValue)
+                                                        @checked($type->id === (int) $typeValue)
+                                                        @endforeach
+                                                    @endif
+                                                >{{$type->title}}</label>
                                         @endforeach
                                     </div>
                                 </div>

@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreRequest;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Marena;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -22,7 +21,12 @@ class UserController extends Controller
 
     public function index(): View
     {
-        $users = User::query()->paginate(Marena::COUNT_ADMIN_ITEMS);
+        $users = User::query()
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'Administrator');
+            })
+            ->paginate(Marena::COUNT_ADMIN_ITEMS);
+
         return view('admin.user.index')->with('users', $users);
     }
 
@@ -43,11 +47,9 @@ class UserController extends Controller
 
     public function edit(User $user): View
     {
-        if (Auth::user()->role->id === 1 ) {
-            $roles = Role::all();
-        } else {
-            $roles = Role::all()->where('id', '!=' , 1);
-        }
+        $roles = Role::all()
+            ->where('guard_name', '=', 'web')
+            ->where('name', '!=' , 'Administrator');
 
         return view('admin.user.edit')
             ->with('user', $user)
@@ -58,18 +60,13 @@ class UserController extends Controller
     {
         $data = $request->validated();
 
-        //Убрать эту кашу
-        if ($user->role->id === 1 && Auth::user()->role->id !== 1) {
-            return redirect()->route('admin.users.edit', $user->id)
-                ->with('error', 'Нельзя изменить роль Администратора!');
-        }
+        $role = Role::findById($data['role_id']);
+        unset($data['role_id']);
 
-        if ((int)$request->role_id === 1 && Auth::user()->role->id !== 1) {
-            return redirect()->route('admin.users.edit', $user->id)
-                ->with('error', 'Роль Администратора может выдать только администратор!');
-        }
-
+//        dd($role->name);
         $user->update($data);
+        $user->syncRoles($role->name);
+
         return redirect()->route('admin.users.index');
     }
 

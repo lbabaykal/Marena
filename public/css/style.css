@@ -1375,6 +1375,9 @@ button.profile-menu-button {
 }
 
 .article_full > img {
+    /*==========================*/
+    filter: saturate(200%);
+    /*==========================*/
     width: 100%;
     border-radius: var(--border-radius);
 }

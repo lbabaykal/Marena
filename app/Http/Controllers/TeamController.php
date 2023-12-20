@@ -11,7 +11,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-
 class TeamController extends Controller
 {
     public function __construct()
@@ -28,7 +27,7 @@ class TeamController extends Controller
         return view('team.index')->with('teams', $teams);
     }
 
-    public function show(Team $team): View
+    public function show(Team $team)
     {
         return view('team.show')->with('team', $team);
     }
@@ -62,4 +61,8 @@ class TeamController extends Controller
         return redirect()->route('teams.index');
     }
 
+    public function description(Team $team): View
+    {
+        return view('team.show')->with('team', $team);
+    }
 }

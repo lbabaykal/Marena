@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
         return [
             'username' => ['required', 'string', 'min:3', 'max:255', Rule::unique(User::class)->ignore($this->user)],
             'email' => ['required', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user)],
-            'role_id' => ['required', 'min:2', 'integer'],
+            'role_id' => ['required', 'string', 'exists:roles,id'],
         ];
     }
 }

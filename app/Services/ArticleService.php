@@ -5,24 +5,21 @@ namespace App\Services;
 use App\Http\Requests\Admin\Article\StoreRequest;
 use App\Http\Requests\Admin\Article\UpdateRequest;
 use App\Models\Article;
-use App\Models\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
 
 class ArticleService
 {
-    private string|null $image = null;
-
     public function store(StoreRequest $request)
     {
+        $fileName = $this->uploadImage($request);
+
         $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $this->saveImage($request);
-        }
-
+        $data['image'] = $fileName;
         $data['is_comment'] = $request->boolean('is_comment');
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
@@ -34,11 +31,6 @@ class ArticleService
             DB::beginTransaction();
 
             $article = Article::query()->create($data);
-            Rating::query()->create([
-                'article_id' => $article->id,
-                'rating' => 0,
-                'count_assessments' => 0
-            ]);
             $article->genres()->attach($genres);
             $article->studios()->attach($studios);
 
@@ -54,14 +46,10 @@ class ArticleService
 
     public function update(UpdateRequest $request, Article $article)
     {
+        $fileName = $this->uploadImage($request);
 
         $data = $request->validated();
-
-        if ($request->hasFile('image')) {
-            $data['image'] = $this->saveImage($request);
-            $this->image = $article->image ?? null;
-        }
-
+        $data['image'] = $fileName ?? $article->image;
         $data['is_comment'] = $request->boolean('is_comment');
         $data['is_rating'] = $request->boolean('is_rating');
         $data['author_id'] = Auth::id();
@@ -73,21 +61,32 @@ class ArticleService
         $article->genres()->sync($genres);
         $article->studios()->sync($studios);
 
-        $this->deleteImage();
-
         return $article;
     }
 
-    public function saveImage(Request $request): bool|string
+    private function uploadImage(StoreRequest|UpdateRequest $request): string|null
     {
-        return $request->file('image')->store(date('Y-m'), 'articles');
-    }
-
-    public function deleteImage(): void
-    {
-        if (isset($this->image)) {
-            Storage::disk('articles')->delete($this->image);
+        if (! $request->hasFile('image')) {
+            return null;
         }
+
+        $fileName = date('Y-m') . '/' . Str::random(40) . '.webp';
+
+        $imageArticle = ImageManager::gd()
+            ->read($request->file('image'))
+            ->toWebp(100)
+            ->toFilePointer();
+
+        $imageArticlePreview = ImageManager::gd()
+            ->read($request->file('image'))
+            ->scale(width: 252)
+            ->toWebp(100)
+            ->toFilePointer();
+
+        Storage::disk('articles')->put($fileName, $imageArticle);
+        Storage::disk('articles_preview')->put($fileName, $imageArticlePreview);
+
+        return $fileName;
     }
 
 }

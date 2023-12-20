@@ -6,7 +6,7 @@
             <div class="My_Profile_User">
                 <div class="user_left">
                     <img src="{{ asset('avatars/' . Auth::user()->avatar) }}" alt="">
-                    <div class="user_group_name">{{ Auth::user()->role->title }}</div>
+                    <div class="user_group_name">{{ Auth::user()->rolesRus->first() }}</div>
                 </div>
                 <div class="user_right">
                     <table id="My_Profile" class="My_Profile_User_table">

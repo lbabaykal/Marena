@@ -15,6 +15,10 @@ class DatabaseSeeder extends Seeder
             Folders::class,
             Types::class,
             Genres::class,
+            Studios::class,
+            Permissions::class,
+            Roles::class,
+            Users::class,
         ]);
     }
 }

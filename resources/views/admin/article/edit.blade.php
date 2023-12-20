@@ -49,8 +49,16 @@
                 </select>
             </label>
 
-            <label for="episodes">Эпизоды: @error('episodes') {{ $message }} @enderror
-                <input id="episodes" type="text" name="episodes" value="{{ $article->episodes }}" placeholder="?/?"/>
+            <label for="episodes_released">Эпизодов вышло: @error('episodes_released') {{ $message }} @enderror
+                <input id="episodes_released" type="number" name="episodes_released" value="{{ $article->episodes_released }}" />
+            </label>
+
+            <label for="episodes_total">Эпизодов всего: @error('episodes_total') {{ $message }} @enderror
+                <input id="episodes_total" type="number" name="episodes_total" value="{{ $article->episodes_total }}" />
+            </label>
+
+            <label for="duration">Продолжительность (минуты): @error('duration') {{ $message }} @enderror
+                <input id="duration" type="number" name="duration" value="{{ $article->duration }}" />
             </label>
 
             <label for="release">Год: @error('release') {{ $message }} @enderror

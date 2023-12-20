@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Rating;
+use App\Models\ArticleExtended;
 use Illuminate\Console\Command;
 
 class RatingUpdate extends Command
@@ -22,9 +22,9 @@ class RatingUpdate extends Command
 //            }
 //        });
 
-        foreach (Rating::cursor() as $rating) {
-            $rating->rating = round($rating->rating_assessments()->avg('assessment'), 1);
-            $rating->count_assessments = $rating->rating_assessments_count;
+        foreach (ArticleExtended::cursor() as $rating) {
+            $rating->rating = round($rating->ratings()->avg('assessment'), 1);
+            $rating->count_assessments = $rating->ratings_count;
             $rating->save();
         }
 

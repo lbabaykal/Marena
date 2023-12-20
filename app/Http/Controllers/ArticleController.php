@@ -14,10 +14,13 @@ use App\Http\Resources\ArticleResource;
 use App\Marena;
 use App\Models\Article;
 use App\Models\Favorites;
-use App\Models\RatingAssessment;
+use App\Models\Rating;
 use App\Models\Team;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Services\FolderService;
 
@@ -29,22 +32,26 @@ class ArticleController extends Controller
         $this->authorize('view', $article);
 
         $article->comments_count = $article->comments()->count();
-        $article->user_assessment = RatingAssessment::query()
-            ->where('user_id', auth()->id())
+        $article->duration = CarbonInterval::minutes($article->duration)->cascade()->forHumans(['short' => true]);
+        $article->release = Carbon::parse($article->release)->format('d.m.Y');
+
+        $userFolders = $folderService->getUserFolders();
+
+        $userRating = Rating::query()
+            ->where('user_id', Auth::id())
             ->where('article_id', $article->id)
             ->value('assessment');
 
-        $favorite = Favorites::query()
+        $userFavorite = Favorites::query()
+            ->where('user_id', Auth::id())
             ->where('article_id', $article->id)
-            ->where('user_id', auth()->id())
             ->get();
-
-        $folders = $folderService->getUserFolders();
 
         return view('layouts.main.article')
             ->with('article', $article)
-            ->with('folders', $folders)
-            ->with('favorite', $favorite);
+            ->with('userFolders', $userFolders)
+            ->with('userRating', $userRating)
+            ->with('userFavorite', $userFavorite);
     }
 
     public function filter(): View

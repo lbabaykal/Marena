@@ -24,9 +24,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-//            'username' => ['required', 'string', 'min:3', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-//            'email' => ['required', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-//            'role' => 'required|integer',
+            //
         ];
     }
 

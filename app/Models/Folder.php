@@ -12,11 +12,16 @@ class Folder extends Model
     protected $table = 'folders';
     protected $guarded = false;
     public $timestamps = false;
-    protected $withCount = ['articles'];
+    protected $withCount = ['articlesUser'];
 
-    public function articles()
+    public function articlesUser()
     {
-        return $this->hasManyThrough(Article::class, Favorites::class, 'folder_id', 'id', 'id', 'article_id')
+        return $this->hasManyThrough(Article::class,
+            Favorites::class,
+            'folder_id',
+            'id',
+            'id',
+            'article_id')
             ->where('user_id', Auth::id());
     }
 }

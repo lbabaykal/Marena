@@ -21,7 +21,9 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\Studio::class)->nullable()->constrained();
             $table->foreignIdFor(\App\Models\Country::class)->constrained();
             $table->foreignIdFor(\App\Models\Genre::class)->nullable()->constrained();
-            $table->string('episodes')->nullable();
+            $table->unsignedSmallInteger('episodes_released');
+            $table->unsignedSmallInteger('episodes_total');
+            $table->unsignedSmallInteger('duration');
             $table->date('release');
             $table->text('description')->nullable();
             $table->foreignIdFor(\App\Models\User::class, 'author_id')->constrained('users');

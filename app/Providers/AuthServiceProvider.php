@@ -4,12 +4,11 @@ namespace App\Providers;
 
 //use Illuminate\Support\Facades\Gate;
 use App\Models\Article;
-use App\Models\Role;
 use App\Models\User;
 use App\Policies\Admin\ArticlePolicy;
-use App\Policies\Admin\RolePolicy;
 use App\Policies\Admin\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -20,7 +19,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Article::class => ArticlePolicy::class,
-        Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
     ];
 
@@ -29,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('Administrator') ? true : null;
+        });
     }
 }

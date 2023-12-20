@@ -27,7 +27,7 @@
             <label>Роль: @error('role_id') {{ $message }} @enderror
                 <select name="role_id">
                     @foreach($roles as $role)
-                        <option value="{{ $role->id }}" {{ $role->id === $user->role_id ? ' selected': '' }} >{{ $role->title }}</option>
+                        <option value="{{ $role->id }}" @selected($user->hasRole($role->name)) >{{ $role->name_rus }}</option>
                     @endforeach
                 </select>
             </label>

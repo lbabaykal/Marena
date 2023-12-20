@@ -28,7 +28,7 @@ class ArticleController extends Controller
     {
         $articles = Article::query()
             ->status('PUBLISHED')
-            ->orderByDesc('articles.id')
+            ->orderByDesc('id')
             ->paginate(Marena::COUNT_ADMIN_ITEMS);
 
         return view('admin.article.index')->with('articles', $articles);

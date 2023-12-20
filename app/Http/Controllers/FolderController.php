@@ -29,7 +29,7 @@ class FolderController extends Controller
             ->send(Favorites::query()
                 ->where('user_id', auth()->id())
                 ->join('articles', 'favorites.article_id', '=', 'articles.id')
-                ->join('ratings', 'ratings.article_id', '=', 'articles.id')
+                ->join('article_extended', 'article_extended.article_id', '=', 'articles.id')
                 ->join('types', 'types.id', '=', 'articles.type_id')
             )
             ->through([

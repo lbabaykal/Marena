@@ -6,20 +6,15 @@ use App\Http\Requests\Team\StoreRequest;
 use App\Http\Requests\Team\UpdateRequest;
 use App\Models\Team;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class TeamService
 {
-    private string|null $logo = null;
-
     public function store(StoreRequest $request)
     {
+        $fileName = $this->uploadLogo($request);
+
         $data = $request->validated();
-
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $this->saveLogo($request);
-        }
-
+        $data['logo'] = $fileName;
         $data['user_id'] = auth()->id();
 
         return Team::query()->create($data);
@@ -27,31 +22,22 @@ class TeamService
 
     public function update(UpdateRequest $request, Team $team)
     {
+        $fileName = $this->uploadLogo($request);
+
         $data = $request->validated();
-
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $this->saveLogo($request);
-            $this->logo = $team->logo ?? null;
-        }
-
+        $data['logo'] = $fileName ?? $team->logo;
         $data['user_id'] = auth()->id();
 
-        $team = $team->update($data);
-        $this->deleteLogo();
-
-        return $team;
+        return $team->update($data);
     }
 
-    public function saveLogo(Request $request): bool|string
+    private function uploadLogo(StoreRequest|UpdateRequest $request): string|null
     {
-        return $request->file('logo')->store('/', 'teams');
-    }
-
-    public function deleteLogo(): void
-    {
-        if (isset($this->logo)) {
-            Storage::disk('teams')->delete($this->logo);
+        if (! $request->hasFile('logo')) {
+            return null;
         }
+
+        return $request->file('logo')->store(options: 'teams');
     }
 
 }

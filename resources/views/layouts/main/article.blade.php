@@ -7,18 +7,23 @@
                 <div class="article_image">
                     <img src="{{ $article->image ? Storage::disk('articles')->url($article->image) : asset('images/no_image.png') }}" alt="">
                     <div class="my_list_cont">
-                        <select class="my_list @if($favorite->isNotEmpty()) favourite_active @endif" id="folder">
-                            @if($favorite->isEmpty())
+                        <select class="my_list @if($userFavorite->isNotEmpty()) favourite_active @endif" id="folder">
+                            @if($userFavorite->isEmpty())
                                 <option value="">Добавить в список</option>
                             @endif
-                            @foreach($folders as $folder)
+                            @foreach($userFolders as $folder)
                                 <option data-folder="{{ $folder->id }}" data-article="{{ $article->id }}"
-                                        {{ $folder->id === $favorite->value('folder_id') ? ' selected': '' }}>{{ $folder->title }}</option>
+                                        {{ $folder->id === $userFavorite->value('folder_id') ? ' selected': '' }}>{{ $folder->title }}</option>
                             @endforeach
                         </select>
-                        @if($favorite->isNotEmpty())
+                        @if($userFavorite->isNotEmpty())
                             <div class="favourite">
                                 <button onclick="favorite_del({{ $article->id }})" id="favourite" class="favourite_button"></button>
+                            </div>
+                        @endif
+                        @isset($userRating)
+                            <div class="favourite">
+                                <button onclick="rating_del({{ $article->id }})" id="rating" class="favourite_button"></button>
                             </div>
                         @endif
                     </div>
@@ -29,9 +34,9 @@
 
                 <div class="article_info">
                     <div class="article_info_titles">
-                        <div>{{ $article->title_rus }}</div>
-                        <div>{{ $article->title_eng }}</div>
-                        <div>{{ $article->title_orig }}</div>
+                        <div style="font-weight: 700;">{{ $article->title_rus }}</div>
+                        <div style="font-size: 18px;">{{ $article->title_eng }}</div>
+                        <div style="font-size: 18px;">{{ $article->title_orig }}</div>
                     </div>
                     <div class="article_info_container">
                         <div class="article_info_block_left">
@@ -54,17 +59,15 @@
                             </div>
 
                             <div class="article_info_line">
-                                @isset($article->episodes)
                                     <div class="info_key">Эпизоды:</div>
-                                    <div class="info_value">{{ $article->episodes }}</div>
-                                @endisset
+                                    <div class="info_value">{{ $article->episodes_released . '/' . $article->episodes_total . ' ~ ' . $article->duration }}</div>
                             </div>
                         </div>
 
                         <div class="article_info_block_right">
                             <div class="article_info_line">
                                 <div class="info_key">Выпуск:</div>
-                                <div class="info_value">{{ \Carbon\Carbon::parse($article->release)->format('d.m.Y') }}</div>
+                                <div class="info_value">{{ $article->release }}</div>
                             </div>
                             <div class="article_info_line">
                                 <div class="info_key">Страна:</div>
